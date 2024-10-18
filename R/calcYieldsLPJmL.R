@@ -34,7 +34,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
   local_options(magclass_sizeLimit = 1e+12)
 
   lpj2mag     <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mappingfolder")
-  cropsLPJmL  <- unique(lpj2mag$LPJmL)
+  cropsLPJmL  <- unique(lpj2mag$LPJmL5)
   irrigTypes  <- c("irrigated", "rainfed")
   yields      <- list()
 

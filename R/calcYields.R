@@ -110,10 +110,10 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
     offYield  <- yields * increaseFactor
 
     # LPJmL to MAgPIE crops
-    mainYield <- toolAggregate(mainYield, lpj2mag, from = "LPJmL",
-                               to = "MAgPIE", dim = 3.1, partrel = TRUE)
-    offYield  <- toolAggregate(offYield, lpj2mag, from = "LPJmL",
-                               to = "MAgPIE", dim = 3.1, partrel = TRUE)
+    mainYield <- toolAggregate(mainYield, lpj2mag, dim = 3.1, partrel = TRUE,
+                               from = "LPJmL5", to = "MAgPIE")
+    offYield  <- toolAggregate(offYield, lpj2mag, dim = 3.1, partrel = TRUE,
+                               from = "LPJmL5", to = "MAgPIE")
 
     # Multiple cropping suitability
     if (areaMask == "none") {
@@ -145,8 +145,8 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
   } else {
 
     # LPJmL to MAgPIE crops
-    yields  <- toolAggregate(yields, lpj2mag, from = "LPJmL",
-                             to = "MAgPIE", dim = 3.1, partrel = TRUE)
+    yields  <- toolAggregate(yields, lpj2mag, dim = 3.1, partrel = TRUE,
+                             from = "LPJmL5", to = "MAgPIE")
   }
 
   # Check for NAs

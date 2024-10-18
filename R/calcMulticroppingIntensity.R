@@ -37,7 +37,7 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
     # Crops that are not suitable for multiple cropping (either because they are a perennial
     # crop that's grown over several years or because the growing period is too long to
     # allow for another season
-    cropsNoMC <- c("sugarcane", "betr", "begr")
+    cropsNoMC <- c("sugarcane", "biomass tree", "biomass grass")
 
   }
 
