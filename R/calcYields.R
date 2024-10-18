@@ -90,7 +90,7 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
   getSets(yields)["d3.1"] <- "crop"
   getSets(yields)["d3.2"] <- "irrigation"
   # Mapping LPJmL to MAgPIE crops
-  lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mappingfolder")
+  lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
 
   if (multicropping) {
 
