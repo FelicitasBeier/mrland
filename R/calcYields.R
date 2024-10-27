@@ -203,82 +203,13 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
 
   }
 
-  # Weight for spatial aggregation
-  if (weighting == "totalCrop") {
-
-    cropAreaWeight <- dimSums(calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = FALSE,
-                                         cellular = TRUE, cells = cells, aggregate = FALSE,
-                                         years = "y1995", round = 6),
-                              dim = 3) + 10e-10
-
-  } else if (weighting %in% c("totalLUspecific", "cropSpecific", "crop+irrigSpecific")) {
-
-    crop <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = TRUE,
-                       cellular = TRUE, cells = cells, aggregate = FALSE, years = "y1995", round = 6)
-
-    past <- calcOutput("LanduseInitialisation", aggregate = FALSE, cellular = TRUE, nclasses = "seven",
-                       input_magpie = TRUE, cells = cells, years = "y1995", round = 6)[, , "past"]
-
-    if (weighting == "crop+irrigSpecific") {
-
-      cropAreaWeight <- new.magpie(cells_and_regions = getCells(yields),
-                                   years = NULL,
-                                   names = getNames(yields),
-                                   fill = NA)
-      cropAreaWeight[, , findset("kcr")] <- crop + 10e-10
-      cropAreaWeight[, , "pasture"]      <- mbind(setNames(past + 10e-10, "irrigated"),
-                                                  setNames(past + 10e-10, "rainfed"))
-
-    } else if (weighting == "cropSpecific") {
-
-      cropAreaWeight <- new.magpie(cells_and_regions = getCells(yields),
-                                   years = NULL,
-                                   names = getNames(yields, dim = 1),
-                                   fill = NA)
-
-      cropAreaWeight[, , findset("kcr")] <- dimSums(crop, dim = 3.1) + 10e-10
-      cropAreaWeight[, , "pasture"]      <- past + 10e-10
-
-    } else {
-
-      cropAreaWeight <- new.magpie(cells_and_regions = getCells(yields),
-                                   years = NULL,
-                                   names = getNames(yields, dim = 1),
-                                   fill = (dimSums(crop, dim = 3) + 10e-10))
-
-      cropAreaWeight[, , "pasture"] <- past + 10e-10
-
-    }
-
-  } else if (weighting == "avlCropland") {
-
-    cropAreaWeight <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land, cells = cells,
-                                          country_level = FALSE, aggregate = FALSE),
-                               NULL) + 10e-10
-
-  } else if (weighting == "avlCropland+avlPasture") {
-
-    avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land, cells = cells,
-                                   country_level = FALSE, aggregate = FALSE), "avlCrop")
-
-    lu1995  <- setYears(calcOutput("LanduseInitialisation", aggregate = FALSE, cellular = TRUE, nclasses = "seven",
-                                   input_magpie = TRUE, cells = cells, years = "y1995", round = 6), NULL)
-
-    cropAreaWeight <- new.magpie(cells_and_regions = getCells(yields),
-                                 years = NULL,
-                                 names = getNames(yields, dim = 1),
-                                 fill = avlCrop)
-
-    cropAreaWeight[, , "pasture"] <- pmax(avlCrop,
-                                          dimSums(lu1995[, , c("primforest", "secdforest", "forestry", "past")],
-                                                  dim = 3)) + 10e-10
-
-  } else {
-
-    stop("Weighting setting is not available.")
-  }
-
-  if (any(is.na(cropAreaWeight))) stop("NAs in weights.")
+  cropAreaWeight <- calcOutput(
+    "YieldsWeight",
+    cells = cells,
+    weighting = weighting,
+    marginal_land = marginal_land,
+    aggregate = FALSE
+  )
 
   # Special case for India case study
   if (indiaYields) {

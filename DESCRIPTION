@@ -1,8 +1,8 @@
 Type: Package
 Package: mrland
 Title: MadRaT land data package
-Version: 0.63.0.9002
-Date: 2024-10-18
+Version: 0.64.1
+Date: 2024-10-25
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Abhijeet", "Mishra", role = "aut"),
@@ -19,7 +19,8 @@ Authors@R: c(
     person("Stephen", "Wirth", role = "aut"),
     person("Felicitas", "Beier", role = "aut"),
     person("David", "Hoetten", role = "aut"),
-    person("Pascal", "Sauer", role = "aut")
+    person("Pascal", "Sauer", role = "aut"),
+    person("Jake", "Tommey", role = "aut")
   )
 Description: The package provides land related data via the madrat
     framework.
