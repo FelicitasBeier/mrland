@@ -102,9 +102,9 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   # [Note: grown throughout the whole year] ---> set to 0
   missingCrops <- new.magpie(cells_and_regions = getItems(increaseFACTOR, dim = 1),
                              years = getItems(increaseFACTOR, dim = 2),
-                             names = c("betr.irrigated", "betr.rainfed",
-                                       "begr.irrigated", "begr.rainfed",
-                                       "mgrass.irrigated", "mgrass.rainfed"),
+                             names = c("biomass tree.irrigated", "biomass tree.rainfed",
+                                       "biomass grass.irrigated", "biomass grass.rainfed",
+                                       "pasture.irrigated", "pasture.rainfed"),
                              fill = 0)
   getSets(missingCrops) <- getSets(increaseFACTOR)
   increaseFACTOR        <- mbind(increaseFACTOR, missingCrops)
