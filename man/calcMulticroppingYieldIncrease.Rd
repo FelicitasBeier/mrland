@@ -8,8 +8,7 @@ calcMulticroppingYieldIncrease(
   selectyears,
   lpjml,
   climatetype,
-  fallowFactor = 0.75,
-  minThreshold = 100
+  fallowFactor = 0.75
 )
 }
 \arguments{
@@ -22,11 +21,6 @@ calcMulticroppingYieldIncrease(
 \item{fallowFactor}{Factor determining yield reduction in off season due to
 fallow period between harvest of first (main) season and
 sowing of second (off) season}
-
-\item{minThreshold}{Minimum threshold of grass GPP in crop growing period
-and crop yield to exclude low yielding cells
-Unit of the threshold is gC/m^2.
-Default: 100 gC/m^2}
 }
 \value{
 magpie object in cellular resolution

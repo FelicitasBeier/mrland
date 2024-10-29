@@ -14,10 +14,6 @@
 #' @param fallowFactor  Factor determining yield reduction in off season due to
 #'                      fallow period between harvest of first (main) season and
 #'                      sowing of second (off) season
-#' @param minThreshold  Minimum threshold of grass GPP in crop growing period
-#'                      and crop yield to exclude low yielding cells
-#'                      Unit of the threshold is gC/m^2.
-#'                      Default: 100 gC/m^2
 #'
 #' @return magpie object in cellular resolution
 #' @author Felicitas Beier
@@ -32,21 +28,12 @@
 #'
 
 calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
-                                           fallowFactor = 0.75, minThreshold = 100) {
+                                           fallowFactor = 0.75) {
 
   # Function requires lpjml argument in standard format
   if (length(lpjml) == 1) {
     lpjml <- c(natveg = "NULL", crop = lpjml)
   }
-
-  ####################
-  ### Definitions  ###
-  ####################
-  # Transformation factor gC/m^2 -> tDM/ha
-  yieldTransform <- 0.01 / 0.45
-
-  # Minimum threshold in tDM/ha
-  minThreshold   <- minThreshold * yieldTransform
 
   ####################
   ### Read in data ###
@@ -80,21 +67,13 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   ### Calculations ###
   ####################
 
-  # Exclude cells with grass yields (in growing period of crop) below minimum threshold
-  # (Note: for numerical reasons)
-  rule1 <- grassGPPgrper > minThreshold
-
-  # Exclude low yielding cells (minimum crop yield in main season below minimum threshold)
-  # (Note: to account for non-matching growing periods)
-  rule2 <- cropYields > minThreshold
-
   ### Yield Increase Factor  ###
   # Calculate multiple cropping factor based on annual grass GPP and
   # grass GPP in growing period of crop
   grassGPPoffseason <- (grassGPPannual[, , cropIrrigList] - grassGPPgrper[, , cropIrrigList])
   grassGPPoffseason[grassGPPoffseason < 0] <- 0
 
-  increaseFACTOR <- ifelse(rule1 & rule2,
+  increaseFACTOR <- ifelse(grassGPPgrper > 0,
                            grassGPPoffseason / grassGPPgrper,
                            0) * fallowFactor
 
@@ -123,7 +102,7 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   ##############
   ### Return ###
   ##############
-  unit        <- "unitless"
+  unit        <- "factor"
   description <- paste0("Factor of yield increase through multiple cropping ",
                         "to be applied on LPJmL crop yield")
 
