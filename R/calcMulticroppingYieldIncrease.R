@@ -40,12 +40,12 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   ####################
   # grass GPP in the entire year (main + off season) where cropping is possible
   # taking the growing period months into account (in tDM/ha)
-  grassGPPannual <- setYears(calcOutput("GrassGPP", season = "wholeYear",
+  grassGPPannual <- setYears(calcOutput("GrassGPPyearly", season = "wholeYear",
                                         lpjml = lpjml, climatetype = climatetype,
                                         selectyears = selectyears, aggregate = FALSE),
                              selectyears)
   # grass GPP in the growing period of LPJmL (main season) (in tDM/ha)
-  grassGPPgrper  <- setYears(calcOutput("GrassGPP", season = "mainSeason",
+  grassGPPgrper  <- setYears(calcOutput("GrassGPPyearly", season = "mainSeason",
                                         lpjml = lpjml, climatetype = climatetype,
                                         selectyears = selectyears, aggregate = FALSE),
                              selectyears)
