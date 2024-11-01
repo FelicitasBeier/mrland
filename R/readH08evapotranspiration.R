@@ -1,13 +1,13 @@
-#' @title readEvapotranspiration
+#' @title readH08evapotranspiration
 #' @description Read evapotranspiration data
 #' @param subtype Switch between different inputs
 #' @return MAgPIE objects with results on cellular level.
 #' @author Marcos Alves
 #' @seealso
-#' \code{\link{readEvapotranspiration}}
+#' \code{\link{readH08evapotranspiration}}
 #' @examples
 #' \dontrun{
-#' readSource("Evapotranspiration", subtype, convert = "onlycorrect")
+#' readSource("H08evapotranspiration", subtype, convert = "onlycorrect")
 #' }
 #'
 #' @importFrom terra rast
@@ -15,7 +15,7 @@
 #' @importFrom magclass as.magpie
 #' @export
 
-readEvapotranspiration <-
+readH08evapotranspiration <-
   function(subtype = "H08:mri-esm2-0:historical") {
     x <- toolSplitSubtype(subtype, list(water_model = NULL, climate_model = NULL, scenario = NULL))
     files <- Sys.glob("*.nc")

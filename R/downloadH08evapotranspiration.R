@@ -1,12 +1,12 @@
-#' @title downloadEvapotranspiration
+#' @title downloadH08evapotranspiration
 #' @description Download water models evapotranspiration data
 #' @param subtype Switch between different inputs
 #' @author  Marcos Alves
 #' @examples
 #'
-#' \dontrun{readSource("Evapotranspiration",  convert="onlycorrect")}
+#' \dontrun{readSource("H08evapotranspiration",  convert="onlycorrect")}
 
-downloadEvapotranspiration <- function(subtype = "H08:mri-esm2-0:historical") {
+downloadH08vapotranspiration <- function(subtype = "H08:mri-esm2-0:historical") {
 
   x        <- toolSplitSubtype(subtype,
                                list(waterModel = NULL,

@@ -1,4 +1,4 @@
-#' @title calcEvapotranspiration
+#' @title calcH08evapotranspiration
 #' @description Calc evapotranspiration data for SSP cenarios in mm/month
 #' @param subtype Switch between different inputs
 #' @return magpie object in cellular resolution
@@ -6,7 +6,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("Evapotranspiration", subtype = "H08:mri-esm2-0")
+#' calcOutput("H08evapotranspiration", subtype = "H08:mri-esm2-0")
 #' }
 #'
 #' @import madrat
@@ -14,18 +14,18 @@
 #' @importFrom magpiesets findset
 #'
 
-calcEvapotranspiration <- function(subtype = "H08:mri-esm2-0") {
+calcH08evapotranspiration <- function(subtype = "H08:mri-esm2-0") {
 
   time <- findset("time")
   timePast <- time[1:match("y2010", time)]
   timeFuture <- time[match("y2015", time):match("y2100", time)]
 
-  y <-  readSource("Evapotranspiration", subtype = paste0(subtype, ":", "historical"),
+  y <-  readSource("H08evapotranspiration", subtype = paste0(subtype, ":", "historical"),
                    convert = FALSE)[, timePast, ]
   scenarios <- c("ssp126", "ssp370", "ssp585") # Current ISIMIP3bv2 scenarios
   x <- list()
   for (scenario in scenarios) {
-    x[[scenario]] <-  mbind(setNames(y, scenario), readSource("Evapotranspiration",
+    x[[scenario]] <-  mbind(setNames(y, scenario), readSource("H08evapotranspiration",
                                                               subtype = paste0(subtype, ":", scenario),
                                                               convert = FALSE)[, timeFuture, ])
   }
