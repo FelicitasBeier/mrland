@@ -34,8 +34,8 @@ spatial_header <- function(mapping) { # nolint
   regionscode <- regionscode(map)
   reg <- .getColumn(map, c("region", "RegionCode"))
   names(reg) <- .getColumn(map, c("country", "CountryCode"))
-  iso <- toolGetMapping("CountryToCellMapping.rds", where = "mrcommons")$iso
+  iso <- toolGetMapping("CountryToCellMapping.rds", where = "mstools")$iso
   spatialHeader <- paste(reg[iso], seq_along(iso),
-                          sep = ".")
+                         sep = ".")
   return(spatialHeader)
 }
