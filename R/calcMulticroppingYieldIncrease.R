@@ -30,6 +30,7 @@
 calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
                                            fallowFactor = 0.75) {
 
+  ### To Do: adjust function call to new format
   # Function requires lpjml argument in standard format
   if (length(lpjml) == 1) {
     lpjml <- c(natveg = "NULL", crop = lpjml)
@@ -49,18 +50,9 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
                                         lpjml = lpjml, climatetype = climatetype,
                                         selectyears = selectyears, aggregate = FALSE),
                              selectyears)
-  # crop yields in main season provided by LPJmL for LPJmL crop types (in tDM/ha)
-  cropYields  <- calcOutput("YieldsLPJmL", source = lpjml,
-                            climatetype = climatetype,
-                            years = selectyears,
-                            cells = "lpjcell", aggregate = FALSE)
 
   # ensure that ordering of third dimension is the same for all objects
   cropIrrigList <- getItems(grassGPPannual, dim = 3)
-  # make sure crops and ordering of objects is the same
-  cropYields <- cropYields[, , cropIrrigList]
-  getSets(cropYields)["d3.1"] <- "crop"
-  getSets(cropYields)["d3.2"] <- "irrigation"
 
 
   ####################
@@ -83,7 +75,7 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
                              years = getItems(increaseFACTOR, dim = 2),
                              names = c("biomass tree.irrigated", "biomass tree.rainfed",
                                        "biomass grass.irrigated", "biomass grass.rainfed",
-                                       "pasture.irrigated", "pasture.rainfed"),
+                                       "grassland.irrigated", "grassland.rainfed"),
                              fill = 0)
   getSets(missingCrops) <- getSets(increaseFACTOR)
   increaseFACTOR        <- mbind(increaseFACTOR, missingCrops)
@@ -102,7 +94,7 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   ##############
   ### Return ###
   ##############
-  unit        <- "factor"
+  unit        <- "1"
   description <- paste0("Factor of yield increase through multiple cropping ",
                         "to be applied on LPJmL crop yield")
 

@@ -4,12 +4,13 @@
 #' @param weighting     use of different weights (totalCrop (default),
 #'                      totalLUspecific, cropSpecific, crop+irrigSpecific,
 #'                      avlCropland, avlCropland+avlPasture)
-#' @param cells         if cellular is TRUE: "magpiecell" for 59199 cells or "lpjcell" for 67420 cells
 #' @param marginal_land  Defines which share of marginal land should be included (see options below) and
-#'                whether suitable land under irrigated conditions ("irrigated"), under rainfed conditions ("rainfed")
-#'                or suitability under rainfed conditions including currently irrigated land (rainfed_and_irrigated)
-#'                should be used. Options combined via ":"
-#'                The different marginal land options are:
+#'                       whether suitable land under irrigated conditions ("irrigated"),
+#'                       under rainfed conditions ("rainfed")
+#'                       or suitability under rainfed conditions including
+#'                       currently irrigated land ("rainfed_and_irrigated")
+#'                       should be used. Options combined via ":"
+#'                       The different marginal land options are:
 #' \itemize{
 #' \item \code{"all_marginal"}: All marginal land (suitability index between 0-0.33) is included as suitable
 #' \item \code{"q33_marginal"}: The bottom tertile (suitability index below 0.13) of the
@@ -42,7 +43,10 @@
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
 
-calcYieldsWeight <- function(cells = "lpjcell", weighting = "totalCrop", marginal_land = "magpie") { # nolint
+calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "magpie") { # nolint
+
+
+  #### To Do: fix this function! Currently pasture is weighted with cropland...
 
   yieldNames <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mappingfolder")$MAgPIE
   isos <- toolGetMappingCoord2Country()
@@ -53,17 +57,17 @@ calcYieldsWeight <- function(cells = "lpjcell", weighting = "totalCrop", margina
   if (weighting == "totalCrop") {
 
     cropAreaWeight <- dimSums(calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = FALSE,
-                                         cellular = TRUE, cells = cells, aggregate = FALSE,
+                                         cellular = TRUE, aggregate = FALSE,
                                          years = "y1995", round = 6),
                               dim = 3) + 10e-10
 
   } else if (weighting %in% c("totalLUspecific", "cropSpecific", "crop+irrigSpecific")) {
 
     crop <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = TRUE,
-                       cellular = TRUE, cells = cells, aggregate = FALSE, years = "y1995", round = 6)
+                       cellular = TRUE, aggregate = FALSE, years = "y1995", round = 6)
 
     past <- calcOutput("LanduseInitialisation", aggregate = FALSE, cellular = TRUE, nclasses = "seven",
-                       input_magpie = TRUE, cells = cells, years = "y1995", round = 6)[, , "past"]
+                       input_magpie = TRUE, years = "y1995", round = 6)[, , "past"]
 
     if (weighting == "crop+irrigSpecific") {
 
@@ -99,17 +103,17 @@ calcYieldsWeight <- function(cells = "lpjcell", weighting = "totalCrop", margina
 
   } else if (weighting == "avlCropland") {
 
-    cropAreaWeight <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land, cells = cells,
+    cropAreaWeight <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
                                           country_level = FALSE, aggregate = FALSE),
                                NULL) + 10e-10
 
   } else if (weighting == "avlCropland+avlPasture") {
 
-    avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land, cells = cells,
+    avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
                                    country_level = FALSE, aggregate = FALSE), "avlCrop")
 
     lu1995  <- setYears(calcOutput("LanduseInitialisation", aggregate = FALSE, cellular = TRUE, nclasses = "seven",
-                                   input_magpie = TRUE, cells = cells, years = "y1995", round = 6), NULL)
+                                   input_magpie = TRUE, years = "y1995", round = 6), NULL)
 
     cropAreaWeight <- new.magpie(cells_and_regions = yieldCells,
                                  years = NULL,

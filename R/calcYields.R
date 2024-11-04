@@ -1,14 +1,13 @@
 #' @title calcYields
 #'
-#' @description This function extracts yields from LPJmL
+#' @description This function extracts yields from calcYieldsLPJmL
 #'              and transforms them to MAgPIE crops calibrating proxy crops
 #'              to FAO yields. Optionally, ISIMIP yields can be returned.
 #'
-#' @param source        Defines LPJmL version for main crop inputs and isimip replacement.
-#'                      For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
+#' @param source        Defines LPJmL version for main crop inputs and ISIMIP replacement.
+#'                      For ISIMIP choose crop model/gcm/rcp/co2 combination formatted like this:
 #'                      "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"
 #' @param climatetype   Switch between different climate scenarios
-#' @param cells         if cellular is TRUE: "magpiecell" for 59199 cells or "lpjcell" for 67420 cells
 #' @param selectyears   Years to be returned
 #' @param weighting     use of different weights (totalCrop (default),
 #'                      totalLUspecific, cropSpecific, crop+irrigSpecific,
@@ -22,17 +21,19 @@
 #'                      "actual:crop" (crop-specific), "actual:irrigation" (irrigation-specific),
 #'                      "actual:irrig_crop" (crop- and irrigation-specific),
 #'                      "potential:endogenous": potentially multicropped areas given
-#'                                              temperature and productivity limits
+#'                                              growing conditions from LPJmL
 #'                      "potential:exogenous": potentially multicropped areas given
 #'                                             GAEZ suitability classification)
 #'                      (e.g. TRUE:actual:total; TRUE:none; FALSE)
 #' @param indiaYields   if TRUE returns scaled yields for rainfed crops in India
 #' @param scaleFactor   integer value by which indiaYields will be scaled
 #' @param marginal_land  Defines which share of marginal land should be included (see options below) and
-#'                whether suitable land under irrigated conditions ("irrigated"), under rainfed conditions ("rainfed")
-#'                or suitability under rainfed conditions including currently irrigated land (rainfed_and_irrigated)
-#'                should be used. Options combined via ":"
-#'                The different marginal land options are:
+#'                       whether suitable land under irrigated conditions ("irrigated"),
+#'                       under rainfed conditions ("rainfed")
+#'                       or suitability under rainfed conditions including
+#'                       currently irrigated land ("rainfed_and_irrigated")
+#'                       should be used. Options combined via ":"
+#'                       The different marginal land options are:
 #' \itemize{
 #' \item \code{"all_marginal"}: All marginal land (suitability index between 0-0.33) is included as suitable
 #' \item \code{"q33_marginal"}: The bottom tertile (suitability index below 0.13) of the
@@ -67,16 +68,15 @@
 #' @importFrom withr local_options
 
 calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL), # nolint
-                       climatetype = "GSWP3-W5E5:historical", cells = "lpjcell",
+                       ### To Do: I think "source" is an argument that linter doesn't like
+                       ###        We could use the chance and update the argument to e.g., datasource
+                       ### Also: should it then be flexibilized such that ISIMIP version can be selected
+                       ### (discuss with Edna, Misko?)
+                       climatetype = "GSWP3-W5E5:historical",
                        selectyears = seq(1965, 2100, by = 5),
                        weighting = "totalCrop", multicropping = FALSE,
                        indiaYields = FALSE, scaleFactor = 0.3,
                        marginal_land = "magpie") { # nolint
-
-  # Extract argument information
-  areaMask      <- paste(str_split(multicropping, ":")[[1]][2],
-                         str_split(multicropping, ":")[[1]][3], sep = ":")
-  multicropping <- as.logical(str_split(multicropping, ":")[[1]][1])
 
   # Set up size limit
   local_options(magclass_sizeLimit = 1e+12)
@@ -85,68 +85,38 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
   yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = source[["lpjml"]], # nolint: undesirable_function_linter.
                                  climatetype = climatetype,
                                  years = selectyears,
-                                 cells = cells, aggregate = FALSE),
+                                 multicropping = multicropping,
+                                 aggregate = FALSE),
                       selectyears)
   getSets(yields)["d3.1"] <- "crop"
   getSets(yields)["d3.2"] <- "irrigation"
   # Mapping LPJmL to MAgPIE crops
   lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
 
-  if (multicropping) {
+  # LPJmL to MAgPIE crops
+  yields  <- toolAggregate(yields, lpj2mag, dim = 3.1, partrel = TRUE,
+                           from = "LPJmL5", to = "MAgPIE")
 
-    increaseFactor <- calcOutput("MulticroppingYieldIncrease",
-                                 lpjml = source[["lpjml"]], # nolint: undesirable_function_linter.
-                                 climatetype = climatetype,
-                                 selectyears = selectyears,
-                                 aggregate = FALSE)
+  # Perennial crops in MAgPIE
+  if (as.logical(str_split(multicropping, ":")[[1]][1])) {
+    ### To Do (discuss with Kristine and Jens): Do we want a special treatment for oilpalm.
+    ### If so (To Do: Feli): adjust calcYieldsLPJmL such that groundnut first and second
+    ### season yield for groundnut can be returned and used here.
+    ### Also (To Do): This chunk of code is actually valid
+    ### not only for the multiple cropping case, but generally.
+    ### Once the multiple cropping functionality is fully tested, the if-condition
+    ### should be removed.
 
-    if (cells == "magpiecell") {
-      increaseFactor <- toolCoord2Isocell(increaseFactor)
-    }
-
-    # Main-season yield
-    mainYield <- yields
-    # Off-season yield
-    offYield  <- yields * increaseFactor
-
-    # LPJmL to MAgPIE crops
-    mainYield <- toolAggregate(mainYield, lpj2mag, dim = 3.1, partrel = TRUE,
-                               from = "LPJmL5", to = "MAgPIE")
-    offYield  <- toolAggregate(offYield, lpj2mag, dim = 3.1, partrel = TRUE,
-                               from = "LPJmL5", to = "MAgPIE")
-
-    # Multiple cropping suitability
-    if (areaMask == "none") {
-      suitMC <- calcOutput("MulticroppingCells",
-                           sectoral = "kcr",
-                           scenario = "potential:exogenous",
-                           lpjml = c(crop = source[["lpjml"]]), # nolint: undesirable_function_linter.
-                           climatetype = climatetype,
-                           selectyears = selectyears,
-                           aggregate = FALSE)
-      # Add pasture to suitMC object with suitability set to 0
-      suitMC <- add_columns(suitMC, dim = 3.1, addnm = "pasture", fill = 0)
-      # multiple cropping is allowed everywhere
-      suitMC[, , ] <- 1
+    # The MAgPIE perennial crop "oilpalm" is grown throughout the whole year
+    # but proxied with an LPJmL crop with seasonality ("groundnut").
+    # Therefore, the main season yield should be adjusted to the whole year yield
+    if (lpj2mag$LPJmL5[lpj2mag$MAgPIE == "oilpalm"] == "groundnut") {
+      # To Do: yields[, , "oilpalm"] <- yields1st[, , "oilpalm"] + yields2nd[, , "oilpalm"]
     } else {
-      suitMC <- calcOutput("MulticroppingCells", scenario = areaMask,
-                           sectoral = "kcr",
-                           lpjml =  c(crop = source[["lpjml"]]), # nolint: undesirable_function_linter.
-                           climatetype = climatetype,
-                           selectyears = selectyears,
-                           aggregate = FALSE)
-      # Add pasture to suitMC object with suitability set to 0
-      suitMC <- add_columns(suitMC, dim = 3.1, addnm = "pasture", fill = 0)
+      warning("The LPJmL-to-MAgPIE crop mapping has changed and the special treatment
+              of oilpalm yields is no longer necessary.
+              Please remove this chunk of code from calcYields.")
     }
-
-    # Whole year yields under multicropping (main-season yield + off-season yield)
-    yields <- mainYield + offYield * suitMC
-
-  } else {
-
-    # LPJmL to MAgPIE crops
-    yields  <- toolAggregate(yields, lpj2mag, dim = 3.1, partrel = TRUE,
-                             from = "LPJmL5", to = "MAgPIE")
   }
 
   # Check for NAs
@@ -155,6 +125,9 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
   }
 
   # Use FAO data to scale proxy crops to reasonable levels (global, static factor)
+  #### To Do (Kristine, Mike, Feli): replace with calcFAOYield,
+  #### but needs adjustments in calcFAOYield to allow to return global average FAO yield
+  #### rather than regional yield
   prodFAO  <- collapseNames(calcOutput("FAOmassbalance_pre", aggregate = FALSE)[, , "production"][, , "dm"])
   areaMAg  <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)
   faoyears <- intersect(getYears(prodFAO), getYears(areaMAg))
@@ -173,6 +146,8 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
                           fill = 1,
                           sets = c("iso", "year", "data"))
   calib[, , "oilpalm"]   <- yieldsFAO[, , "oilpalm"] / yieldsFAO[, , "groundnut"]   # LPJmL proxy is groundnut
+  ### Question (Kristine): Do we need special treatment for oilpalm here as well?
+  ### Due to fact that it is a perennial in MAgPIE proxied by groundnut from LPJmL
   calib[, , "cottn_pro"] <- yieldsFAO[, , "cottn_pro"] / yieldsFAO[, , "groundnut"] # LPJmL proxy is groundnut
   calib[, , "foddr"]     <- yieldsFAO[, , "foddr"] / yieldsFAO[, , "maiz"]          # LPJmL proxy is maize
   calib[, , "others"]    <- yieldsFAO[, , "others"] / yieldsFAO[, , "maiz"]         # LPJmL proxy is maize
@@ -183,7 +158,7 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
 
   if (!is.na(source["isimip"])) { # nolint: undesirable_function_linter.
     isimipYields <- calcOutput("ISIMIP3bYields", subtype = source[["isimip"]], # nolint: undesirable_function_linter.
-                               cells = cells, aggregate = FALSE)
+                               cells = "lpjcell", aggregate = FALSE)
     commonVars  <- intersect(getNames(yields), getNames(isimipYields))
     commonYears <- intersect(getYears(yields), getYears(isimipYields))
 
@@ -201,24 +176,35 @@ calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimi
     yields    <- as.magpie(yields, spatial = 1)
     repHarmon <- as.magpie(repHarmon, spatial = 1)
 
+    #### Question (Jens, Kristine, Jan): Would we want to be able to apply
+    #### the multiple cropping logic on ISIMIP yields as well?
+    #### If so: I would suggest to use the same yield increase factor
+    #### (as calculated from LPJmL grass GPP)
+    #### and move the multicropping yield increase calculation from calcYieldsLPJmL
+    #### to a separate tool-/calc-Function
+
   }
 
-  cropAreaWeight <- calcOutput(
-    "YieldsWeight",
-    cells = cells,
-    weighting = weighting,
-    marginal_land = marginal_land,
-    aggregate = FALSE
-  )
+  # select weight for crop and pasture yields
+  cropAreaWeight <- calcOutput("YieldsWeight",
+                               cells = "lpjcell",
+                               weighting = weighting,
+                               marginal_land = marginal_land,
+                               aggregate = FALSE)
 
   # Special case for India case study
   if (indiaYields) {
     yields["IND", , "rainfed"] <- yields["IND", , "rainfed"] * scaleFactor
+    #### Question (Kristine, Misko, Edna): Should this scale factor be applied to both
+    #### LPJmL and ISIMIP yields? I guess Vartika based this on LPJmL yields only?
+    #### Also: should we check whether this is needed with the new LPJmL data still?
+    #### And finally: I guess it won't be necessary with the multiple cropping update anymore.
+    ####              Should we deprecate this argument once multiple cropping is merged?
   }
 
   return(list(x            = yields,
               weight       = cropAreaWeight,
-              unit         = "t per ha",
-              description  = "Yields in tons per hectar for different crop types.",
+              unit         = "tDM per ha",
+              description  = "Yields for different MAgPIE crop types",
               isocountries = FALSE))
 }

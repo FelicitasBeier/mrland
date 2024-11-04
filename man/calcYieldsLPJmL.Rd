@@ -7,7 +7,7 @@
 calcYieldsLPJmL(
   lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
   climatetype = "GSWP3-W5E5:historical",
-  cells = "lpjcell"
+  multicropping = FALSE
 )
 }
 \arguments{
@@ -15,15 +15,26 @@ calcYieldsLPJmL(
 
 \item{climatetype}{Switch between different climate scenarios}
 
-\item{cells}{if cellular is TRUE: "magpiecell" for 59199 cells
-or "lpjcell" for 67420 cells}
+\item{multicropping}{Multicropping activated (TRUE) or not (FALSE) and
+Multiple Cropping Suitability mask selected
+(mask can be:
+"none": no mask applied (only for development purposes)
+"actual:total": currently multicropped areas calculated from total harvested areas
+                and total physical areas per cell from readLandInG
+"actual:crop" (crop-specific), "actual:irrigation" (irrigation-specific),
+"actual:irrig_crop" (crop- and irrigation-specific),
+"potential:endogenous": potentially multicropped areas given
+                        growing conditions from LPJmL
+"potential:exogenous": potentially multicropped areas given
+                       GAEZ suitability classification)
+(e.g. TRUE:actual:total; TRUE:none; FALSE)}
 }
 \value{
 magpie object in cellular resolution
 }
 \description{
-This function extracts yields from LPJmL
-             for all years
+This function extracts yields from LPJmL in the first season (main growing period)
+             and calculates the yields for the off season (second growing period)
 }
 \examples{
 \dontrun{
