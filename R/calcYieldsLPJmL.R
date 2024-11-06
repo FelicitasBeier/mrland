@@ -35,12 +35,12 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                             climatetype = "GSWP3-W5E5:historical",
                             multicropping = FALSE) {
   # Extract multiple cropping argument information
-  areaMask      <- paste(str_split(multicropping, ":")[[1]][2],
-                         str_split(multicropping, ":")[[1]][3], sep = ":")
-  multicropping <- as.logical(str_split(multicropping, ":")[[1]][1])
+  areaMask      <- paste(unlist(strsplit(multicropping, ":"))[2],
+                         unlist(strsplit(multicropping, ":"))[3], sep = ":")
+  multicropping <- as.logical(unlist(strsplit(multicropping, ":"))[1])
 
   # Increase object size limit
-  local_options(magclass_sizeLimit = 1e+12)
+  withr::local_options(magclass_sizeLimit = 1e+12)
 
   # LPJmL crop types
   lpj2mag     <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
@@ -55,18 +55,17 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     # irrigated yields in irrigated growing period (in tDM/ha)
     irYlds[[crop]] <- calcOutput("LPJmLharmonize", subtype = "crops:pft_harvestc",
                                  # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
-                                 subdata = c(crop, "irrigated"),
+                                 subdata = paste("irrigated", crop, sep = "."),
                                  version = lpjml, climatetype = climatetype,
                                  aggregate = FALSE)
     # rainfed yields in rainfed growing period (in tDM/ha)
     rfYlds[[crop]] <- calcOutput("LPJmLharmonize", subtype = "crops:pft_harvestc",
                                  # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
-                                 subdata = c(crop, "rainfed"),
+                                 subdata = paste("rainfed", crop, sep = "."),
                                  version = lpjml, climatetype = climatetype,
                                  aggregate = FALSE)
     # irrigated and rainfed yields in main growing period (in tDM/ha)
     yields[[crop]] <- mbind(rfYlds[[crop]], irYlds[[crop]])
-    ### To do: check whether this is necessary or whether one mbind is sufficient
   }
   yields  <- mbind(yields)
 
@@ -79,7 +78,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
   if (multicropping) {
     # Multiple cropping yield increase factor
     increaseFactor <- calcOutput("MulticroppingYieldIncrease",
-                                 lpjml = source[["lpjml"]], # nolint: undesirable_function_linter.
+                                 lpjml = lpjml,
                                  climatetype = climatetype,
                                  selectyears = getItems(yields, dim = 2),
                                  aggregate = FALSE)
@@ -95,15 +94,16 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     offYield  <- toolAggregate(offYield, lpj2mag, dim = 3.1, partrel = TRUE,
                                from = "LPJmL5", to = "MAgPIE")
     # Cap for off-season yield due to numerical reasons
-    ### To Do (Feli): write as apply instead
+    ### To Do: write as apply instead
     for (y in getItems(offYield, dim = 2)) {
       for (k in getItems(offYield, dim = 3)) {
         cap <- quantile(offYield[, y, k], 0.999, na.rm = TRUE)
         offYield[, y, k][offYield[, y, k] > cap] <- cap
       }
     }
-    ### Question (Jens): Do we want to have a minimum second season yield cap here?
-    ### (e.g., all crops/cells with second season yields smaller than 0.5 tDM/ha get 0 second season yield)
+
+    # Off-season yield minimum (small off season yields are excluded)
+    offYield[offYield < 0.5] <- 0
 
     # Multiple cropping suitability
     if (areaMask == "none") {

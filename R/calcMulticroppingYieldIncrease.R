@@ -30,12 +30,6 @@
 calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
                                            fallowFactor = 0.75) {
 
-  ### To Do: adjust function call to new format
-  # Function requires lpjml argument in standard format
-  if (length(lpjml) == 1) {
-    lpjml <- c(natveg = "NULL", crop = lpjml)
-  }
-
   ####################
   ### Read in data ###
   ####################
