@@ -219,20 +219,18 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              round = 4, file = "f36_unspecified_subsidies.csv")
   calcOutput("NonMAgPIEFactorCosts", subtype = "missingVoP", years = seq(1965, 2150, 5),
              round = 4, file = "f36_nonmagpie_factor_costs.csv")
-  calcOutput("AgCapLabourShare", round = 2, aggregate = TRUE, years = c(1995, 2000, 2005, 2010),
-             file = "f36_historical_share.csv")
-  calcOutput("RegFactorShare", datasource = "USDA", factor = "cap", round = 4, aggregate = FALSE,
-             file = "f36_regression_cap_share.csv")
 
   # 38 factor costs
   calcOutput("FAOYield", cut = 0.98, years = 1995, round = 2, file = "f38_region_yield.csv")
   # Question: Is f38_region_yield used? And why not f14_region_yield?
   calcOutput("FacReq", round = 2, aggregate = "GLO", years = 2005, file = "f38_fac_req_fao.csv")
   calcOutput("FacReq", round = 2, aggregate = TRUE, file = "f38_fac_req_fao_regional.cs4")
-  calcOutput("AgCapLabourShare", round = 2, aggregate = TRUE, years = c(1995, 2000, 2005, 2010),
-             file = "f38_historical_share.csv")
-  calcOutput("RegFactorShare", datasource = "USDA", factor = "cap", round = 4, aggregate = FALSE,
+  calcOutput("AgCapLabourShare", round = 4, aggregate = FALSE, years = c(1995, 2000, 2005, 2010),
+             file = "f38_historical_share_iso.csv")
+  calcOutput("RegFactorShare", datasource = "USDA", round = 4, aggregate = FALSE,
              file = "f38_regression_cap_share.csv")
+  calcOutput("FactorCosts", aggregate = FALSE, years = c(1995, 2000, 2005, 2010), round = 2,
+             file = "f38_hist_factor_costs_iso.csv")
 
   # 41 Area Equipped for Irrigation
   # f41_irrig(j) should be read out of calcAreaEquippedForIrrigation()
@@ -321,10 +319,6 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("LivestockProductivity", years = magYears,  round = 4, file = "f70_livestock_productivity.cs3")
   calcOutput("SlaughterFeedShare",    years = magYears,  round = 4, file = "f70_slaughter_feed_share.cs4")
   calcOutput("PYieldSlope",                             round = 2, file = "f70_pyld_slope_reg.cs4")
-  calcOutput("AgCapLabourShare", round = 2, aggregate = TRUE, years = c(1995, 2000, 2005, 2010),
-             file = "f70_hist_cap_share.csv")
-  calcOutput("RegFactorShare", datasource = "USDA", factor = "cap", round = 4, aggregate = FALSE,
-             file = "f70_cap_share_reg.csv")
   calcOutput("Production", round = 4, products = "kli", aggregate = TRUE, years = seq(1995, 2010, 5),
              file = "f70_hist_prod_livst.cs3")
   calcOutput("FactorCostsLivst", round = 4, aggregate = TRUE, years = seq(1995, 2015, 5),
