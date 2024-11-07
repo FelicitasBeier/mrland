@@ -4,12 +4,12 @@
 #'              and transforms them to MAgPIE crops calibrating proxy crops
 #'              to FAO yields. Optionally, ISIMIP yields can be returned.
 #'
-#' @param source        Defines LPJmL version for main crop inputs and ISIMIP replacement.
+#' @param datasource    Choose LPJmL version for main crop inputs and optionally ISIMIP version
 #'                      For ISIMIP choose crop model/gcm/rcp/co2 combination formatted like this:
 #'                      "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"
 #' @param climatetype   Switch between different climate scenarios
 #' @param selectyears   Years to be returned
-#' @param weighting     use of different weights (totalCrop (default),
+#' @param weighting     Use of different weights (totalCrop (default),
 #'                      totalLUspecific, cropSpecific, crop+irrigSpecific,
 #'                      avlCropland, avlCropland+avlPasture)
 #' @param multicropping Multicropping activated (TRUE) or not (FALSE) and
@@ -25,8 +25,8 @@
 #'                      "potential:exogenous": potentially multicropped areas given
 #'                                             GAEZ suitability classification)
 #'                      (e.g. TRUE:actual:total; TRUE:none; FALSE)
-#' @param indiaYields   if TRUE returns scaled yields for rainfed crops in India
-#' @param scaleFactor   integer value by which indiaYields will be scaled
+#' @param indiaYields    If TRUE returns scaled yields for rainfed crops in India
+#' @param scaleFactor    Integer value by which indiaYields will be scaled
 #' @param marginal_land  Defines which share of marginal land should be included (see options below) and
 #'                       whether suitable land under irrigated conditions ("irrigated"),
 #'                       under rainfed conditions ("rainfed")
@@ -67,11 +67,7 @@
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
 
-calcYields <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL), # nolint
-                       ### To Do: I think "source" is an argument that linter doesn't like
-                       ###        We could use the chance and update the argument to e.g., datasource
-                       ### Also: should it then be flexibilized such that ISIMIP version can be selected
-                       ### (discuss with Edna, Misko?)
+calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
                        climatetype = "GSWP3-W5E5:historical",
                        selectyears = seq(1965, 2100, by = 5),
                        weighting = "totalCrop", multicropping = FALSE,

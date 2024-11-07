@@ -56,23 +56,18 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     irYlds[[crop]] <- calcOutput("LPJmLharmonize", subtype = "crops:pft_harvestc",
                                  # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
                                  subdata = paste("irrigated", crop, sep = "."),
-                                 version = lpjml, climatetype = climatetype,
+                                 lpjmlversion = lpjml, climatetype = climatetype,
                                  aggregate = FALSE)
     # rainfed yields in rainfed growing period (in tDM/ha)
     rfYlds[[crop]] <- calcOutput("LPJmLharmonize", subtype = "crops:pft_harvestc",
                                  # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
                                  subdata = paste("rainfed", crop, sep = "."),
-                                 version = lpjml, climatetype = climatetype,
+                                 lpjmlversion = lpjml, climatetype = climatetype,
                                  aggregate = FALSE)
     # irrigated and rainfed yields in main growing period (in tDM/ha)
     yields[[crop]] <- mbind(rfYlds[[crop]], irYlds[[crop]])
   }
   yields  <- mbind(yields)
-
-  # Check for NA's
-  if (any(is.na(yields))) {
-    stop("calcYieldsLPJmL produced NA yields during run selection")
-  }
 
   # For case of multiple cropping, off-season yield needs to be calculated
   if (multicropping) {
@@ -81,7 +76,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                                  lpjml = lpjml,
                                  climatetype = climatetype,
                                  selectyears = getItems(yields, dim = 2),
-                                 aggregate = FALSE)
+                                 aggregate = FALSE)[, , getItems(yields, dim = 3)]
 
     # Main-season yield
     mainYield <- yields
@@ -94,7 +89,6 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     offYield  <- toolAggregate(offYield, lpj2mag, dim = 3.1, partrel = TRUE,
                                from = "LPJmL5", to = "MAgPIE")
     # Cap for off-season yield due to numerical reasons
-    ### To Do: write as apply instead
     for (y in getItems(offYield, dim = 2)) {
       for (k in getItems(offYield, dim = 3)) {
         cap <- quantile(offYield[, y, k], 0.999, na.rm = TRUE)
@@ -103,6 +97,8 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     }
 
     # Off-season yield minimum (small off season yields are excluded)
+    # The assumption is that no multiple cropping takes place where the additional
+    # yield that can be achieved in the second season is very small
     offYield[offYield < 0.5] <- 0
 
     # Multiple cropping suitability
@@ -110,11 +106,12 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
       suitMC <- calcOutput("MulticroppingCells",
                            sectoral = "lpj",
                            scenario = "potential:exogenous",
-                           lpjml = c(crop = source[["lpjml"]]), # nolint: undesirable_function_linter.
+                           lpjml = lpjml,
                            climatetype = climatetype,
                            selectyears = getItems(yields, dim = 2),
                            ## To Do (Feli): double check which years are available
                            ## and either extrapolate or use constant suitability from iniyear
+                           ### This function is anyway only available for one year, right?
                            aggregate = FALSE)
       # multiple cropping is allowed everywhere
       suitMC[, , ] <- 1
@@ -125,7 +122,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     } else {
       suitMC <- calcOutput("MulticroppingCells", scenario = areaMask,
                            sectoral = "lpj",
-                           lpjml =  c(crop = source[["lpjml"]]), # nolint: undesirable_function_linter.
+                           lpjml = lpjml,
                            climatetype = climatetype,
                            selectyears = getItems(yields, dim = 2),
                            ## To Do (Feli): double check which years are available
@@ -144,6 +141,15 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     # Only main season yields are returned
     yields  <- yields
   }
+
+  # Check for NA's and negative yields
+  if (any(is.na(yields))) {
+    stop("calcYieldsLPJmL produced NA yields")
+  }
+  if (any(yields < -1e-10)) {
+    stop("calcYieldsLPJmL produced negative yields")
+  }
+  yields[yields < 0] <- 0
 
   return(list(x            = yields,
               weight       = NULL,
