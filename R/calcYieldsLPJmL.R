@@ -5,6 +5,8 @@
 #'
 #' @param lpjml         Defines LPJmL version for main crop inputs
 #' @param climatetype   Switch between different climate scenarios
+#' @param selectyears   Option to reduce number of years to be returned
+#'                      (e.g., to avoid memory issues)
 #' @param multicropping Multicropping activated (TRUE) or not (FALSE) and
 #'                      Multiple Cropping Suitability mask selected
 #'                      (mask can be:
@@ -21,7 +23,7 @@
 #'
 #' @return magpie object in cellular resolution
 #'
-#' @author Kristine Karstens, Felicitas Beier
+#' @author Felicitas Beier, Kristine Karstens
 #'
 #' @examples
 #' \dontrun{
@@ -31,8 +33,9 @@
 #' @importFrom madrat toolGetMapping
 #' @importFrom withr local_options
 
-calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
-                            climatetype = "GSWP3-W5E5:historical",
+calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
+                            climatetype = "MRI-ESM2-0:ssp370",
+                            selectyears = seq(1965, 2100, by = 5),
                             multicropping = FALSE) {
 
   # Extract multiple cropping argument information
@@ -58,12 +61,14 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                                  # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
                                  subdata = paste("irrigated", crop, sep = "."),
                                  lpjmlversion = lpjml, climatetype = climatetype,
+                                 years = selectyears,
                                  aggregate = FALSE)
     # rainfed yields in rainfed growing period (in tDM/ha)
     rfYlds[[crop]] <- calcOutput("LPJmLharmonize", subtype = "crops:pft_harvestc",
                                  # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
                                  subdata = paste("rainfed", crop, sep = "."),
                                  lpjmlversion = lpjml, climatetype = climatetype,
+                                 years = selectyears,
                                  aggregate = FALSE)
     # irrigated and rainfed yields in main growing period (in tDM/ha)
     yields[[crop]] <- mbind(rfYlds[[crop]], irYlds[[crop]])
@@ -76,7 +81,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     increaseFactor <- calcOutput("MulticroppingYieldIncrease",
                                  lpjml = lpjml,
                                  climatetype = climatetype,
-                                 selectyears = getItems(yields, dim = 2),
+                                 selectyears = selectyears,
                                  aggregate = FALSE)[, , getItems(yields, dim = 3)]
 
     # Main-season yield
@@ -105,7 +110,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            scenario = "potential:exogenous",
                            lpjml = lpjml,
                            climatetype = climatetype,
-                           selectyears = getItems(yields, dim = 2),
+                           selectyears = selectyears,
                            aggregate = FALSE)
       # multiple cropping is allowed everywhere
       suitMC[, , ] <- 1
@@ -114,7 +119,7 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            sectoral = "lpj",
                            lpjml = lpjml,
                            climatetype = climatetype,
-                           selectyears = getItems(yields, dim = 2),
+                           selectyears = selectyears,
                            aggregate = FALSE)
     }
     # adjust dimensions

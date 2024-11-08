@@ -80,7 +80,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   # LPJmL yields
   yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = source[["lpjml"]], # nolint: undesirable_function_linter.
                                  climatetype = climatetype,
-                                 years = selectyears,
+                                 selectyears = selectyears,
                                  multicropping = multicropping,
                                  aggregate = FALSE),
                       selectyears)

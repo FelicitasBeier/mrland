@@ -5,8 +5,9 @@
 \title{calcYieldsLPJmL}
 \usage{
 calcYieldsLPJmL(
-  lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
-  climatetype = "GSWP3-W5E5:historical",
+  lpjml = "lpjml5.9.5-m1",
+  climatetype = "MRI-ESM2-0:ssp370",
+  selectyears = seq(1965, 2100, by = 5),
   multicropping = FALSE
 )
 }
@@ -14,6 +15,9 @@ calcYieldsLPJmL(
 \item{lpjml}{Defines LPJmL version for main crop inputs}
 
 \item{climatetype}{Switch between different climate scenarios}
+
+\item{selectyears}{Option to reduce number of years to be returned
+(e.g., to avoid memory issues)}
 
 \item{multicropping}{Multicropping activated (TRUE) or not (FALSE) and
 Multiple Cropping Suitability mask selected
@@ -43,5 +47,5 @@ calcOutput("YieldsLPJmL", aggregate = FALSE)
 
 }
 \author{
-Kristine Karstens, Felicitas Beier
+Felicitas Beier, Kristine Karstens
 }
