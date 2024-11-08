@@ -39,9 +39,12 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                             multicropping = FALSE) {
 
   # Extract multiple cropping argument information
-  areaMask      <- paste(unlist(strsplit(multicropping, ":"))[2],
-                         unlist(strsplit(multicropping, ":"))[3], sep = ":")
-  multicropping <- as.logical(unlist(strsplit(multicropping, ":"))[1])
+  if (multicropping != FALSE) {
+    areaMask <- paste(unlist(strsplit(multicropping, ":"))[2],
+                      unlist(strsplit(multicropping, ":"))[3],
+                      sep = ":")
+    multicropping <- as.logical(unlist(strsplit(multicropping, ":"))[1])
+  }
 
   # Increase object size limit
   withr::local_options(magclass_sizeLimit = 1e+12)
