@@ -34,6 +34,7 @@
 calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                             climatetype = "GSWP3-W5E5:historical",
                             multicropping = FALSE) {
+
   # Extract multiple cropping argument information
   areaMask      <- paste(unlist(strsplit(multicropping, ":"))[2],
                          unlist(strsplit(multicropping, ":"))[3], sep = ":")
@@ -83,12 +84,8 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
     # Off-season yield
     offYield  <- yields * increaseFactor
 
-    # LPJmL to MAgPIE crops
-    mainYield <- toolAggregate(mainYield, lpj2mag, dim = 3.1, partrel = TRUE,
-                               from = "LPJmL5", to = "MAgPIE")
-    offYield  <- toolAggregate(offYield, lpj2mag, dim = 3.1, partrel = TRUE,
-                               from = "LPJmL5", to = "MAgPIE")
     # Cap for off-season yield due to numerical reasons
+    ## To Do: speed up this part of the function, e.g. using apply
     for (y in getItems(offYield, dim = 2)) {
       for (k in getItems(offYield, dim = 3)) {
         cap <- quantile(offYield[, y, k], 0.999, na.rm = TRUE)
@@ -109,9 +106,6 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            lpjml = lpjml,
                            climatetype = climatetype,
                            selectyears = getItems(yields, dim = 2),
-                           ## To Do (Feli): double check which years are available
-                           ## and either extrapolate or use constant suitability from iniyear
-                           ### This function is anyway only available for one year, right?
                            aggregate = FALSE)
       # multiple cropping is allowed everywhere
       suitMC[, , ] <- 1
@@ -125,8 +119,6 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            lpjml = lpjml,
                            climatetype = climatetype,
                            selectyears = getItems(yields, dim = 2),
-                           ## To Do (Feli): double check which years are available
-                           ## and either extrapolate or use constant suitability from iniyear
                            aggregate = FALSE)
       # Add grassland to suitMC object with suitability set to 0
       # Note: The grassland growing period is already the whole year, so no multiple

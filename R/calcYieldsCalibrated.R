@@ -126,7 +126,7 @@ calcYieldsCalibrated <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735
 
     cropareaMAGgrid <- calcOutput("CropareaLandInG", sectoral = "kcr", physical = TRUE,
                                   irrigation = TRUE, selectyears = refYear,
-                                  cellular = TRUE, cells = cells, aggregate = FALSE)[, , crops]
+                                  cellular = TRUE, aggregate = FALSE)[, , crops]
     # total irrigated & rainfed cropland (for correction of 0 cropland areas)
     proxyMAGgrid    <- dimSums(cropareaMAGgrid, dim = "crop")
 

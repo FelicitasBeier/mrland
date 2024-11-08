@@ -90,7 +90,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
 
   # LPJmL to MAgPIE crops
-  yields  <- toolAggregate(yields, lpj2mag, dim = 3.1, partrel = TRUE,
+  yields  <- toolAggregate(yields, lpj2mag, dim = 3.2, partrel = TRUE,
                            from = "LPJmL5", to = "MAgPIE")
 
   # Perennial crops in MAgPIE

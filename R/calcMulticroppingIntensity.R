@@ -43,10 +43,10 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
 
   # areas where multicropping takes place currently (crop- and irrigation-specific)
   phys <- calcOutput("CropareaLandInG", physical = TRUE, sectoral = sectoral,
-                     cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                     cellular = TRUE, irrigation = TRUE,
                      selectyears = selectyears, aggregate = FALSE)
   harv <- calcOutput("CropareaLandInG", physical = FALSE, sectoral = sectoral,
-                     cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                     cellular = TRUE, irrigation = TRUE,
                      selectyears = selectyears, aggregate = FALSE)
   # keep for dimensionality
   phys[, , ] <- NA
@@ -55,11 +55,11 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
   if (scenario == "total") {
     # total actual multicropping area
     tempPhys <- dimSums(calcOutput("CropareaLandInG", physical = TRUE, sectoral = sectoral,
-                                   cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
+                                   cellular = TRUE, irrigation = FALSE,
                                    selectyears = selectyears, aggregate = FALSE),
                         dim = "crop")
     tempHarv <- dimSums(calcOutput("CropareaLandInG", physical = FALSE, sectoral = sectoral,
-                                   cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
+                                   cellular = TRUE, irrigation = FALSE,
                                    selectyears = selectyears, aggregate = FALSE),
                         dim = "crop")
 
@@ -70,11 +70,11 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
   } else if (scenario == "irrig") {
     # total actual multicropping area (irrigation-specific)
     tempPhys <- dimSums(calcOutput("CropareaLandInG", physical = TRUE, sectoral = sectoral,
-                                   cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                                   cellular = TRUE, irrigation = TRUE,
                                    selectyears = selectyears, aggregate = FALSE),
                         dim = "crop")
     tempHarv <- dimSums(calcOutput("CropareaLandInG", physical = FALSE, sectoral = sectoral,
-                                   cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                                   cellular = TRUE, irrigation = TRUE,
                                    selectyears = selectyears, aggregate = FALSE),
                         dim = "crop")
 
@@ -85,10 +85,10 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
   } else if (scenario == "crop") {
     # areas where multicropping takes place currently (crop-specific)
     tempPhys <- calcOutput("CropareaLandInG", physical = TRUE, sectoral = sectoral,
-                           cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
+                           cellular = TRUE, irrigation = FALSE,
                            selectyears = selectyears, aggregate = FALSE)
     tempHarv <- calcOutput("CropareaLandInG", physical = FALSE, sectoral = sectoral,
-                           cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
+                           cellular = TRUE, irrigation = FALSE,
                            selectyears = selectyears, aggregate = FALSE)
 
     # expand dimension
@@ -98,10 +98,10 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
   } else if (scenario == "irrig_crop") {
     # areas where multicropping takes place currently (crop- and irrigation-specific)
     phys <- calcOutput("CropareaLandInG", physical = TRUE, sectoral = sectoral,
-                       cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                       cellular = TRUE, irrigation = TRUE,
                        selectyears = selectyears, aggregate = FALSE)
     harv <- calcOutput("CropareaLandInG", physical = FALSE, sectoral = sectoral,
-                       cellular = TRUE, cells = "lpjcell", irrigation = TRUE,
+                       cellular = TRUE, irrigation = TRUE,
                        selectyears = selectyears, aggregate = FALSE)
 
   } else {
