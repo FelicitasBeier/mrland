@@ -109,10 +109,6 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            aggregate = FALSE)
       # multiple cropping is allowed everywhere
       suitMC[, , ] <- 1
-      # Add grassland to suitMC object with suitability set to 0
-      # Note: The grassland growing period is already the whole year, so no multiple
-      #       cropping treatment necessary.
-      suitMC <- add_columns(suitMC, dim = 3.1, addnm = "grassland", fill = 0)
     } else {
       suitMC <- calcOutput("MulticroppingCells", scenario = areaMask,
                            sectoral = "lpj",
@@ -120,11 +116,14 @@ calcYieldsLPJmL <- function(lpjml = "ggcmi_phase3_nchecks_bft_e511ac58",
                            climatetype = climatetype,
                            selectyears = getItems(yields, dim = 2),
                            aggregate = FALSE)
-      # Add grassland to suitMC object with suitability set to 0
-      # Note: The grassland growing period is already the whole year, so no multiple
-      #       cropping treatment necessary.
-      suitMC <- add_columns(suitMC, dim = 3.1, addnm = "grassland", fill = 0)
     }
+    # adjust dimensions
+    suitMC <- dimOrder(suitMC, perm = c(2, 1), dim = 3)
+    # Add grassland to suitMC object with suitability set to 0
+    # Note: The grassland growing period is already the whole year, so no multiple
+    #       cropping treatment necessary.
+    suitMC <- add_columns(suitMC, dim = 3.2, addnm = "grassland", fill = 0)
+    suitMC <- suitMC[, , getItems(yields, dim = 3)]
 
     # Whole year yields under multicropping (main-season yield + off-season yield)
     yields <- mainYield + offYield * suitMC
