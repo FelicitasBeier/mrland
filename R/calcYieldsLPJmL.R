@@ -49,6 +49,8 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
   # Increase object size limit
   withr::local_options(magclass_sizeLimit = 1e+12)
 
+  ### To Do: replace lines 52-80 with toolLPJmLCombine() call once new LPJmL run is ready ###
+  # yields <- toolLPJmLCombine(lpjmlversion = lpjml, climatetype = climatetype, subtype = "pft_harvestc", selectyears = selectyears)
   # LPJmL crop types
   lpj2mag     <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
   cropsLPJmL  <- unique(lpj2mag$LPJmL5)
