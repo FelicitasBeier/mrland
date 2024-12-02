@@ -185,7 +185,9 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              aggregate = TRUE)
 
   # 31 Past
-  calcOutput("PastureYield", range_pastr = TRUE, round = 3, file = "f31_grassl_yld_hist.cs3")
+  if (grepl("+grasslandRealization", dev)) {
+    calcOutput("PastureYield", range_pastr = TRUE, round = 3, file = "f31_grassl_yld_hist.cs3")
+  }
 
   # 32 forestry
   calcOutput("AfforestCosts", years = 2001,        round = 0, file = "f32_fac_req_ha.csv")

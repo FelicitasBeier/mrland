@@ -13,11 +13,12 @@ readS4Nproject_input(subtype = "co2prices")
 magpie object at country-level resolution
 }
 \description{
-reads in total bioenergy (1st gen, 2nd gen and residues) demand and co2 prices from IMAGE model for Sim4Nexus project
+reads in total bioenergy (1st gen, 2nd gen and residues)
+demand and co2 prices from IMAGE model for Sim4Nexus project
 }
 \examples{
-
-\dontrun{ a <- readSource("S4Nproject_input", convert="onlycorrect", aggregate=FALSE)
+\dontrun{
+a <- readSource("S4Nproject_input", convert = "onlycorrect", aggregate = FALSE)
 }
 }
 \seealso{
