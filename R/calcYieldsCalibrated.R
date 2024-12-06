@@ -2,7 +2,7 @@
 #' @description This functions calibrates extracted yields from LPJmL to
 #'              FAO country level yields
 #'
-#' @param source        Defines LPJmL version for main crop inputs and isimip replacement.
+#' @param datasource    Defines LPJmL version for main crop inputs and isimip replacement.
 #'                      For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
 #'                      "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"
 #' @param climatetype   switch between different climate scenarios
@@ -68,7 +68,7 @@
 #' @importFrom mstools toolCoord2Isocell
 #' @importFrom withr local_options
 
-calcYieldsCalibrated <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
+calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
                                  climatetype = "GSWP3-W5E5:historical",
                                  refYear = "y1995", selectyears = seq(1965, 2100, by = 5),
                                  cells = "lpjcell",
@@ -88,11 +88,11 @@ calcYieldsCalibrated <- function(source = c(lpjml = "ggcmi_phase3_nchecks_9ca735
   # read FAO and LPJmL yields
   yieldFAOiso    <- calcOutput("FAOYield", cut = 0.98, areaSource = areaSource,
                                aggregate = FALSE)[, refYear, crops]
-  yieldLPJmLgrid <- calcOutput("Yields", source = source, climatetype = climatetype, # nolint
+  yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype, # nolint
                                selectyears = selectyears,
                                multicropping = multicropping, marginal_land = marginal_land,
                                aggregate = FALSE, supplementary = TRUE)
-  yieldLPJmLbase <- calcOutput("Yields", source = source, climatetype = climatetype, # nolint
+  yieldLPJmLbase <- calcOutput("Yields", datasource = datasource, climatetype = climatetype, # nolint
                                selectyears = selectyears,
                                multicropping = refYields, marginal_land = marginal_land,
                                aggregate = FALSE, supplementary = FALSE)
