@@ -78,18 +78,15 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   local_options(magclass_sizeLimit = 1e+12)
 
   # LPJmL yields
-  yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = datasource[["lpjml"]], # nolint: undesirable_function_linter.
+  yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = datasource[["lpjml"]],
                                  climatetype = climatetype,
                                  selectyears = selectyears,
                                  multicropping = multicropping,
                                  aggregate = FALSE),
                       selectyears)
-  getSets(yields)["d3.1"] <- "crop"
-  getSets(yields)["d3.2"] <- "irrigation"
-  # Mapping LPJmL to MAgPIE crops
-  lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
 
   # LPJmL to MAgPIE crops
+  lpj2mag   <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mrlandcore")
   yields  <- toolAggregate(yields, lpj2mag, dim = 3.2, partrel = TRUE,
                            from = "LPJmL5", to = "MAgPIE")
 
@@ -106,7 +103,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
     # The MAgPIE perennial crop "oilpalm" is grown throughout the whole year
     # but proxied with an LPJmL crop with seasonality ("groundnut").
     # Therefore, the main season yield should be adjusted to the whole year yield
-    if (lpj2mag$LPJmL5[lpj2mag$MAgPIE == "oilpalm"] == "groundnut") {
+    if (lpj2mag$LPJmL5[lpj2mag$MAgPIE == "oilpalm"] == "oil crops groundnut") {
       # To Do: yields[, , "oilpalm"] <- yields1st[, , "oilpalm"] + yields2nd[, , "oilpalm"]
     } else {
       warning("The LPJmL-to-MAgPIE crop mapping has changed and the special treatment
@@ -150,16 +147,16 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   calib[, , "potato"]    <- yieldsFAO[, , "potato"] / yieldsFAO[, , "sugr_beet"]    # LPJmL proxy is sugarbeet
 
   # Recalibrate yields for proxies
-  yields <- yields * calib[, , getNames(yields, dim = 1)]
+  yields <- yields * calib[, , getItems(yields, dim = "crop")]
 
-  if (!is.na(datasource["isimip"])) { # nolint: undesirable_function_linter.
-    isimipYields <- calcOutput("ISIMIP3bYields", subtype = datasource[["isimip"]], # nolint: undesirable_function_linter.
+  if (!is.na(datasource["isimip"])) {
+    isimipYields <- calcOutput("ISIMIP3bYields", subtype = datasource[["isimip"]],
                                cells = "lpjcell", aggregate = FALSE)
     commonVars  <- intersect(getNames(yields), getNames(isimipYields))
     commonYears <- intersect(getYears(yields), getYears(isimipYields))
 
     #  harmonize to LPJml
-    cfg       <- toolLPJmLVersion(version = datasource["lpjml"], # nolint: undesirable_function_linter.
+    cfg       <- toolLPJmLVersion(version = datasource["lpjml"],
                                   climatetype = climatetype)
     repHarmon <- toolHarmonize2Baseline(x = isimipYields[, commonYears, commonVars],
                                         base = yields[, commonYears, commonVars],
