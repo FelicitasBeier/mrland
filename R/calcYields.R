@@ -78,7 +78,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   local_options(magclass_sizeLimit = 1e+12)
 
   # LPJmL yields
-  yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = source[["lpjml"]], # nolint: undesirable_function_linter.
+  yields  <- setYears(calcOutput("YieldsLPJmL", lpjml = datasource[["lpjml"]], # nolint: undesirable_function_linter.
                                  climatetype = climatetype,
                                  selectyears = selectyears,
                                  multicropping = multicropping,
@@ -152,14 +152,14 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   # Recalibrate yields for proxies
   yields <- yields * calib[, , getNames(yields, dim = 1)]
 
-  if (!is.na(source["isimip"])) { # nolint: undesirable_function_linter.
-    isimipYields <- calcOutput("ISIMIP3bYields", subtype = source[["isimip"]], # nolint: undesirable_function_linter.
+  if (!is.na(datasource["isimip"])) { # nolint: undesirable_function_linter.
+    isimipYields <- calcOutput("ISIMIP3bYields", subtype = datasource[["isimip"]], # nolint: undesirable_function_linter.
                                cells = "lpjcell", aggregate = FALSE)
     commonVars  <- intersect(getNames(yields), getNames(isimipYields))
     commonYears <- intersect(getYears(yields), getYears(isimipYields))
 
     #  harmonize to LPJml
-    cfg       <- toolLPJmLVersion(version = source["lpjml"], # nolint: undesirable_function_linter.
+    cfg       <- toolLPJmLVersion(version = datasource["lpjml"], # nolint: undesirable_function_linter.
                                   climatetype = climatetype)
     repHarmon <- toolHarmonize2Baseline(x = isimipYields[, commonYears, commonVars],
                                         base = yields[, commonYears, commonVars],
@@ -183,7 +183,6 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
 
   # select weight for crop and pasture yields
   cropAreaWeight <- calcOutput("YieldsWeight",
-                               cells = "lpjcell",
                                weighting = weighting,
                                marginal_land = marginal_land,
                                aggregate = FALSE)
