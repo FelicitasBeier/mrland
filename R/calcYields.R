@@ -62,7 +62,7 @@
 #' @importFrom magpiesets findset
 #' @importFrom magclass getYears add_columns dimSums time_interpolate
 #' @importFrom madrat toolFillYears toolGetMapping toolTimeAverage
-#' @importFrom mrlandcore toolLPJmLVersion
+#' @importFrom mrlandcore toolLPJmLHarmonize
 #' @importFrom mstools toolHarmonize2Baseline
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
@@ -156,11 +156,11 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
     commonYears <- intersect(getYears(yields), getYears(isimipYields))
 
     #  harmonize to LPJml
-    cfg       <- toolLPJmLVersion(version = datasource["lpjml"],
-                                  climatetype = climatetype)
+    cfg       <- toolLPJmLHarmonize(lpjmlversion = datasource["lpjml"],
+                                    climatetype  = climatetype)
     repHarmon <- toolHarmonize2Baseline(x = isimipYields[, commonYears, commonVars],
                                         base = yields[, commonYears, commonVars],
-                                        ref_year = cfg$ref_year_gcm)
+                                        ref_year = cfg$refYearGcm)
     gc()
     # convert to array for memory
     yields    <- as.array(yields)

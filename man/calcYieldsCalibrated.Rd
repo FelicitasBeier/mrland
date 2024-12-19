@@ -5,7 +5,7 @@
 \title{calcYieldsCalibrated}
 \usage{
 calcYieldsCalibrated(
-  source = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
+  datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
   climatetype = "GSWP3-W5E5:historical",
   refYear = "y1995",
   selectyears = seq(1965, 2100, by = 5),
@@ -17,7 +17,7 @@ calcYieldsCalibrated(
 )
 }
 \arguments{
-\item{source}{Defines LPJmL version for main crop inputs and isimip replacement.
+\item{datasource}{Defines LPJmL version for main crop inputs and isimip replacement.
 For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
 "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"}
 

@@ -39,7 +39,6 @@
 #' @importFrom magclass getYears add_columns dimSums time_interpolate
 #' @importFrom madrat toolFillYears toolGetMapping toolTimeAverage
 #' @importFrom mstools toolHarmonize2Baseline
-#' @importFrom mrlandcore toolLPJmLVersion
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
 
