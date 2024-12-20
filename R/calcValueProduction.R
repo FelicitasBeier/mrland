@@ -18,7 +18,7 @@ if (datasource == "FAO") {
 
   if (cellular == TRUE) {
   prod <- calcOutput("Production", products = "kcr",
-                     cellular = TRUE, cells = "lpjcell",
+                     cellular = TRUE,
                      aggregate = FALSE)[, , "dm"]
   } else {
   prod <- calcOutput("Production", products = "kcr",
