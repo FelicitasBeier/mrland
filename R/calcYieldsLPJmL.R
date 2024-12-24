@@ -32,6 +32,7 @@
 #'
 #' @importFrom madrat toolGetMapping
 #' @importFrom withr local_options
+#' @importFrom stringr str_split
 
 calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                             climatetype = "MRI-ESM2-0:ssp370",
@@ -39,7 +40,7 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                             multicropping = FALSE) {
 
   # Extract multiple cropping argument information
-  if (multicropping != FALSE) {
+  if (as.logical(stringr::str_split(multicropping, ":")[[1]][1])) {
     areaMask <- paste(unlist(strsplit(multicropping, ":"))[2],
                       unlist(strsplit(multicropping, ":"))[3],
                       sep = ":")
