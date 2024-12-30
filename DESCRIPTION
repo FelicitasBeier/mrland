@@ -2,7 +2,7 @@ Type: Package
 Package: mrland
 Title: MadRaT land data package
 Version: 0.65.2
-Date: 2024-11-22
+Date: 2024-12-30
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Abhijeet", "Mishra", role = "aut"),
@@ -55,7 +55,8 @@ Suggests:
     covr,
     ggplot2,
     rmarkdown,
-    testthat
+    testthat,
+    knitr
 VignetteBuilder:
     knitr
 Encoding: UTF-8
