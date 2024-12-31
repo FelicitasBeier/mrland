@@ -4,13 +4,11 @@
 \alias{calcSNVTargetCropland}
 \title{calcSNVTargetCropland}
 \usage{
-calcSNVTargetCropland(maginput = TRUE, cells = "magpiecell")
+calcSNVTargetCropland(maginput = TRUE)
 }
 \arguments{
 \item{maginput}{Whether data should be corrected to align with cropland
 initialised in MAgPIE.}
-
-\item{cells}{magpiecell (59199 cells) or lpjcell (67420 cells)}
 }
 \value{
 List with a magpie object

@@ -5,7 +5,6 @@
 
 #' @param maginput Whether data should be corrected to align with cropland
 #' initialised in MAgPIE.
-#' @param cells magpiecell (59199 cells) or lpjcell (67420 cells)
 #'
 #' @return List with a magpie object
 #' @author Patrick v. Jeetze
@@ -18,8 +17,8 @@
 #' }
 #'
 #' @importFrom mstools toolCoord2Isocell
-#'
-calcSNVTargetCropland <- function(maginput = TRUE, cells = "magpiecell") {
+
+calcSNVTargetCropland <- function(maginput = TRUE) {
   targetCropland <- readSource("Copernicus", subtype = "SNVTargetCropland", convert = "onlycorrect")
 
   if (maginput) {
@@ -39,12 +38,6 @@ calcSNVTargetCropland <- function(maginput = TRUE, cells = "magpiecell") {
     out <- targetCropland
   } else {
     out <- targetCropland
-  }
-
-  if (cells == "magpiecell") {
-    out <- toolCoord2Isocell(out)
-  } else if (cells != "lpjcell") {
-    stop("Please specify cells argument")
   }
 
   return(list(
