@@ -88,11 +88,11 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   # read FAO and LPJmL yields
   yieldFAOiso    <- calcOutput("FAOYield", cut = 0.98, areaSource = areaSource,
                                aggregate = FALSE)[, refYear, crops]
-  yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype, # nolint
+  yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype,
                                selectyears = selectyears,
                                multicropping = multicropping, marginal_land = marginal_land,
                                aggregate = FALSE, supplementary = TRUE)
-  yieldLPJmLbase <- calcOutput("Yields", datasource = datasource, climatetype = climatetype, # nolint
+  yieldLPJmLbase <- calcOutput("Yields", datasource = datasource, climatetype = climatetype,
                                selectyears = selectyears,
                                multicropping = refYields, marginal_land = marginal_land,
                                aggregate = FALSE, supplementary = FALSE)
@@ -131,9 +131,6 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
     proxyMAGgrid    <- dimSums(cropareaMAGgrid, dim = "crop")
 
   }
-
-  # Order dimenstion to match with yield dimensions
-  cropareaMAGgrid <- dimOrder(cropareaMAGgrid, perm = c(2, 1), dim = 3)
 
   # Aggregate to country values
   if (cells == "magpiecell") {
