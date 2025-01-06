@@ -101,7 +101,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   years          <- years[years >= as.integer(gsub("y", "", refYear))]
   weight         <- yieldLPJmLgrid$weight
 
-  otherYields    <- yieldLPJmLgrid$x[, years, setdiff(getNames(yieldLPJmLgrid$x, dim = 1), crops)]
+  otherYields    <- yieldLPJmLgrid$x[, years, setdiff(getItems(yieldLPJmLgrid$x, dim = "crop"), crops)]
   yieldLPJmLgrid <- yieldLPJmLgrid$x[, years, crops]
   yieldLPJmLbase <- yieldLPJmLbase[, refYear, crops]
 
