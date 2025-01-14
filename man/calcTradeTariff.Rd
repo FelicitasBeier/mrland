@@ -36,5 +36,5 @@ calculate tarde tariffs from GTAP dataset
     }
 }
 \author{
-Xiaoxi Wang
+Xiaoxi Wang, David M Chen
 }

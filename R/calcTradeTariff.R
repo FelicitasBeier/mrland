@@ -14,13 +14,11 @@
 #'@param bilateral calculates whether tariffs should be bilateral
 #'
 #' @return Trade tariffs as an MAgPIE object
-#' @author Xiaoxi Wang
+#' @author Xiaoxi Wang, David M Chen
 #' @examples
 #'     \dontrun{
 #'     x <- calcTradeTariff("GTAP7")
 #'     }
-#' @importFrom madrat toolAggregate
-#' @importFrom reshape2 acast
 #' @importFrom magclass as.data.frame add_columns
 #' @importFrom magpiesets findset
 #' @importFrom GDPuc toolConvertGDP
@@ -143,6 +141,51 @@ calcTradeTariff<- function(gtap_version = "GTAP9", type_tariff = "total", bilate
   out[, , "sugr_cane"] <- setNames(out[, , "sugar"], "sugr_cane")
   out[, , "sugr_beet"] <- setNames(out[, , "sugar"], "sugr_beet")
 
+
+  # remove tariffs for primary products that are not produced in a certain region i.e. sugarcane in EUR,
+  # and only assigned because they are part of a larger GTAP group (i.e. sugarcane as part of sugarcrops)
+
+  prod <- calcOutput("Production", aggregate = FALSE)[, , "dm", drop = TRUE]
+  prodL <- calcOutput("Production", products = "kli", aggregate = FALSE)[, , "dm", drop = TRUE]
+  prod <- mbind(prod, prodL)
+  rm(prodL)
+  #take last decade
+  prod <- dimSums(prod[, 2000:2013, ], dim = 2)
+
+  sectorMapping <- toolGetMapping(type = "sectoral", name = "mappingGTAPMAgPIETrade.csv", where = "mrland")
+  sectorMapping <- sectorMapping[which(sectorMapping$gtap != "xxx" & sectorMapping$magpie != "zzz"), ]
+
+  citems <- intersect(getItems(prod, dim = 3), sectorMapping$magpie)
+
+  #some items have 2 mappings, use the just one
+  sectorMapping <- sectorMapping[-which(sectorMapping$gtap %in% c("ctl", "pcr", "rmk")), ]
+  mag <- sectorMapping$magpie
+  names(mag) <- sectorMapping$gtap
+
+  #make production share
+  prodShrs <- new.magpie(cells_and_regions = getItems(prod, dim = 1), years = NULL, names = citems, fill = 0)
+  for (i in citems) {
+    group <- sectorMapping[which(sectorMapping$gtap == sectorMapping[which(
+                                                                           sectorMapping$magpie == i), "gtap"]),
+    "magpie"]
+    group <- group[which(group %in% citems)]
+    prodShrs[, , i] <- prod[, , i] / dimSums(prod[, , group])
+  }
+
+  prodShrs[is.na(prodShrs)] <- 0
+  #give threshold of 5%
+  prodShrs <- ifelse(prodShrs < 0.05, 0, 1)
+  c2items <- intersect(getItems(out, dim = 3), citems)
+
+  #rename dim2 to multiply only by the exporters
+  if (bilateral) {
+    getItems(out, dim = 1.2) <- paste0(getItems(out, dim = 1.2), "2")
+    out[, , c2items] <- prodShrs[, , c2items] * out[, , c2items]
+    getItems(out, dim = 1.2) <- gsub("[0-9]+", "", getItems(out, dim = 1.2))
+  } else {
+    out[, , c2items] <-  prodShrs[, , c2items] * out[, , c2items]
+  }
+
   if (gtap_version == "GTAP9") {
     yr <- 2011
   } else {
@@ -164,6 +207,7 @@ calcTradeTariff<- function(gtap_version = "GTAP9", type_tariff = "total", bilate
 
   description <- paste0(type_tariff, "trade tariff")
   unit <- "US$2017/tDM"
+
   return(list(x = out,
               weight = weight,
               unit = unit,
