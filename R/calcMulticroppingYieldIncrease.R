@@ -74,6 +74,9 @@ calcMulticroppingYieldIncrease <- function(selectyears, lpjml, climatetype,
   getSets(missingCrops) <- getSets(increaseFACTOR)
   increaseFACTOR        <- mbind(increaseFACTOR, missingCrops)
 
+  # Adjust dimension to same ordering as Yields functions
+  increaseFACTOR <- dimOrder(increaseFACTOR, perm = c(2, 1), dim = 3)
+
   ##############
   ### Checks ###
   ##############

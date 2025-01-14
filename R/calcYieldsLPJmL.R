@@ -77,7 +77,8 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
     # irrigated and rainfed yields in main growing period (in tDM/ha)
     yields[[crop]] <- mbind(rfYlds[[crop]], irYlds[[crop]])
   }
-  yields  <- mbind(yields)
+  yields <- mbind(yields)
+  yields <- dimOrder(yields, perm = c(2, 1), dim = 3)
 
   # For case of multiple cropping, off-season yield needs to be calculated
   if (multicropping) {
@@ -126,8 +127,6 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                            selectyears = selectyears,
                            aggregate = FALSE)
     }
-    # adjust dimensions
-    suitMC <- dimOrder(suitMC, perm = c(2, 1), dim = 3)
     # Add grassland to suitMC object with suitability set to 0
     # Note: The grassland growing period is already the whole year, so no multiple
     #       cropping treatment necessary.
