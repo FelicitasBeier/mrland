@@ -9,7 +9,6 @@ calcYieldsCalibrated(
   climatetype = "GSWP3-W5E5:historical",
   refYear = "y1995",
   selectyears = seq(1965, 2100, by = 5),
-  cells = "lpjcell",
   multicropping = FALSE,
   refYields = FALSE,
   areaSource = "FAO",
@@ -26,9 +25,6 @@ For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
 \item{refYear}{reference year for calibration}
 
 \item{selectyears}{Years to be returned (for memory reasons)}
-
-\item{cells}{number of cells "magpiecell" for 59199 cells or
-"lpjcell" for 67420 cells}
 
 \item{multicropping}{Multicropping activated (TRUE) or not (FALSE) and
 Multiple Cropping Suitability mask selected
