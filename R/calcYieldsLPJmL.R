@@ -38,7 +38,6 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                             climatetype = "MRI-ESM2-0:ssp370",
                             selectyears = seq(1965, 2100, by = 5),
                             multicropping = FALSE) {
-
   # Extract multiple cropping argument information
   if (as.logical(stringr::str_split(multicropping, ":")[[1]][1])) {
     areaMask <- paste(unlist(strsplit(multicropping, ":"))[2],
@@ -62,35 +61,32 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
   for (crop in cropsLPJmL) {
     # irrigated yields in irrigated growing period (in tDM/ha)
     irYlds[[crop]] <- calcOutput("LPJmLHarmonize",
-      subtype = "crops:pft_harvestc",
-      # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
-      subdata = paste("irrigated", crop, sep = "."),
-      lpjmlversion = lpjml, climatetype = climatetype,
-      years = selectyears,
-      aggregate = FALSE
-    )
-    # rainfed yields in rainfed growing period (in tDM/ha)
-    # HACKATHON: HOTFIX rainfed grassland yields
+                                 subtype = "crops:pft_harvestc",
+                                 # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
+                                 subdata = paste("irrigated", crop, sep = "."),
+                                 lpjmlversion = lpjml, climatetype = climatetype,
+                                 years = selectyears,
+                                 aggregate = FALSE)
+
     if (crop == "grassland") {
-      t <- calcOutput("LPJmLHarmonize",
-        subtype = "crops:pft_harvestc",
-        # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
-        subdata = paste("rainfed", "pulses", sep = "."),
-        lpjmlversion = lpjml, climatetype = climatetype,
-        years = selectyears,
-        aggregate = FALSE
-      )
-      getItems(t, dim = 3.2) <- "grassland"
+      t <- dimSums(calcOutput("LPJmLHarmonize",
+                              subtype = "grass:gpp",
+                              lpjmlversion = lpjml,
+                              climatetype = climatetype,
+                              years = selectyears,
+                              aggregate = FALSE),
+                   dim = 3) * 0.23 # magical number from Jens - TO-DO document that somewhere
+      getItems(t, dim = 3) <- "rainfed.grassland"
       rfYlds[[crop]] <- t
     } else {
       rfYlds[[crop]] <- calcOutput("LPJmLHarmonize",
-        subtype = "crops:pft_harvestc",
-        # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
-        subdata = paste("rainfed", crop, sep = "."),
-        lpjmlversion = lpjml, climatetype = climatetype,
-        years = selectyears,
-        aggregate = FALSE
-      )
+                                   subtype = "crops:pft_harvestc",
+                                   # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
+                                   subdata = paste("rainfed", crop, sep = "."),
+                                   lpjmlversion = lpjml,
+                                   climatetype = climatetype,
+                                   years = selectyears,
+                                   aggregate = FALSE)
     }
 
     # irrigated and rainfed yields in main growing period (in tDM/ha)
