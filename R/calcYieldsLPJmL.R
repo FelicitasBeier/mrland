@@ -62,7 +62,7 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
     # irrigated yields in irrigated growing period (in tDM/ha)
     irYlds[[crop]] <- calcOutput("LPJmLHarmonize",
                                  subtype = "crops:pft_harvestc",
-                                 # To Do (change once LPJmL runs ready): "cropsIr:pft_harvestc",
+                                 # HACKATHON: Change once LPJmL runs ready to "cropsIr:pft_harvestc"
                                  subdata = paste("irrigated", crop, sep = "."),
                                  lpjmlversion = lpjml, climatetype = climatetype,
                                  years = selectyears,
@@ -75,13 +75,14 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
                               climatetype = climatetype,
                               years = selectyears,
                               aggregate = FALSE),
-                   dim = 3) * 0.23 # magical number from Jens - TO-DO document that somewhere
-      getItems(t, dim = 3) <- "rainfed.grassland"
+                   dim = 3) * 0.23 # HACKATHON: Document magical number from Jens
+      t <- add_dimension(t, dim = 3.1, add = "irrigation", nm = "rainfed")
+      t <- add_dimension(t, dim = 3.2, add = "crop",       nm = "grassland")
       rfYlds[[crop]] <- t
     } else {
       rfYlds[[crop]] <- calcOutput("LPJmLHarmonize",
                                    subtype = "crops:pft_harvestc",
-                                   # To Do (change once new LPJmL runs ready): "cropsRf:pft_harvestc",
+                                   # HACKATHON: Change once LPJmL runs ready to "cropsRf:pft_harvestc"
                                    subdata = paste("rainfed", crop, sep = "."),
                                    lpjmlversion = lpjml,
                                    climatetype = climatetype,
