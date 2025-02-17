@@ -48,7 +48,7 @@ calcEATLancetTargets <- function(attributes = "kcal/d") {
   out <- collapseNames(eat[, , attributes])
 
   #### Define weights and units
-  weight <- collapseNames(calcOutput("Population", aggregate = FALSE)[, "y2010", "pop_SSP2"])
+  weight <- collapseNames(calcOutput("Population", scenario = "SSP2", aggregate = FALSE)[, "y2010", ])
   unit   <- "kcal or grams wm per capita per day"
 
   return(list(x = out,

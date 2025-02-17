@@ -229,9 +229,9 @@ calcGHGPrices <- function(emissions = "pollutants", datasource = "REMMAG", rev =
 
   }
 
-  pop <- calcOutput("Population", aggregate = FALSE)
+  pop <- calcOutput("Population", scenario = "SSP2", aggregate = FALSE)
 
-  return(list(x = x, weight = pop[, 2010, 1],
+  return(list(x = x, weight = pop[, 2010, ],
               unit = "US$ 2017 per t N2O-N CH4 and CO2-C",
               description = description,
               note = "As weight for aggregation currently population data from 2010 is used.",

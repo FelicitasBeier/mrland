@@ -23,7 +23,6 @@ The unit is kcal/day per capita or wm/day per capita.
 Mapping of intake from NIN Lancet to MAgPIE food commodities is done indivudually for the different available units.
 }
 \examples{
-
 \dontrun{
 calcOutput("NINDiets")
 }

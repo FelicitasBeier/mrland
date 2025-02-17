@@ -11,8 +11,8 @@ convertREMIND <- function(x, subtype) {
 
   } else if (grepl("extensive", subtype)) {
     # Use population of 2010 as weight for disaggregation
-    pop <- calcOutput("Population", aggregate = FALSE)
-    y <- toolAggregate(x, map, weight = pop[, 2010, 1])
+    pop <- calcOutput("Population", scenario = "SSP2", aggregate = FALSE)
+    y <- toolAggregate(x, map, weight = pop[, 2010, ])
 
   } else {
     stop("Unknown subtype ", subtype)

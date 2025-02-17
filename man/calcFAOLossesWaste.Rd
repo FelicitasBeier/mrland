@@ -15,12 +15,11 @@ List of magpie objects with results on country level, weight on country level, u
 }
 \description{
 Calculates the ratio between food supply at household level and food intake for different MAgPIE commodities
-based on estimated/assumed FAO waste shares for each commodity group (optionally also including food 
+based on estimated/assumed FAO waste shares for each commodity group (optionally also including food
 conversion factors into edible matter).
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 calcOutput("FAOLossesWaste")
 }
 }

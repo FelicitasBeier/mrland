@@ -43,29 +43,30 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("TauTotal",  years = 1995,        round = 2, file = "fm_tau1995.cs4", aggregate = superregion)
 
   # 09 drivers
+  driverScenarios <- c("SSPs", "SDPs")
   calcOutput("GDP",
+             scenario = driverScenarios,
              unit = "constant 2017 Int$PPP",
-             naming = "scenario",
              aggregate = FALSE,
              years = magYears,
              round = 3, # please dont increase rounding, this can create errors
              file = "f09_gdp_ppp_iso.csv")
   calcOutput("GDP",
+             scenario = driverScenarios,
              unit = "constant 2017 US$MER",
-             naming = "scenario",
              aggregate = FALSE,
              years = magYears,
              round = 3, # please dont increase rounding, this can create errors
              file = "f09_gdp_mer_iso.csv")
   calcOutput("Population",
-             naming = "scenario",
+             scenario = driverScenarios,
              aggregate = FALSE,
              years = magYears,
              round = 6, # please dont increase rounding, this can create errors
              file = "f09_pop_iso.csv")
   calcOutput("Urban",
+             scenario = driverScenarios,
              asShare = FALSE,
-             naming = "scenario",
              aggregate = FALSE,
              years = magYears,
              round = 4, # please dont increase rounding, this can create errors

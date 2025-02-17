@@ -21,7 +21,6 @@ accounting for food-specific estimates of baseline intake of quantification of N
 NIN comission, as well as for FAO food waste shares.
 }
 \examples{
-
 \dontrun{
 calcOutput("NINWaste")
 }

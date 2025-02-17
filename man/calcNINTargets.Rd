@@ -18,7 +18,6 @@ recommendations proposed by the NIN on healthy diets from sustainable
 food systems, specified for different MAgPIE commodities.
 }
 \examples{
-
 \dontrun{
 calcOutput("NINTargets")
 }

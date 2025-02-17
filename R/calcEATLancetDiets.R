@@ -32,8 +32,8 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   # food supply includes householde waste: food supply = intake + waste
   kfo <- findset("kfo")
   fsupplyHist <- calcOutput(type = "FoodSupplyPast", aggregate = FALSE,
-                             per_capita = TRUE, product_aggr = FALSE,
-                             attributes = c("wm", "kcal"))
+                            per_capita = TRUE, product_aggr = FALSE,
+                            attributes = c("wm", "kcal"))
   getSets(fsupplyHist)[3:4] <- c("kfo", "unit")
 
   # define new diet object with MAgPIE food products
@@ -87,7 +87,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   roots <- c("cassav_sp", "potato")
   for (i in roots) {
     root.shr <- setYears(fsupplyHist[, "y2010", i] / dimSums(fsupplyHist[, "y2010", roots],
-                                                              dim = 3.1),
+                                                             dim = 3.1),
                          NULL)
     if (any(!is.finite(root.shr))) {
       replacement <- as.magpie(apply(root.shr, 3, mean, na.rm = TRUE))
@@ -127,7 +127,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   }
 
   balance.post.crls <- collapseNames(EATdiets[, , "othr_grains"] - (
-                  setYears(collapseNames(fsupplyHist[, "y2010", "trce"]), NULL) * (1 - waste_shr_crls[, , ]) * mult_factor_othgr))
+                                                                    setYears(collapseNames(fsupplyHist[, "y2010", "trce"]), NULL) * (1 - waste_shr_crls[, , ]) * mult_factor_othgr))
 
   balance.post.crls[which(balance.post.crls < 0)] <- 0
 
@@ -167,8 +167,8 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   Mag_waste_vfns <- collapseNames(dimSums(fsupplyHist[, "y2010", vfns_Mag], dim = 3.1) - dimSums(EATdiets[, , "BMK"][, , "2100kcal"][, "y2010", vfns_EAT], dim = 3.4))
 
   waste_vfns_estimated <- collapseNames(FAO_waste_shr[, "y2010", "Oilseeds and pulses"] * dimSums(fsupplyHist[, "y2010", ns_Mag], dim = 3.1)
-                           + FAO_waste_shr[, "y2010", "Fruits and vegetables"] * fsupplyHist[, "y2010", "others"]
-                           + (1 - FAO_waste_shr[, "y2010", "Fruits and vegetables"]) * (1 - conv_fact_vf) * fsupplyHist[, "y2010", "others"])
+                                        + FAO_waste_shr[, "y2010", "Fruits and vegetables"] * fsupplyHist[, "y2010", "others"]
+                                        + (1 - FAO_waste_shr[, "y2010", "Fruits and vegetables"]) * (1 - conv_fact_vf) * fsupplyHist[, "y2010", "others"])
 
   calib_fact_waste <- Mag_waste_vfns / waste_vfns_estimated
 
@@ -193,7 +193,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   }
 
   balance.post.vfns <- collapseNames(tmp_EAT_nuts_seeds - (
-    setYears(dimSums(fsupplyHist[, "y2010", ns_Mag], dim = 3.1), NULL) * (1 - waste_shr_ns[, , ]) * mult_factor_ns))
+                                                           setYears(dimSums(fsupplyHist[, "y2010", ns_Mag], dim = 3.1), NULL) * (1 - waste_shr_ns[, , ]) * mult_factor_ns))
 
   balance.post.vfns[which(balance.post.vfns < 0)] <- 0
 
@@ -225,7 +225,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   magEATdiets[, , magSugrcrp] <- 0
 
   factorSC <- collapseNames(EATdiets[, , "BMK"][, , "othrcrp"]
-                                  / setYears(EATdiets[, "y2010", "BMK"][, , "2100kcal"][, , "othrcrp"], NULL))
+                            / setYears(EATdiets[, "y2010", "BMK"][, , "2100kcal"][, , "othrcrp"], NULL))
   if (any(!is.finite(factorSC))) {
     temp_mult_factor <- factorSC
     temp_mult_factor[which(!is.finite(temp_mult_factor))] <- 1
@@ -238,7 +238,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
 
   for (t in years) {
     magEATdiets[, t, magSugrcrp][, , "BMK"] <- setYears(fsupplyHist[, "y2010", magSugrcrp] * (1 - FAO_waste_shr[, "y2010", "Fruits and vegetables"])
-                                              * conv_fact_vf, t) * factorSC[, t, ]
+                                                        * conv_fact_vf, t) * factorSC[, t, ]
 
     sugr_gap_reg <- where(dimSums(magEATdiets[, t, magSugrcrp], dim = 3.4) > EATdiets[, t, "BMK"][, , "othrcrp"])$true$regions
     sugr_gap_cal <- collapseNames(EATdiets[sugr_gap_reg, t, "BMK"][, , "2100kcal"][, , "othrcrp"] / dimSums(magEATdiets[sugr_gap_reg, t, magSugrcrp][, , "BMK"][, , "2100kcal"], dim = 3.4))
@@ -309,10 +309,10 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
   # to MAgPIE commodities is accurate
 
   eatLancetintakeNObalancing <- dimSums(EATdiets[, , c("othrcrp", "othrcal"), invert = TRUE],
-                                          dim = 3.4)
+                                        dim = 3.4)
   MAgPIEeatintakeNObalancing <- dimSums(magEATdiets[, , magSugrcrp, invert = TRUE][, , "alcohol",
                                                                                    invert = TRUE],
-                                          dim = 3.4)
+                                        dim = 3.4)
   checkIntakeNObalancing     <- eatLancetintakeNObalancing - MAgPIEeatintakeNObalancing
 
   if (max(abs(checkIntakeNObalancing)) > 1e-09) {
@@ -349,7 +349,7 @@ calcEATLancetDiets <- function(attributes = c("wm", "kcal"), calib = TRUE, FAOco
 
 
   #### Define weights and units
-  weight <- collapseNames(calcOutput("Population", aggregate = FALSE)[, years, "pop_SSP2"])
+  weight <- collapseNames(calcOutput("Population", scenario = "SSP2", aggregate = FALSE)[, years, ])
   unit   <- "kcal or wm per capita per day"
 
   return(list(x = out,

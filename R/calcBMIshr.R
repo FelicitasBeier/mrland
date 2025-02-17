@@ -55,7 +55,7 @@ calcBMIshr <- function(convert = TRUE) {
 
     regression <- readSource("Bodirsky2018", convert = FALSE)
 
-    gdpPC <- collapseNames(calcOutput("GDPpc", naming = "scenario", aggregate = FALSE)[, , "SSP2"])
+    gdpPC <- collapseNames(calcOutput("GDPpc", scenario = "SSP2", aggregate = FALSE)[, , ])
 
     bmiRegr <- collapseNames(regression[, , "intercept"]
                              + regression[, , "saturation"] * gdpPC / (regression[, , "halfsaturation"] + gdpPC))

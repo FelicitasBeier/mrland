@@ -10,9 +10,7 @@
 
 calcGDPdeflator <- function(yearFrom = 2017, yearTo = 2005, currency = "PPP") {
 
-  reg <- getItems(calcOutput("GDP", unit = "constant 2005 Int$PPP",
-                             naming = "scenario",
-                             aggregate = FALSE), dim = 1)
+  reg <- getItems(calcOutput("GDP", scenario = "SSP2", unit = "constant 2005 Int$PPP", aggregate = FALSE), dim = 1)
 
   defl2017 <- new.magpie(cells_and_regions = reg,
                          years = NULL,

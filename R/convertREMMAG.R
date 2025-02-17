@@ -4,8 +4,8 @@ convertREMMAG <- function(x, subtype) {
   if (subtype == "ghgprices") {
     y <- toolAggregate(x, map)
   } else if (subtype == "biodem") {
-    pop <- calcOutput("Population", aggregate = FALSE)
-    y <- toolAggregate(x, map, weight = pop[, 2010, 1])
+    pop <- calcOutput("Population", scenario = "SSP2", aggregate = FALSE)
+    y <- toolAggregate(x, map, weight = pop[, 2010, ])
   } else {
     stop("Unknown subtype ", subtype)
   }
