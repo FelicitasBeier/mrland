@@ -85,6 +85,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   # read FAO and LPJmL yields
   yieldFAOiso    <- calcOutput("FAOYield", cut = 0.98, areaSource = areaSource,
                                aggregate = FALSE)[, refYear, crops]
+  #### Question Kristine: Could we also calibrate to GLO values? (To maintain patterns, but get roughly a better level value)
   yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype,
                                selectyears = selectyears,
                                multicropping = multicropping, marginal_land = marginal_land,

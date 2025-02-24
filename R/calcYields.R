@@ -121,6 +121,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   #### To Do (Kristine, Mike, Feli): replace with calcFAOYield,
   #### but needs adjustments in calcFAOYield to allow to return global average FAO yield
   #### rather than regional yield
+  #### This is possible already, right? Just use calcOutput(FAOYield, aggregate = "GLO")
   prodFAO  <- collapseNames(calcOutput("FAOmassbalance_pre", aggregate = FALSE)[, , "production"][, , "dm"])
   areaMAg  <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)
   faoyears <- intersect(getYears(prodFAO), getYears(areaMAg))

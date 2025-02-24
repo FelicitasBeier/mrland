@@ -146,7 +146,7 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
     # Add grassland to suitMC object with suitability set to 0
     # Note: The grassland growing period is already the whole year, so no multiple
     #       cropping treatment necessary.
-    suitMC <- add_columns(suitMC, dim = 3.2, addnm = "grassland", fill = 0)
+    suitMC <- add_columns(suitMC, dim = "crop", addnm = "grassland", fill = 0)
     suitMC <- suitMC[, , getItems(yields, dim = 3)]
 
     # Whole year yields under multicropping (main-season yield + off-season yield)
