@@ -168,21 +168,21 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              file = "f20_processing_balanceflow.cs3")
 
   # 21 trade
-  calcOutput("TradeSelfSuff",    years = magYears, round = 2, file = "f21_trade_self_suff.cs3",
+  calcOutput("TradeSelfSuff",    years = magYears, round = 6, file = "f21_trade_self_suff.cs3",
              aggregate = superregion)
-  calcOutput("TradeExportShr",   years = magYears, round = 2, file = "f21_trade_export_share.cs3",
+  calcOutput("TradeExportShr",   years = magYears, round = 6, file = "f21_trade_export_share.cs3",
              aggregate = superregion)
-  calcOutput("TradeBalanceflow", years = magYears, round = 4, file = "f21_trade_balanceflow.cs3",
+  calcOutput("TradeBalanceflow", years = magYears, round = 6, file = "f21_trade_balanceflow.cs3",
              aggregate = FALSE)
-  calcOutput("TradeBalance", years = magYears, round = 2, file = "f21_trade_balance.cs3",
+  calcOutput("TradeBalance", years = magYears, round = 6, file = "f21_trade_balance.cs3",
              aggregate = superregion)
-  calcOutput("TradeMargin", round = 4, file = "f21_trade_margin.cs3",
+  calcOutput("TradeMargin", round = 6, file = "f21_trade_margin.cs3",
              aggregate = superregion)
-  calcOutput("TradeTariff", round = 4, file = "f21_trade_tariff.cs3",
+  calcOutput("TradeTariff", round = 6, file = "f21_trade_tariff.cs3",
              aggregate = superregion)
-  calcOutput("TradeMargin", bilateral = TRUE, round = 4, file = "f21_trade_margin_bilat.cs5",
+  calcOutput("TradeMargin", bilateral = TRUE, round = 6, file = "f21_trade_margin_bilat.cs5",
              aggregate = TRUE)
-  calcOutput("TradeTariff", bilateral = TRUE, round = 4, file = "f21_trade_tariff_bilat.cs5",
+  calcOutput("TradeTariff", bilateral = TRUE, round = 6, file = "f21_trade_tariff_bilat.cs5",
              aggregate = TRUE)
 
   # 31 Past

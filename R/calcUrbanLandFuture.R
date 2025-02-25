@@ -56,6 +56,12 @@ calcUrbanLandFuture <- function(timestep = "5year", subtype = "LUH2v2",
     stop("Not a Valid Subtype")
   }
 
+  # make all years
+  yHarm <- seq(1995, 2025, 5)
+  for (i in c("SSP1", "SSP3", "SSP4", "SSP5")) {
+    out[, yHarm, i] <- out[, yHarm, "SSP2"]
+  }
+
   if (cells == "magpiecell") {
     out <- toolCoord2Isocell(out)
   } else if (cells != "lpjcell") {
