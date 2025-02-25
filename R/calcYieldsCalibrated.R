@@ -28,6 +28,8 @@
 #'                      (e.g. TRUE:actual:total; TRUE:none; FALSE)
 #' @param areaSource    data source for croparea used in calculation: FAO or LandInG
 #'                      Note: when calibrating multicropped yields, LandInG croparea should be used
+#' @param average       Averaging period in years used in calcFAOYield (if NULL no averaging is used)
+#' @param aggregation   Aggregation at which calibration is performed (options: "country", "continents", "GLO")
 #' @param marginal_land Defines which share of marginal land should be included (see options below) and
 #'                      whether suitable land under irrigated conditions ("irrigated"),
 #'                      under rainfed conditions ("rainfed")
@@ -70,7 +72,8 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
                                  climatetype = "GSWP3-W5E5:historical",
                                  refYear = "y1995", selectyears = seq(1965, 2100, by = 5),
                                  multicropping = FALSE, refYields = FALSE,
-                                 areaSource = "FAO", marginal_land = "magpie") { # nolint
+                                 areaSource = "FAO", marginal_land = "magpie", # nolint
+                                 average = 5, aggregation = "country") {
 
   local_options(magclass_sizeLimit = 1e+12)
 
@@ -84,6 +87,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
 
   # read FAO and LPJmL yields
   yieldFAOiso    <- calcOutput("FAOYield", cut = 0.98, areaSource = areaSource,
+                               average = average,
                                aggregate = FALSE)[, refYear, crops]
   #### Question Kristine: Could we also calibrate to GLO values? (To maintain patterns, but get roughly a better level value)
   yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype,
@@ -145,6 +149,19 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   # Harmonize countries
   yieldLPJmLiso <- yieldLPJmLiso[intersect(getCells(yieldLPJmLiso), getCells(yieldFAOiso)), , ]
   yieldFAOiso   <- yieldFAOiso[intersect(getCells(yieldLPJmLiso), getCells(yieldFAOiso)), , ]
+
+  # Optional: Aggregate to continental or global value
+  if (aggregation == "GLO") {
+    rel <- data.frame(iso = getItems(yieldFAOiso, dim = "iso"),
+                      glo = rep("GLO", length(getItems(yieldFAOiso, dim = "iso"))))
+    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "glo")
+    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "glo")
+  } else if (grepl("continent", aggregation)) {
+    rel <- toolGetMapping("country2continent.csv", where = "mrland")
+    rel <- rel[rel$iso %in% getItems(yieldFAOiso, dim = "iso"), ]
+    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "continent")
+    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "continent")
+  }
 
   # Yield calibration of LPJmL yields to FAO country yield levels
   out <- toolPatternScaling(yieldLPJmLgrid, yieldLPJmLiso, yieldFAOiso, refYear = refYear)
