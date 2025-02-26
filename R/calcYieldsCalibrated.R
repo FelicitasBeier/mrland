@@ -165,7 +165,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   # Yield calibration of LPJmL yields to FAO country yield levels
   out <- toolPatternScaling(yieldLPJmLgrid, yieldLPJmLiso, yieldFAOiso, refYear = refYear)
   # correct dimensions
-  if (length(names(dimnames(out))[1]) > 3) {
+  if (length(strsplit(names(dimnames(out))[1], split = "\\.")[[1]]) > 3) {
     out <- collapseDim(out, dim = 1.4)
   }
 
