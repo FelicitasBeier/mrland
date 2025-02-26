@@ -158,8 +158,15 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   } else if (grepl("continent", aggregation)) {
     rel <- toolGetMapping("country2continent.csv", where = "mrland")
     rel <- rel[rel$iso %in% getItems(yieldFAOiso, dim = "iso"), ]
+    tmp <- toolGetMappingCoord2Country()
+    rel <- merge(tmp, rel, by = "iso")
+    rel <- rel[order(match(rel$coords, tmp$coords)), ]
+
     yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
     yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
+
+    getItems(yieldLPJmLgrid, dim = 1, raw = TRUE) <- paste(rel$coords, rel$iso, rel$continent, sep = ".")
+    names(dimnames(yieldLPJmLgrid))[1] <- "x.y.iso.iso1"
   }
 
   # Yield calibration of LPJmL yields to FAO country yield levels
