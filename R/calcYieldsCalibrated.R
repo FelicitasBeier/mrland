@@ -89,7 +89,6 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   yieldFAOiso    <- calcOutput("FAOYield", cut = 0.98, areaSource = areaSource,
                                average = average,
                                aggregate = FALSE)[, refYear, crops]
-  #### Question Kristine: Could we also calibrate to GLO values? (To maintain patterns, but get roughly a better level value)
   yieldLPJmLgrid <- calcOutput("Yields", datasource = datasource, climatetype = climatetype,
                                selectyears = selectyears,
                                multicropping = multicropping, marginal_land = marginal_land,
@@ -154,17 +153,21 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
   if (aggregation == "GLO") {
     rel <- data.frame(iso = getItems(yieldFAOiso, dim = "iso"),
                       glo = rep("GLO", length(getItems(yieldFAOiso, dim = "iso"))))
-    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "glo")
-    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "glo")
+    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "glo")
+    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "glo")
   } else if (grepl("continent", aggregation)) {
     rel <- toolGetMapping("country2continent.csv", where = "mrland")
     rel <- rel[rel$iso %in% getItems(yieldFAOiso, dim = "iso"), ]
-    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "continent")
-    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso, from = "iso", to = "continent")
+    yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
+    yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
   }
 
   # Yield calibration of LPJmL yields to FAO country yield levels
   out <- toolPatternScaling(yieldLPJmLgrid, yieldLPJmLiso, yieldFAOiso, refYear = refYear)
+  # correct dimensions
+  if (length(names(dimnames(out))[1]) > 3) {
+    out <- collapseDim(out, dim = 1.4)
+  }
 
   # Combine with pasture, betr, begr yields that were not calibrated
   getCells(out) <- getCells(otherYields)
