@@ -34,7 +34,7 @@
 #' @importFrom withr local_options
 #' @importFrom stringr str_split
 
-calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
+calcYieldsLPJmL <- function(lpjml = "lpjml5.9.16-m1",
                             climatetype = "MRI-ESM2-0:ssp370",
                             selectyears = seq(1965, 2100, by = 5),
                             multicropping = FALSE) {
@@ -61,12 +61,10 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
   for (crop in cropsLPJmL) {
     # irrigated yields in irrigated growing period (in tDM/ha)
     irYlds[[crop]] <- calcOutput("LPJmLHarmonize",
-                                 subtype = "crops:pft_harvestc",
-                                 # HACKATHON: Change once LPJmL runs ready to "cropsIr:pft_harvestc"
+                                 subtype = "cropsIR:pft_harvestc",
                                  subdata = paste("irrigated", crop, sep = "."),
                                  lpjmlversion = lpjml, climatetype = climatetype,
-                                 years = selectyears,
-                                 aggregate = FALSE)
+                                 years = selectyears, aggregate = FALSE)
 
     if (crop == "grassland") {
       t <- dimSums(calcOutput("LPJmLHarmonize",
@@ -81,13 +79,10 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.5-m1",
       rfYlds[[crop]] <- t
     } else {
       rfYlds[[crop]] <- calcOutput("LPJmLHarmonize",
-                                   subtype = "crops:pft_harvestc",
-                                   # HACKATHON: Change once LPJmL runs ready to "cropsRf:pft_harvestc"
+                                   subtype = "cropsRF:pft_harvestc",
                                    subdata = paste("rainfed", crop, sep = "."),
-                                   lpjmlversion = lpjml,
-                                   climatetype = climatetype,
-                                   years = selectyears,
-                                   aggregate = FALSE)
+                                   lpjmlversion = lpjml, climatetype = climatetype,
+                                   years = selectyears, aggregate = FALSE)
     }
 
     # irrigated and rainfed yields in main growing period (in tDM/ha)
