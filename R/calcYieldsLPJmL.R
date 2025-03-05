@@ -38,6 +38,7 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.16-m1",
                             climatetype = "MRI-ESM2-0:ssp370",
                             selectyears = seq(1965, 2100, by = 5),
                             multicropping = FALSE) {
+
   # Extract multiple cropping argument information
   if (as.logical(stringr::str_split(multicropping, ":")[[1]][1])) {
     areaMask <- paste(unlist(strsplit(multicropping, ":"))[2],
@@ -119,9 +120,9 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.16-m1",
     # yield that can be achieved in the second season is very small
     offYield[offYield < 0.5] <- 0
 
-    # Multiple cropping suitability
+    # Multiple cropping share
     if (areaMask == "none") {
-      suitMC <- calcOutput("MulticroppingCells",
+      mcShr <- calcOutput("MulticroppingCells",
                            sectoral = "lpj",
                            scenario = "potential:exogenous",
                            lpjml = lpjml,
@@ -129,23 +130,32 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.16-m1",
                            selectyears = selectyears,
                            aggregate = FALSE)
       # multiple cropping is allowed everywhere
-      suitMC[, , ] <- 1
+      mcShr[, , ] <- 1
+    } else if (grepl(pattern = "actual", x = areaMask)) {
+      # Cropping Intensity Factor (between 1 and 2)
+      ci <- calcOutput("MulticroppingIntensity", scenario = areaMask,
+                            sectoral = "lpj",
+                            selectyears = selectyears, aggregate = FALSE)
+      # Share that is multiple cropped
+      mcShr <- ci - 1
+      mcShr[mcShr > 1] <- 1
     } else {
-      suitMC <- calcOutput("MulticroppingCells", scenario = areaMask,
+      # for potential case: cell is fully multiple cropped
+      mcShr <- calcOutput("MulticroppingCells", scenario = areaMask,
                            sectoral = "lpj",
                            lpjml = lpjml,
                            climatetype = climatetype,
                            selectyears = selectyears,
                            aggregate = FALSE)
     }
-    # Add grassland to suitMC object with suitability set to 0
+    # Add grassland to mcShr object with suitability set to 0
     # Note: The grassland growing period is already the whole year, so no multiple
     #       cropping treatment necessary.
-    suitMC <- add_columns(suitMC, dim = "crop", addnm = "grassland", fill = 0)
-    suitMC <- suitMC[, , getItems(yields, dim = 3)]
+    mcShr <- add_columns(mcShr, dim = "crop", addnm = "grassland", fill = 0)
+    mcShr <- mcShr[, , getItems(yields, dim = 3)]
 
     # Whole year yields under multicropping (main-season yield + off-season yield)
-    yields <- mainYield + offYield * suitMC
+    yields <- mainYield + offYield * mcShr
 
   } else {
     # Only main season yields are returned

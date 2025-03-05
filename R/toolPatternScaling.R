@@ -38,7 +38,7 @@ toolPatternScaling <- function(scen, scenMean, refMean, refYear = "y2010", varia
   }
 
   # check if x and base are identical in dimension except time
-  # TO-DO find a way of muliple checking
+  # TO-DO find a way of multiple checking
 
   # create new magpie object with full time horizon
   out      <- new.magpie(getCells(scen), afterRef, getNames(scen), sets = getSets(scen))
