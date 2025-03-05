@@ -133,12 +133,11 @@ calcYieldsLPJmL <- function(lpjml = "lpjml5.9.16-m1",
       mcShr[, , ] <- 1
     } else if (grepl(pattern = "actual", x = areaMask)) {
       # Cropping Intensity Factor (between 1 and 2)
-      ci <- calcOutput("MulticroppingIntensity", scenario = areaMask,
+      ci <- calcOutput("MulticroppingIntensity", scenario = strsplit(areaMask, split = ":")[[1]][2],
                             sectoral = "lpj",
                             selectyears = selectyears, aggregate = FALSE)
       # Share that is multiple cropped
       mcShr <- ci - 1
-      mcShr[mcShr > 1] <- 1
     } else {
       # for potential case: cell is fully multiple cropped
       mcShr <- calcOutput("MulticroppingCells", scenario = areaMask,
