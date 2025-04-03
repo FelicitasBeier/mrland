@@ -32,7 +32,7 @@ readAQUASTAT <- function(subtype = "ConsAgri") {
 
   file <- toolSubtypeSelect(subtype, files)
 
-  aquastat   <- read.csv(file, nrow = 600, blank.lines.skip = TRUE,
+  aquastat   <- read.csv(file, nrows = 600, blank.lines.skip = TRUE,
                          stringsAsFactors = FALSE)
 
   aquastat$X <- substr(aquastat$X, 1, 3)
@@ -43,19 +43,19 @@ readAQUASTAT <- function(subtype = "ConsAgri") {
 
   colyears  <- grep("X[0-9]{4}\\.[0-9]{4}", names(aquastat), value = TRUE)
   years     <- paste0("y", c(substr(head(colyears, 1), 2, 5):
-                             substr(tail(colyears, 1), 7, 10)))
+                               substr(tail(colyears, 1), 7, 10)))
 
   mag <- array(NA, dim = c(length(aquastat$X), length(years), 1),
                dimnames = list(aquastat$X, years, subtype))
 
-  for (iso3 in 1:length(aquastat$X)) {
+  for (iso3 in seq_along(aquastat$X)) {
 
-    value_cols <-
+    valueCols <-
       setdiff(which(!is.na(aquastat[iso3, ]) &
-                    aquastat[iso3, ] != "" &
-                    !grepl("[a-zA-Z]", aquastat[iso3, ])), c(1, 2))
+                      aquastat[iso3, ] != "" &
+                      !grepl("[a-zA-Z]", aquastat[iso3, ])), c(1, 2))
 
-    for (i in value_cols[value_cols %% 2 != 0]) {
+    for (i in valueCols[valueCols %% 2 != 0]) {
       mag[iso3, paste0("y", aquastat[iso3, i]), ] <-
         as.numeric(aquastat[iso3, i + 1])
     }

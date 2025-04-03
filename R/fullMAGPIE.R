@@ -168,6 +168,8 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              file = "f20_processing_balanceflow.cs3")
 
   # 21 trade
+  calcOutput("DomSupply", round = 6, file = "f21_trade_domestic_supply.cs3",
+             aggregate = superregion)
   calcOutput("TradeSelfSuff",    years = magYears, round = 6, file = "f21_trade_self_suff.cs3",
              aggregate = superregion)
   calcOutput("TradeExportShr",   years = magYears, round = 6, file = "f21_trade_export_share.cs3",
