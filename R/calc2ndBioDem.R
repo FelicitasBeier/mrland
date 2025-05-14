@@ -110,8 +110,14 @@ calc2ndBioDem <- function(datasource, rev = numeric_version("0.1")) {
     yrFut <- years[years >= 2020]
 
     # apply lowpass filter (not applied on 1st time step, applied separately on historic and future period)
+    # only on sceanrios that were existing before revision 4.188
     iter <- 3
-    x <- mbind(x[, 1995, ], lowpass(x[, yrHist, ], i = iter), lowpass(x[, yrFut, ], i = iter)[, -1, ])
+    modelsBeforeRev4188 <- "SSPDB|R2M41|R21M42|R32M46|PIK_NPI|PIK_HOS|PIK_HBL|PIK_OPT|PIK_H2C|PIK_GDP|PIK_LIN"
+    scenariosBeforeRev4188 <- grep(modelsBeforeRev4188, getItems(x, dim = 3), value = TRUE)
+
+    x[,,scenariosBeforeRev4188] <- mbind(x[, 1995, scenariosBeforeRev4188],
+                                         lowpass(x[, yrHist, scenariosBeforeRev4188], i = iter),
+                                         lowpass(x[, yrFut, scenariosBeforeRev4188], i = iter)[, -1, scenariosBeforeRev4188])
 
     # sort scenarios alphabetically
     x <- x[, , sort(getNames(x))]

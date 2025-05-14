@@ -25,6 +25,14 @@ readREMIND <- function(subtype) {
                                 as.list = FALSE,
                                 showSeparatorWarning = FALSE)[, , "REMIND"][, , indicator])
     }
+
+    # if data contains US$2005 convert them
+    if (any(grepl("US\\$2005", getItems(x, dim = 3.3)))) {
+      #convert from USD05MER to USD17MER based on USA values for all countries as the CO2 price is global.
+      x <- x * round(GDPuc::toolConvertSingle(1, "USA", unit_in = "constant 2005 US$MER",
+                                              unit_out = "constant 2017 US$MER"), 2)
+    }
+
     # remove model and variable name
     x <- collapseNames(x)
     # shorten names of the REMIND scenarios
@@ -37,6 +45,9 @@ readREMIND <- function(subtype) {
     subtype  <- strsplit(subtype, split = "_")
     revision <- numeric_version(unlist(subtype)[2])
     indicator <- unlist(subtype)[3]
+
+    # for data that was added with revisions < 4.118 always look for US$2005
+    indicator <- gsub("US\\$2017", "US$2005", indicator)
 
     # Please refer to the 2019-R2M41/readme.txt for the source of the data
     fileList <- c("2019-R2M41/REMIND_generic_r8473-trunk-C_Budg600-rem-5.mif",
@@ -105,10 +116,37 @@ readREMIND <- function(subtype) {
                                        replacement = "R32M46-\\1",
                                        indicator = indicator))
     }
+
+    # for data that was added with revisions >= 4.118 look for US$2017
+    indicator <- gsub("US\\$2005", "US$2017", indicator)
+
+    if (revision >= 4.118) {
+      # Please refer to the 2025-R34M410/readme.txt for the source of the data
+      fileList <- c("2025-R34M410/REMIND_generic_C_SSP1-NPi2025-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP1-PkBudg1000-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP1-PkBudg650-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2_lowEn-NPi2025-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2_lowEn-PkBudg1000-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2_lowEn-PkBudg650-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2-NPi2025-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2-PkBudg1000-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP2-PkBudg650-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP3-NPi2025-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP3-PkBudg1000-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP3-rollBack-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP5-NPi2025-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP5-PkBudg1000-rawluc-rem-5.mif",
+                    "2025-R34M410/REMIND_generic_C_SSP5-PkBudg650-rawluc-rem-5.mif")
+
+      out <- mbind(out, .readAndRename(fileList = fileList,
+                                       pattern = "C_(SSP)",
+                                       replacement = "R34M410-\\1",
+                                       indicator = indicator))
+    }
   }
 
   # shorten names of the REMIND scenarios
-  getNames(out) <- gsub("-rem-5", "", getNames(out))
+  getNames(out) <- gsub("(-rawluc|)-rem-5", "", getNames(out))
 
   return(out)
 
