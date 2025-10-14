@@ -6,7 +6,7 @@
 #'
 #' @return magpie object of the Curtis et al., 2018 Data
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource("ForestLossDrivers")

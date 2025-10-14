@@ -13,19 +13,19 @@ readNIN(subtype)
 }}
 }
 \value{
-magpie object containing NIN  data
+magpie object containing NIN data
 }
 \description{
 Read in data from the NIN recommendations
 }
 \examples{
-
-\dontrun{ a <- readSource(type="NIN",subtype="cons_data")
+\dontrun{
+a <- readSource(type = "NIN", subtype = "cons_data")
 }
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Isabelle Weindl, Jan Philipp Dietrich

@@ -21,7 +21,7 @@ calcOutput("IrrigationInvCosts")
 
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{readWBirrigation}},
+\code{\link[madrat]{calcOutput}}, \code{\link{readWBirrigation}},
 \code{\link{convertWBirrigation}}
 }
 \author{

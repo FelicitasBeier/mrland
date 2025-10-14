@@ -4,11 +4,11 @@
 #' @param consvBaseYear Reference year for land conservation. Chosing "y1750", for instance, means that
 #' the reference land use is based on the year 1750 ('pre-industrial') so
 #' land use can be restored to the pre-industrial state in conservation priority areas.
-#' Any year available in the LUH2v2 data set can be chosen. Historic land use in the LUH2v2 data
+#' Any year available in the LUH3 data set can be chosen. Historic land use in the LUH3 data
 #' is based on the HYDE data base.
 #' The choice "y2020" provides a special case, in which reference land use is based on the 2020 ESA CCI LULC map,
 #' derived at a spatial resolution of 300 x 300 Meter.
-#' @param cells number of cells of landmask (select "magpiecell" for 59199 cells or "lpjcell" for 67420 cells)
+#' @param cells (deprecated) number of cells of landmask (only "lpjcell" for 67420 cells)
 #' @param nclasses Options are either "seven" or "nine".
 #' \itemize{
 #' \item "seven" separates primary and secondary forest and includes "crop", "past", "forestry",
@@ -45,8 +45,8 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # https://www.iucn.org/resources/conservation-tool/key-biodiversity-areas
 
   kba <- calcOutput("KeyBiodiversityAreas",
-    maginput = TRUE, unprotected = TRUE,  nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    maginput = TRUE, unprotected = TRUE,
+    nclasses = nclasses, aggregate = FALSE
   )
 
   # ---------------------------
@@ -58,7 +58,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   gsn <- calcOutput("GlobalSafetyNet",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
   # Unprotected Key Biodiversity Areas have been masked at
   # high resolution to remove overlaps and can be now
@@ -81,7 +81,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   cca <- calcOutput("CriticalConnectivityAreas",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, mask = "KBA", aggregate = FALSE
+    mask = "KBA", aggregate = FALSE
   )
 
   # Unprotected Key Biodiversity Areas have been masked at
@@ -103,7 +103,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   irrC <- calcOutput("IrrecoverableCarbonLand",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
 
   # -------------------------------------------------
@@ -120,7 +120,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   bhifl <- calcOutput("BHIFL",
     nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
 
   # -------------------------------------------------
@@ -132,7 +132,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   pblHalfEarth <- calcOutput("HalfEarth",
     nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
 
   getNames(pblHalfEarth) <- paste0("PBL_", getNames(pblHalfEarth))
@@ -146,7 +146,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   gsn30 <- calcOutput("GlobalSafetyNet",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
   # Use GSN Distinct Species Assemblages (DSA) for the 30 % target
   gsn30 <- gsn30[, , "GSN_DSA"]
@@ -155,7 +155,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # by KBAs and GSN DSAs at high resolution
   cca30 <- calcOutput("CriticalConnectivityAreas",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, mask = "KBA_GSN", aggregate = FALSE
+    mask = "KBA_GSN", aggregate = FALSE
   )
 
   # combine KBA, GSN & CCA data sets
@@ -178,7 +178,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   gsnHalfEarth <- calcOutput("GlobalSafetyNet",
     maginput = TRUE, nclasses = nclasses,
-    cells = cells, aggregate = FALSE
+    aggregate = FALSE
   )
 
   gsnHalfEarth <- mbind(kba, gsnHalfEarth)
@@ -198,27 +198,23 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # in the additive options can be larger than total
   # land in a grid cell. This is corrected in the following.
 
-  luh2v2 <- readSource("LUH2v2", subtype = paste0("states_", gsub("y", "", consvBaseYear), "to2015"),
-                       convert = "onlycorrect")[, consvBaseYear, ]
-  if (cells == "magpiecell") {
-    luh2v2 <- toolCoord2Isocell(luh2v2, cells = cells)
-    getCells(luh2v2) <- getCells(consvPrio)
-  }
-  getYears(luh2v2) <- NULL
+  luh3 <- calcOutput("LUH3", cellular = TRUE, yrs = consvBaseYear,
+                     landuseTypes = "LUH3", aggregate = FALSE)[, consvBaseYear, ]
+  getYears(luh3) <- NULL
 
   # get total land area
-  totLand <- dimSums(luh2v2, dim = 3)
+  totLand <- dimSums(luh3, dim = 3)
 
   # urban land
   urbanLand <- calcOutput("UrbanLandFuture",
-    subtype = "LUH2v2", aggregate = FALSE,
-    timestep = "5year", cells = cells
+    subtype = "LUH3", aggregate = FALSE,
+    timestep = "5year"
   )
 
   # baseline protected area (WDPA)
   wdpaLand <- calcOutput("ProtectedAreaBaseline",
     aggregate = FALSE, nclasses = "seven",
-    cells = cells, magpie_input = TRUE,
+    magpie_input = TRUE,
   )
 
   # make sure that future conservation priority land is not greater
@@ -238,7 +234,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # -------------------------------
   # Define conservation base year
   # -------------------------------
-  # Historic land use is derived from the LUH2v2 data.
+  # Historic land use is derived from the LUH3 data.
   # Based on historic land use, shares of the different
   # land types are extracted and applied proportionally
   # in conservation priority areas.
@@ -247,23 +243,23 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
     # Reclassify LUH classes to MAgPIE classes
     if (nclasses == "seven") {
       consvBaseLand <- mbind(
-        setNames(dimSums(luh2v2[, , c("c3ann", "c4ann", "c3per", "c4per", "c3nfx")], dim = 3), "crop"),
-        setNames(dimSums(luh2v2[, , c("pastr", "range")], dim = 3), "past"),
-        setNames(luh2v2[, , c("primf", "secdf")], c("primforest", "secdforest")),
-        setNames(new.magpie(getCells(luh2v2), fill = 0), "forestry"),
-        luh2v2[, , c("urban")],
-        setNames(dimSums(luh2v2[, , c("primn", "secdn")], dim = 3), "other")
+        setNames(dimSums(luh3[, , c("c3ann", "c4ann", "c3per", "c4per", "c3nfx")], dim = 3), "crop"),
+        setNames(dimSums(luh3[, , c("pastr", "range")], dim = 3), "past"),
+        setNames(luh3[, , c("primf", "secdf")], c("primforest", "secdforest")),
+        setNames(new.magpie(getCells(luh3), fill = 0), "forestry"),
+        luh3[, , c("urban")],
+        setNames(dimSums(luh3[, , c("primn", "secdn")], dim = 3), "other")
       )
     } else if (nclasses == "nine") {
       consvBaseLand <- mbind(
-        setNames(dimSums(luh2v2[, , c("c3ann", "c4ann", "c3per", "c4per", "c3nfx")], dim = 3), "crop"),
-        setNames(luh2v2[, , "pastr"], "past"),
-        setNames(luh2v2[, , "range"], "range"),
-        setNames(luh2v2[, , c("primf", "secdf")], c("primforest", "secdforest")),
-        setNames(new.magpie(getCells(luh2v2), fill = 0), "forestry"),
-        luh2v2[, , c("urban")],
-        setNames(luh2v2[, , "primn"], "primother"),
-        setNames(luh2v2[, , "secdn"], "secdother")
+        setNames(dimSums(luh3[, , c("c3ann", "c4ann", "c3per", "c4per", "c3nfx")], dim = 3), "crop"),
+        setNames(luh3[, , "pastr"], "past"),
+        setNames(luh3[, , "range"], "range"),
+        setNames(luh3[, , c("primf", "secdf")], c("primforest", "secdforest")),
+        setNames(new.magpie(getCells(luh3), fill = 0), "forestry"),
+        luh3[, , c("urban")],
+        setNames(luh3[, , "primn"], "primother"),
+        setNames(luh3[, , "secdn"], "secdother")
       )
     }
 

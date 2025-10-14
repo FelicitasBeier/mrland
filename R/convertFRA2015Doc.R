@@ -5,7 +5,7 @@
 #' @param subtype The data table type, e.g.: forest_area
 #' @return Data as MAgPIE object
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readFRA2015Doc}}, \code{\link{readSource}},
+#' @seealso \code{\link{readFRA2015Doc}}, \code{\link[madrat]{readSource}},
 #' @examples
 #' \dontrun{
 #' a <- readSource("FRA2015Doc", "forest_area", convert = TRUE)

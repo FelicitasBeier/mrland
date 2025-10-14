@@ -28,7 +28,7 @@ calcOutput("NINDiets")
 }
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{readNIN}},
+\code{\link[madrat]{calcOutput}}, \code{\link{readNIN}},
 \code{\link{convertNIN}}
 }
 \author{

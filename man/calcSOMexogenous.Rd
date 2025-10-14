@@ -18,7 +18,7 @@ calcOutput("SOMexogenous")
 }
 }
 \seealso{
-\code{\link{calcOutput}}
+\code{\link[madrat]{calcOutput}}
 }
 \author{
 Benjamin Leon Bodirsky

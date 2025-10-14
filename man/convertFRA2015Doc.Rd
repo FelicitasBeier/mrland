@@ -23,7 +23,7 @@ a <- readSource("FRA2015Doc", "forest_area", convert = TRUE)
 }
 }
 \seealso{
-\code{\link{readFRA2015Doc}}, \code{\link{readSource}},
+\code{\link{readFRA2015Doc}}, \code{\link[madrat]{readSource}},
 }
 \author{
 Abhijeet Mishra

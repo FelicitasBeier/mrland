@@ -22,7 +22,7 @@ a <- readSource("S4Nproject_input", convert = "onlycorrect", aggregate = FALSE)
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Felicitas Beier

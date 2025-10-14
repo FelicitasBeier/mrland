@@ -7,8 +7,8 @@
 #' @return List with a magpie object
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{readNCDrisc}},
-#' \code{\link{calcIntake}}
+#' \code{\link[mrcommons]{readNCDrisc}},
+#' \code{\link[mrcommons]{calcIntake}}
 #'
 #' @examples
 #' \dontrun{

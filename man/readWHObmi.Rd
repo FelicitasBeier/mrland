@@ -15,5 +15,5 @@ http://www.who.int/childgrowth/standards/bmi_for_age/en/
 http://www.who.int/growthref/who2007_bmi_for_age/en/
 }
 \seealso{
-\code{\link{readNCDrisc}}
+\code{\link[mrcommons]{readNCDrisc}}
 }

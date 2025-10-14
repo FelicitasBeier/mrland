@@ -4,7 +4,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #'
 #' @author Benjamin Leon Bodirsky
-#' @seealso \code{\link{calcOutput}}
+#' @seealso \code{\link[madrat]{calcOutput}}
 #' @examples
 #' \dontrun{
 #' calcOutput("SOMexogenous")

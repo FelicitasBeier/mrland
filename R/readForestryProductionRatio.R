@@ -2,7 +2,7 @@
 #' 
 #' @return magpie object of the proportion of production coming from plantations
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ a <- readSource("ForestryProductionRatio")

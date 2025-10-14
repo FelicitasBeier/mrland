@@ -5,7 +5,7 @@
 #' @author Benjamin Leon Bodirsky
 #' @seealso
 #' \code{\link{calcEFch4Rice}},
-#' \code{\link{calcOutput}}
+#' \code{\link[madrat]{calcOutput}}
 #' @examples
 #'
 #' \dontrun{

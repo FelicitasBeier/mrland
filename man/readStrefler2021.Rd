@@ -22,7 +22,7 @@ readSource("Strefler2021",aggregate=FALSE)
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Florian Humpenöder

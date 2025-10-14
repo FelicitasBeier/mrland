@@ -21,7 +21,7 @@ calcOutput("ForestDisturbances",aggregate=FALSE)
 
 }
 \seealso{
-\code{\link{readFRA2020}}
+\code{\link[mrfaocore]{readFRA2020}}
 }
 \author{
 Abhijeet Mishra

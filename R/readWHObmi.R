@@ -6,7 +6,7 @@
 #' @return magpie object 
 #' 
 #' @seealso
-#' \code{\link{readNCDrisc}}
+#' \code{\link[mrcommons]{readNCDrisc}}
 #' 
 readWHObmi <- function() {
   file <- "BMI.csv"

@@ -13,7 +13,7 @@ Dummy file for regional exogenous tau path
 Dummy file for regional exogenous tau path
 }
 \seealso{
-\code{\link{readSource}}, \code{\link{calcOutput}}
+\code{\link[madrat]{readSource}}, \code{\link[madrat]{calcOutput}}
 }
 \author{
 Florian Humpenoeder

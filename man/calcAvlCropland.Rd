@@ -42,7 +42,7 @@ cropland cannot be expanded above this value.}
 \item{country_level}{Whether output shall be at country level.
 Requires aggregate=FALSE in calcOutput.}
 
-\item{cells}{magpiecell (59199 cells) or lpjcell (67420 cells)}
+\item{cells}{(deprecated) only lpjcell (67420 cells)}
 
 \item{luhBaseYear}{Base year of LUH land area}
 }

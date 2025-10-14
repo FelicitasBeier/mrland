@@ -29,7 +29,9 @@ calcNutritionAttributes <- function() {
     message(paste("The following items violate massbalance constraints: ",
                   paste(unique(dimnames(household)[[3]][which(household > fooduseFlour, arr.ind = TRUE)[, 3]]),
                         collapse = " "),
-                  ". Violating items are corrected through household balance flow."))
+                  ". Violating items are corrected through household balance flow.",
+                  "Epecially for livestock products it seems like FAOSTAT's nutrient conversion may be very",
+                  "different from our reasonable values."))
     household[household > fooduseFlour] <- fooduseFlour[household > fooduseFlour]
   }
 
@@ -63,7 +65,7 @@ calcNutritionAttributes <- function() {
   out[, , "scp"][, , "kcal"]    <- 20.9 / 4.184
   out[, , "scp"][, , "protein"] <- 0.45
 
-  # add years beyond 2010
+  # add missing years
   years        <- findset("time")
   lastyear     <- paste0("y", max(getYears(out, as.integer = TRUE)))
   missingyears <- setdiff(years, getYears(out))

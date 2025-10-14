@@ -7,7 +7,7 @@
 #'
 #' @return MAgPIE object of the calculated means of each MAgPIE region
 #' @author Nele Steinmetz
-#' @seealso \code{\link{calcOutput}}, \code{\link{readSathayeForest}},
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link{readSathayeForest}},
 #' \code{\link{convertSathayeForest}}
 #' @examples
 #'

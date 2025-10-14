@@ -24,7 +24,7 @@ calcOutput("FAOLossesWaste")
 }
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{readFAOLossesWaste}},
+\code{\link[madrat]{calcOutput}}, \code{\link{readFAOLossesWaste}},
 \code{\link{calcEATLancetWaste}}
 }
 \author{

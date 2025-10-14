@@ -30,7 +30,7 @@ a <- readSource(type = "EATLancet", subtype = "cons_data")
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Isabelle Weindl, Jan Philipp Dietrich, Felicitas Beier

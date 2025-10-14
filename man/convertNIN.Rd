@@ -29,7 +29,7 @@ a <- readSource(type="NIN",subtype="cons_data")
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Isabelle Weindl

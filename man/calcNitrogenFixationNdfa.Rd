@@ -19,7 +19,7 @@ calcOutput("calcNitrogenFixationNdfa")
 
 }
 \seealso{
-\code{\link{calcNitrogenFixationPast}}
+\code{\link[mrcommons]{calcNitrogenFixationPast}}
 }
 \author{
 Benjamin Leon Bodirsky

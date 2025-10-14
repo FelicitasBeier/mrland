@@ -6,7 +6,7 @@
 #' 
 #' @return regional trade balances
 #' @author Jan Philipp Dietrich
-#' @seealso \code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 #' @examples
 #' 
 #' \dontrun{ 

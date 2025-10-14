@@ -19,7 +19,7 @@ Read-in an Sathaye Forest data .csv file as magclass object
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Lavinia Baumstark, Felicitas Beier, Abhijeet Mishra

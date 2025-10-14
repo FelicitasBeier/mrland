@@ -21,7 +21,7 @@ corrects IMAGE inputs of total bioenergy (1st gen, 2nd gen and residues) demand 
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Felicitas Beier

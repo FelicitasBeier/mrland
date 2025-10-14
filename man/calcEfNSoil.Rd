@@ -19,7 +19,7 @@ Emission factors from cropland soils.
 }
 \examples{
 
-\dontrun{ 
+\dontrun{
 calcOutput("EmisNitrogenPast")
 }
 }

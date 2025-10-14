@@ -1,7 +1,7 @@
 #' @title calcHalfEarth
 #' @description Function calculates land area in 'Half Earth' conservation priority area
 #'
-#' @param cells number of cells of landmask (select "magpiecell" for 59199 cells or "lpjcell" for 67420 cells)
+#' @param cells (deprecated) always lpjcell (67420 cells)
 #' @param nclasses Options are either "seven" or "nine".
 #' \itemize{
 #' \item "seven" separates primary and secondary forest and includes "crop", "past", "forestry",
@@ -27,7 +27,7 @@
 calcHalfEarth <- function(cells = "lpjcell", nclasses = "seven") {
   # Land area (in Mha):
   iniLU <- calcOutput("LanduseInitialisation",
-                      cellular = TRUE, cells = cells,
+                      cellular = TRUE,
                       nclasses = nclasses, input_magpie = TRUE,
                       years = "y1995", aggregate = FALSE)
   landArea <- dimSums(iniLU, dim = 3)
@@ -37,15 +37,12 @@ calcHalfEarth <- function(cells = "lpjcell", nclasses = "seven") {
   getNames(halfEarthShr) <- "HalfEarth"
   getSets(halfEarthShr)  <- c("x", "y", "iso", "year", "data")
 
-  if (cells == "magpiecell") {
-    halfEarthShr <- toolCoord2Isocell(halfEarthShr, cells = cells)
-  }
   # Land area to be protected by 2050 (in Mha)
   x <- halfEarthShr * landArea
 
   # get WDPA baseline data (1995 - 2020)
   wdpaBase <- calcOutput("ProtectedAreaBaseline",
-                         aggregate = FALSE, cells = cells,
+                         aggregate = FALSE,
                          nclasses = nclasses, magpie_input = TRUE)
 
   # make sure that current WDPA protected areas
@@ -54,8 +51,8 @@ calcHalfEarth <- function(cells = "lpjcell", nclasses = "seven") {
   x <- toolConditionalReplace(x, "<0", 0)
 
   urbanLand <- calcOutput("UrbanLandFuture",
-                          subtype = "LUH2v2", aggregate = FALSE,
-                          timestep = "5year", cells = cells)
+                          subtype = "LUH3", aggregate = FALSE,
+                          timestep = "5year")
 
   # Conservation potential after 2020
   consvPot <- landArea - dimSums(wdpaBase[, "y2020", ], dim = 3) -

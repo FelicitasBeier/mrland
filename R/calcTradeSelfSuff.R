@@ -1,11 +1,11 @@
-#' Calculate food/material self sufficiencies
+#' @title calcTradeSelfSuff
 #'
-#' Calculates regional self sufficiences from FAO data as
+#' @description Calculates regional self sufficiences from FAO data as
 #' production/domestic_supply.
 #'
 #' @return Self sufficiences
 #' @author Ulrich Kreidenweis
-#' @seealso \code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 #' @examples
 #' \dontrun{
 #' a <- calcTradeSelfSuff()

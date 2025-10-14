@@ -2,7 +2,7 @@
 #' @description read in gridded future urban land use datasets, from LUH2 Hurtt data
 #' @return magpie object of gridded future urban land use in Mha, 2015-2100
 #' @author David Chen, Patrick v. Jeetze
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @importFrom magclass as.magpie
 #' @importFrom ncdf4 nc_open
 #' @importFrom terra ext rast aggregate extract ext<-

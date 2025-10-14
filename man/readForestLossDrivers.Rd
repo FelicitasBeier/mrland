@@ -20,7 +20,7 @@ a <- readSource("ForestLossDrivers")
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Abhijeet Mishra

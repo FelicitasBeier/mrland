@@ -10,7 +10,7 @@
 #'         unit and description.
 #'
 #' @author Isabelle Weindl
-#' @seealso \code{\link{calcOutput}}, \code{\link{readEATLancet}},
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link{readEATLancet}},
 #' \code{\link{calcEATLancetDiets}}
 #' @examples
 #' \dontrun{

@@ -2,7 +2,7 @@
 #' @description provides costs of pumping irrigation water
 #' @return A magpie object at iso level for all years with information on pumping costs
 #' @author Vartika Singh
-#' #' @seealso \code{\link{readSource}}, \code{\link{calcOutput}}
+#' #' @seealso \code{\link[madrat]{readSource}}, \code{\link[madrat]{calcOutput}}
 #' @importFrom magclass new.magpie
 #' @importFrom utils read.csv2
 #' @examples

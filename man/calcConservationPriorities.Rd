@@ -14,12 +14,12 @@ calcConservationPriorities(
 \item{consvBaseYear}{Reference year for land conservation. Chosing "y1750", for instance, means that
 the reference land use is based on the year 1750 ('pre-industrial') so
 land use can be restored to the pre-industrial state in conservation priority areas.
-Any year available in the LUH2v2 data set can be chosen. Historic land use in the LUH2v2 data
+Any year available in the LUH3 data set can be chosen. Historic land use in the LUH3 data
 is based on the HYDE data base.
 The choice "y2020" provides a special case, in which reference land use is based on the 2020 ESA CCI LULC map,
 derived at a spatial resolution of 300 x 300 Meter.}
 
-\item{cells}{number of cells of landmask (select "magpiecell" for 59199 cells or "lpjcell" for 67420 cells)}
+\item{cells}{(deprecated) number of cells of landmask (only "lpjcell" for 67420 cells)}
 
 \item{nclasses}{Options are either "seven" or "nine".
 \itemize{

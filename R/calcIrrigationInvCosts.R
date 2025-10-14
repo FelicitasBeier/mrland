@@ -8,7 +8,7 @@
 #'
 #' @author Nele Steinmetz, Felicitas Beier
 #'
-#' @seealso \code{\link{calcOutput}}, \code{\link{readWBirrigation}},
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link{readWBirrigation}},
 #' \code{\link{convertWBirrigation}}
 #'
 #' @examples

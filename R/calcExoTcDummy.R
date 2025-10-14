@@ -4,7 +4,7 @@
 #'
 #' @return Dummy file for regional exogenous tau path
 #' @author Florian Humpenoeder
-#' @seealso \code{\link{readSource}}, \code{\link{calcOutput}}
+#' @seealso \code{\link[madrat]{readSource}}, \code{\link[madrat]{calcOutput}}
 #' @importFrom magclass new.magpie
 #' @importFrom utils read.csv2
 

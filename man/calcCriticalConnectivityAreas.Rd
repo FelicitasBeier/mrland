@@ -12,7 +12,7 @@ calcCriticalConnectivityAreas(
 )
 }
 \arguments{
-\item{maginput}{Whether data should be transformed (based on LUH2v2 data) to match land use types used in MAgPIE.}
+\item{maginput}{Whether data should be transformed (based on LUH3 data) to match land use types used in MAgPIE.}
 
 \item{nclasses}{If \code{magpie_input = TRUE}. Options are either "seven" or "nine". Note that by default,
 the protected area is reported for urban land and forestry is zero.
@@ -24,7 +24,7 @@ differentiation of primary and secondary non-forest vegetation and therefore ret
 "crop", "past", "range", "forestry", "primforest", "secdforest", "urban", "primother" and "secdother"
 }}
 
-\item{cells}{magpiecell (59199 cells) or lpjcell (67420 cells)}
+\item{cells}{(deprecated) always lpjcell (67420 cells)}
 
 \item{mask}{Whether Key Biodiversity Areas ("KBA") or Global Safety Net and Key Biodiversity Areas
 ("KBA_GSN") are masked. This switch is useful for complementary scenario building.}

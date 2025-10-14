@@ -7,25 +7,25 @@
 calcTradeBalanceflow()
 }
 \value{
-global Domestic Balanceflows as MAgPIE object
+global domestic balanceflows as MAgPIE object
 }
 \description{
-Calculate the difference between the global production and the global
-domestic_supply. The difference is the result of imports not equaling
-exports, and because storage is not considered. The calculated
-DomesticBalanceflow assures that production matches domestic_supply. The
-goods come from nowhere and go to nowhere. The numbers are usually decreased
-linearly and become zero in 2050.
+Calculate the difference between the global production and
+             global domestic_supply (corrective balance flow).
+             The difference is the result of imports not equaling exports,
+             and because storage is not considered. The calculated
+             DomesticBalanceflow assures that production matches domestic_supply. The
+             goods come from nowhere and go to nowhere. The numbers are usually decreased
+             linearly and become zero in 2050.
 }
 \examples{
-
-\dontrun{ 
+\dontrun{
 a <- calcTradeBalanceflow()
 }
 
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+\code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 }
 \author{
 Ulrich Kreidenweis, Xiaoxi Wang

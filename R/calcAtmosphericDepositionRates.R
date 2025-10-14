@@ -8,8 +8,8 @@
 #' @author Benjamin Leon Bodirsky
 #'
 #' @seealso
-#' \code{\link{calcAtmosphericDeposition}},
-#' \code{\link{calcNitrogenBudgetCropland}}
+#' \code{\link[mrcommons]{calcAtmosphericDeposition}},
+#' \code{\link[mrcommons]{calcNitrogenBudgetCropland}}
 #' @examples
 #' \dontrun{
 #' calcOutput("AtmosphericDepositionRates")

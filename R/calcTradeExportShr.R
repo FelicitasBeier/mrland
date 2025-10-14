@@ -1,24 +1,24 @@
-#' Calculate export shares
+#' @title calcTradeExportShr
+#' @description Calculate  export shares of countries compared to total export. 
+#'              This is based on export values from FAOSTAT. 
+#'              Function calculates this based on average
+#'              values of the specified years.
 #'
-#' Provides export shares of countries compared to total export. This is based
-#' on export values from FAOSTAT. Function calculates this based on average
-#' values of the specified years.
-#'
-#' @return Export shares
+#' @return export shares as MAgPIE object
 #' @author Ulrich Kreidenweis, Xiaoxi Wang
-#' @seealso \code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 #' @examples
 #' \dontrun{
 #' a <- calcTradeExportShr()
 #' }
 #'
 calcTradeExportShr <- function() {
-  massbalance <- calcOutput("FAOmassbalance", aggregate = FALSE)
 
+  massbalance <- calcOutput("FAOmassbalance", aggregate = FALSE)
   massbalance <- massbalance[, , findset("k_trade")]
 
-  # export share is the regions' share in total exports. So the sum per commodity over all regions is 1
-
+  # export share is the regions' share in total exports. 
+  # So the sum per commodity over all regions is 1
   netexp <- massbalance[, , "export"][, , "dm"] - massbalance[, , "import"][, , "dm"]
   netexp[netexp < 0] <- 0
   netexp[, , "scp"] <- 1

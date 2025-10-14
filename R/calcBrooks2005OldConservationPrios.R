@@ -1,7 +1,7 @@
 #' @title calcBrooks2005OldConservationPrios
 #' @description Function calculates land area in conservation priority areas
 #'
-#' @param cells number of cells of landmask (select "magpiecell" for 59199 cells or "lpjcell" for 67420 cells)
+#' @param cells (deprecated) number of cells of landmask ("lpjcell" for 67420 cells)
 #' @param nclasses Options are either "seven" or "nine".
 #' \itemize{
 #' \item "seven" separates primary and secondary forest and includes "crop", "past", "forestry",
@@ -27,9 +27,11 @@
 calcBrooks2005OldConservationPrios <- function(cells = "lpjcell", nclasses = "seven") {
   # Land area (in Mha):
   iniLU <- calcOutput("LanduseInitialisation",
-    cellular = TRUE, cells = cells,
-    nclasses = nclasses, input_magpie = TRUE,
-    years = "y1995", aggregate = FALSE
+    cellular = TRUE,
+    nclasses = nclasses,
+    input_magpie = TRUE,
+    years = "y1995",
+    aggregate = FALSE
   )
   landArea <- dimSums(iniLU, dim = 3)
 
@@ -53,10 +55,7 @@ calcBrooks2005OldConservationPrios <- function(cells = "lpjcell", nclasses = "se
   getNames(halfEarthShr) <- "HalfEarth"
   getSets(halfEarthShr) <- c("x", "y", "iso", "year", "data")
 
-  if (cells == "magpiecell") {
-    halfEarthShr <- toolCoord2Isocell(halfEarthShr, cells = cells)
-  } else if (cells == "lpjcell") {
-    landArea <- collapseDim(addLocation(landArea), dim = c("N", "region"))
+  if (cells == "lpjcell") {
     tmp <- collapseDim(addLocation(x), dim = c("region", "cell"))
     x <- new.magpie(
       cells_and_regions = getCells(collapseDim(halfEarthShr, dim = "iso")),
@@ -92,7 +91,7 @@ calcBrooks2005OldConservationPrios <- function(cells = "lpjcell", nclasses = "se
   x <- toolConditionalReplace(x, "<0", 0)
 
   urbanLand <- calcOutput("UrbanLandFuture",
-    subtype = "LUH2v2", aggregate = FALSE,
+    subtype = "LUH3", aggregate = FALSE,
     timestep = "5year", cells = cells
   )
 

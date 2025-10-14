@@ -15,7 +15,7 @@
 #' @importFrom data.table fread
 #' @importFrom magclass complete_magpie
 #' @author Isabelle Weindl, Jan Philipp Dietrich, Felicitas Beier
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource(type = "EATLancet", subtype = "cons_data")

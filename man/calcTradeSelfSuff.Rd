@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcTradeSelfSuff.R
 \name{calcTradeSelfSuff}
 \alias{calcTradeSelfSuff}
-\title{Calculate food/material self sufficiencies}
+\title{calcTradeSelfSuff}
 \usage{
 calcTradeSelfSuff()
 }
@@ -20,7 +20,7 @@ a <- calcTradeSelfSuff()
 
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+\code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 }
 \author{
 Ulrich Kreidenweis

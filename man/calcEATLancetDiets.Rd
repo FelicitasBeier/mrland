@@ -32,7 +32,7 @@ calcOutput("EATLancetDiets")
 }
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{readEATLancet}},
+\code{\link[madrat]{calcOutput}}, \code{\link{readEATLancet}},
 \code{\link{convertEATLancet}}
 }
 \author{

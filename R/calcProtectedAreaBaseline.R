@@ -3,7 +3,7 @@
 #' @description Returns protected land area (Mha) in terms of cropland, pasture, forest and other
 #' land between 1995 and 2020.
 #'
-#' @param magpie_input Whether data should be transformed (based on LUH2v2 data) to match land use types used in MAgPIE.
+#' @param magpie_input Whether data should be transformed (based on LUH3 data) to match land use types used in MAgPIE.
 #' @param nclasses If \code{magpie_input = TRUE}. Options are either "seven" or "nine". Note that by default,
 #' the protected area is reported for urban land and forestry is zero.
 #' \itemize{
@@ -13,7 +13,7 @@
 #' differentiation of primary and secondary non-forest vegetation and therefore returns
 #' "crop", "past", "range", "forestry", "primforest", "secdforest", "urban", "primother" and "secdother"
 #' }
-#' @param cells magpiecell (59199 cells) or lpjcell (67420 cells)
+#' @param cells (deprecated) only lpjcell (67420 cells)
 #'
 #' @return List with a magpie object
 #' @author Patrick v. Jeetze
@@ -32,31 +32,25 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
   PABaseline <- readSource("ProtectedAreaBaseline", convert = "onlycorrect") # nolint
 
   if (magpie_input == TRUE) {
-    luh2v2 <- calcOutput("LUH2v2",
-      landuse_types = "LUH2v2", aggregate = FALSE,
-      cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
-      selectyears = c("y1995", "y2000", "y2005", "y2010", "y2015")
+    luh3 <- calcOutput("LUH3",
+      landuseTypes = "LUH3", aggregate = FALSE,
+      cellular = TRUE,
+      yrs = c(1995, 2000, 2005, 2010, 2015, 2020)
     )
 
     # extend the data set to all time steps provided in the protected area data
     # i.e. use the data from the year 2015 for the year 2020.
-    luh2v2 <- setCells(
-      mbind(
-        luh2v2,
-        setYears(
-          luh2v2[, "y2015", ],
-          "y2020"
-        )
-      ),
+    luh3 <- setCells(
+      luh3,
       getCells(PABaseline)
     )
 
     # calculate total land area
-    landArea <- dimSums(luh2v2[, "y1995", ], dim = 3)
+    landArea <- dimSums(luh3[, "y1995", ], dim = 3)
 
     # urban land
     urbanLand <- calcOutput("UrbanLandFuture",
-      subtype = "LUH2v2", aggregate = FALSE,
+      subtype = "LUH3", aggregate = FALSE,
       timestep = "5year", cells = "lpjcell"
     )
 
@@ -83,10 +77,10 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
     )
 
     if (nclasses %in% c("seven", "nine")) {
-      # differentiate primary and secondary forest based on luh2v2 data
-      totforestluh <- dimSums(luh2v2[, , c("primf", "secdf")], dim = 3)
-      primforestShr <- luh2v2[, , "primf"] / setNames(totforestluh + 1e-10, NULL)
-      secdforestShr <- luh2v2[, , "secdf"] / setNames(totforestluh + 1e-10, NULL)
+      # differentiate primary and secondary forest based on luh3 data
+      totforestluh <- dimSums(luh3[, , c("primf", "secdf")], dim = 3)
+      primforestShr <- luh3[, , "primf"] / setNames(totforestluh + 1e-10, NULL)
+      secdforestShr <- luh3[, , "secdf"] / setNames(totforestluh + 1e-10, NULL)
       # where luh2 does not report forest, but we find forest land in
       # protected area data, set share of secondary forest land to 1
       secdforestShr[secdforestShr == 0 & primforestShr == 0] <- 1
@@ -121,9 +115,9 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
 
     if (nclasses == "nine") {
       # separate pasture into pasture and rangeland
-      totgrassluh <- dimSums(luh2v2[, , c("pastr", "range")], dim = 3)
-      pastShr <- luh2v2[, , "pastr"] / setNames(totgrassluh + 1e-10, NULL)
-      rangeShr <- luh2v2[, , "range"] / setNames(totgrassluh + 1e-10, NULL)
+      totgrassluh <- dimSums(luh3[, , c("pastr", "range")], dim = 3)
+      pastShr <- luh3[, , "pastr"] / setNames(totgrassluh + 1e-10, NULL)
+      rangeShr <- luh3[, , "range"] / setNames(totgrassluh + 1e-10, NULL)
       # where luh2 does not report grassland, but we find grassland in
       # protected area data, set share of rangeland to 1
       rangeShr[pastShr == 0 & rangeShr == 0] <- 1
@@ -133,9 +127,9 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
       range <- setNames(range, sub("past", "range", getNames(range)))
 
       # separate other land into primary and secondary
-      tototherluh <- dimSums(luh2v2[, , c("primn", "secdn")], dim = 3)
-      primotherShr <- luh2v2[, , "primn"] / setNames(tototherluh + 1e-10, NULL)
-      secdotherShr <- luh2v2[, , "secdn"] / setNames(tototherluh + 1e-10, NULL)
+      tototherluh <- dimSums(luh3[, , c("primn", "secdn")], dim = 3)
+      primotherShr <- luh3[, , "primn"] / setNames(tototherluh + 1e-10, NULL)
+      secdotherShr <- luh3[, , "secdn"] / setNames(tototherluh + 1e-10, NULL)
       # where luh2 does not report other land, but we find other land in
       # protected area data, set share of secondary other land to 1
       secdotherShr[secdotherShr == 0 & primotherShr == 0] <- 1
@@ -156,12 +150,6 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
     }
   } else {
     out <- PABaseline
-  }
-
-  if (cells == "magpiecell") {
-    out <- toolCoord2Isocell(out)
-  } else if (cells != "lpjcell") {
-    stop("Please specify cells argument")
   }
 
   return(list(

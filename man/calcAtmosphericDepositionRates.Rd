@@ -24,8 +24,8 @@ calcOutput("AtmosphericDepositionRates")
 
 }
 \seealso{
-\code{\link{calcAtmosphericDeposition}},
-\code{\link{calcNitrogenBudgetCropland}}
+\code{\link[mrcommons]{calcAtmosphericDeposition}},
+\code{\link[mrcommons]{calcNitrogenBudgetCropland}}
 }
 \author{
 Benjamin Leon Bodirsky

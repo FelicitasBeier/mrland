@@ -18,7 +18,7 @@ calcOutput("PlantationContribution")
 }
 }
 \seealso{
-\code{\link{calcFAOmassbalance_pre}}
+\code{\link[mrfaocore]{calcFAOmassbalance_pre}}
 }
 \author{
 Abhijeet Mishra

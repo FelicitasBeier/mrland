@@ -2,17 +2,18 @@
 % Please edit documentation in R/calcTradeExportShr.R
 \name{calcTradeExportShr}
 \alias{calcTradeExportShr}
-\title{Calculate export shares}
+\title{calcTradeExportShr}
 \usage{
 calcTradeExportShr()
 }
 \value{
-Export shares
+export shares as MAgPIE object
 }
 \description{
-Provides export shares of countries compared to total export. This is based
-on export values from FAOSTAT. Function calculates this based on average
-values of the specified years.
+Calculate  export shares of countries compared to total export. 
+             This is based on export values from FAOSTAT. 
+             Function calculates this based on average
+             values of the specified years.
 }
 \examples{
 \dontrun{
@@ -21,7 +22,7 @@ a <- calcTradeExportShr()
 
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{calcFAOmassbalance}}
+\code{\link[madrat]{calcOutput}}, \code{\link[mrcommons]{calcFAOmassbalance}}
 }
 \author{
 Ulrich Kreidenweis, Xiaoxi Wang

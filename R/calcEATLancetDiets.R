@@ -12,7 +12,7 @@
 #' @param FAOcountr if TRUE, estimates for countries not covered in FAOSTAT are set to Zero.
 #'
 #' @author Isabelle Weindl
-#' @seealso \code{\link{calcOutput}}, \code{\link{readEATLancet}},
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link{readEATLancet}},
 #' \code{\link{convertEATLancet}}
 #' @examples
 #' \dontrun{

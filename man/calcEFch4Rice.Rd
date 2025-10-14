@@ -25,7 +25,7 @@ calcOutput("EFch4Rice")
 }
 \seealso{
 \code{\link{calcEFch4AWMS}},
-\code{\link{calcOutput}}
+\code{\link[madrat]{calcOutput}}
 }
 \author{
 Benjamin Leon Bodirsky

@@ -3,8 +3,8 @@
 #' @return List of magpie objects with results on global level, empty weight, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{calcNitrogenFixationPast}}
-#' \code{\link{readHerridge}} 
+#' \code{\link[mrcommons]{calcNitrogenFixationPast}}
+#' \code{\link[mrcommons]{readHerridge}} 
 #' @examples
 #' 
 #' \dontrun{ 

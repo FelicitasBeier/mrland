@@ -11,7 +11,7 @@ calcIrrecoverableCarbonLand(
 )
 }
 \arguments{
-\item{maginput}{Whether data should be transformed (based on LUH2v2 data) to match land use types used in MAgPIE.}
+\item{maginput}{Whether data should be transformed (based on luh3 data) to match land use types used in MAgPIE.}
 
 \item{nclasses}{If \code{magpie_input = TRUE}. Options are either "seven" or "nine". Note that by default,
 the protected area is reported for urban land and forestry is zero.

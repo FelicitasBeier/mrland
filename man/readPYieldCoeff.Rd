@@ -20,7 +20,7 @@ a <- readSource("PYieldCoeff")
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Isabelle Weindl

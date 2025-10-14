@@ -20,5 +20,5 @@ calcOutput("PumpingCosts")
 }
 \author{
 Vartika Singh
-#' @seealso \code{\link{readSource}}, \code{\link{calcOutput}}
+#' @seealso \code{\link[madrat]{readSource}}, \code{\link[madrat]{calcOutput}}
 }

@@ -23,7 +23,7 @@ William I. Jones(1991) "The World Bank and Irrigation" (World Bank Operations Ev
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Lavinia Baumstark

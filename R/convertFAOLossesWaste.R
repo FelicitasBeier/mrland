@@ -11,7 +11,7 @@
 #' }
 #' @return Data on  food losses and waste as MAgPIE object at ISO country level
 #' @author Isabelle Weindl
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{

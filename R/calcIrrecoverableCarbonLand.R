@@ -3,7 +3,7 @@
 #' @description Returns unprotected land area (Mha) that covers 50 %, 75% and
 #' 99% of irrecoverable carbon as defined in Noon et al (2022).
 
-#' @param maginput Whether data should be transformed (based on LUH2v2 data) to match land use types used in MAgPIE.
+#' @param maginput Whether data should be transformed (based on luh3 data) to match land use types used in MAgPIE.
 #' @param nclasses If \code{magpie_input = TRUE}. Options are either "seven" or "nine". Note that by default,
 #' the protected area is reported for urban land and forestry is zero.
 #' \itemize{
@@ -40,20 +40,20 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
   )
 
   if (maginput == TRUE) {
-    luh2v2 <- calcOutput("LUH2v2",
-      landuse_types = "LUH2v2", aggregate = FALSE,
-      cellular = TRUE, cells = "lpjcell", irrigation = FALSE,
-      selectyears = "y2015"
+    luh3 <- calcOutput("LUH3",
+      landuseTypes = "LUH3", aggregate = FALSE,
+      cellular = TRUE,
+      yrs = 2015
     )
-    getYears(luh2v2) <- NULL
-    getCells(luh2v2) <- getCells(ic)
+    getYears(luh3) <- NULL
+    getCells(luh3) <- getCells(ic)
 
     # calculate total land area
-    landArea <- dimSums(luh2v2, dim = 3)
+    landArea <- dimSums(luh3, dim = 3)
 
     # urban land
     urbanLand <- calcOutput("UrbanLandFuture",
-      subtype = "LUH2v2", aggregate = FALSE,
+      subtype = "LUH3", aggregate = FALSE,
       timestep = "5year", cells = "lpjcell"
     )
 
@@ -83,10 +83,10 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
 
     if (nclasses %in% c("seven", "nine")) {
 
-      # differentiate primary and secondary forest based on LUH2v2 data
-      totForestLUH <- dimSums(luh2v2[, , c("primf", "secdf")], dim = 3) # nolint
-      primforestShr <- luh2v2[, , "primf"] / setNames(totForestLUH + 1e-10, NULL)
-      secdforestShr <- luh2v2[, , "secdf"] / setNames(totForestLUH + 1e-10, NULL)
+      # differentiate primary and secondary forest based on luh3 data
+      totForestLUH <- dimSums(luh3[, , c("primf", "secdf")], dim = 3) # nolint
+      primforestShr <- luh3[, , "primf"] / setNames(totForestLUH + 1e-10, NULL)
+      secdforestShr <- luh3[, , "secdf"] / setNames(totForestLUH + 1e-10, NULL)
       # where luh2 does not report forest, but we find forest land in
       # irrecoverable carbon data, set share of secondary forest land to 1
       secdforestShr[secdforestShr == 0 & primforestShr == 0] <- 1
@@ -110,9 +110,9 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
     if (nclasses == "nine") {
 
       # separate pasture into pasture and rangeland
-      totGrassLUH <- dimSums(luh2v2[, , c("pastr", "range")], dim = 3) # nolint
-      pastShr <- luh2v2[, , "pastr"] / setNames(totGrassLUH + 1e-10, NULL)
-      rangeShr <- luh2v2[, , "range"] / setNames(totGrassLUH + 1e-10, NULL)
+      totGrassLUH <- dimSums(luh3[, , c("pastr", "range")], dim = 3) # nolint
+      pastShr <- luh3[, , "pastr"] / setNames(totGrassLUH + 1e-10, NULL)
+      rangeShr <- luh3[, , "range"] / setNames(totGrassLUH + 1e-10, NULL)
       # where luh2 does not report grassland, but we find grassland in
       # irrecoverable carbon data, set share of rangeland to 1
       rangeShr[pastShr == 0 & rangeShr == 0] <- 1
@@ -121,9 +121,9 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
       range <- setNames(rangeShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "past", sep = ".")]
 
       # separate other land into primary and secondary
-      totOtherLUH <- dimSums(luh2v2[, , c("primn", "secdn")], dim = 3) # nolint
-      primotherShr <- luh2v2[, , "primn"] / setNames(totOtherLUH + 1e-10, NULL)
-      secdotherShr <- luh2v2[, , "secdn"] / setNames(totOtherLUH + 1e-10, NULL)
+      totOtherLUH <- dimSums(luh3[, , c("primn", "secdn")], dim = 3) # nolint
+      primotherShr <- luh3[, , "primn"] / setNames(totOtherLUH + 1e-10, NULL)
+      secdotherShr <- luh3[, , "secdn"] / setNames(totOtherLUH + 1e-10, NULL)
       # where luh2 does not report other land, but we find other land in
       # irrecoverable carbon data, set share of secondary other land to 1
       secdotherShr[secdotherShr == 0 & primotherShr == 0] <- 1

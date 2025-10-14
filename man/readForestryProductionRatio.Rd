@@ -19,7 +19,7 @@ Read Forestry Production Ratio
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Abhijeet Mishra

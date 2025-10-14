@@ -5,7 +5,7 @@
 #' 
 #' @return magpie object at country-level resolution
 #' @author Felicitas Beier
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ a <- readSource("S4Nproject_input", aggregate=FALSE)

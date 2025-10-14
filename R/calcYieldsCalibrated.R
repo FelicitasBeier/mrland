@@ -2,7 +2,7 @@
 #' @description This functions calibrates extracted yields from LPJmL to
 #'              FAO country level yields
 #'
-#' @param datasource    Defines LPJmL version for main crop inputs and isimip replacement.
+#' @param source        Defines LPJmL version for main crop inputs and isimip replacement.
 #'                      For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
 #'                      "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"
 #' @param climatetype   switch between different climate scenarios
@@ -71,6 +71,7 @@
 calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", isimip = NULL),
                                  climatetype = "GSWP3-W5E5:historical",
                                  refYear = "y1995", selectyears = seq(1965, 2100, by = 5),
+                                 cells = "lpjcell",
                                  multicropping = FALSE, refYields = FALSE,
                                  areaSource = "FAO", marginal_land = "magpie", # nolint
                                  average = 5, aggregation = "country") {
@@ -112,7 +113,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
     cropareaMAGgrid <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE,
                                   cellular = TRUE,  cells = "lpjcell",
                                   irrigation = TRUE, aggregate = FALSE)[, refYear, crops]
-    cropareaMAGgrid <- dimOrder(cropareaMAGgrid, perm = c(2, 1), dim = 3)
+
 
     # total irrigated & rainfed cropland (for correction of 0 cropland areas)
     proxyMAGgrid    <- dimSums(cropareaMAGgrid, dim = "MAG")
@@ -125,6 +126,7 @@ calcYieldsCalibrated <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9c
     cropareaMAGgrid <- dimOrder(cropareaMAGgrid, perm = c(2, 1), dim = 3)
     # total irrigated & rainfed cropland (for correction of 0 cropland areas)
     proxyMAGgrid    <- dimSums(cropareaMAGgrid, dim = "crop")
+
   }
 
   # Aggregate to country values

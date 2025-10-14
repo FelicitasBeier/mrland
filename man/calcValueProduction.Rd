@@ -24,8 +24,8 @@ calcOutput("ValueProduction")
 
 }
 \seealso{
-\code{\link{calcProduction}},
-\code{\link{calcPriceAgriculture}}
+\code{\link[mrcommons]{calcProduction}},
+\code{\link[mrcommons]{calcPriceAgriculture}}
 }
 \author{
 David Chen

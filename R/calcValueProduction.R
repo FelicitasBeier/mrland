@@ -5,8 +5,8 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author David Chen
 #' @seealso
-#' \code{\link{calcProduction}},
-#' \code{\link{calcPriceAgriculture}}
+#' \code{\link[mrcommons]{calcProduction}},
+#' \code{\link[mrcommons]{calcPriceAgriculture}}
 #' @examples
 #' \dontrun{
 #' calcOutput("ValueProduction")

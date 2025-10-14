@@ -9,7 +9,7 @@ readREMIND(subtype)
 \arguments{
 \item{subtype}{A string composed of three items: unit, revision and indicator.
 Unit can be either "intensive" or "extensive", revision is the input data
-revision, and indicator is the name of thre REMIND indicator}
+revision, and indicator is the name of the REMIND indicator}
 }
 \value{
 MAgPIE object with regional aggregation of REMIND H12
@@ -24,7 +24,7 @@ readSource("REMIND",aggregate=FALSE)
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 David Klein

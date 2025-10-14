@@ -5,7 +5,7 @@
 #' @return MAgPIE object with regional aggregation of REMIND H12
 #' @author Florian Humpenöder
 #' @seealso
-#' \code{\link{readSource}}
+#' \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ 

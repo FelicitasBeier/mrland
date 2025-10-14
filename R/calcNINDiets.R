@@ -12,7 +12,7 @@
 #' @param FAOcountr if TRUE, estimates for countries not covered in FAOSTAT are set to Zero.
 #'
 #' @author Isabelle Weindl
-#' @seealso \code{\link{calcOutput}}, \code{\link{readNIN}},
+#' @seealso \code{\link[madrat]{calcOutput}}, \code{\link{readNIN}},
 #' \code{\link{convertNIN}}
 #' @examples
 #' \dontrun{

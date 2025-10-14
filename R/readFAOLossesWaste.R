@@ -10,7 +10,7 @@
 #' }
 #' @return magpie object of food waste percentages for several commodity groups 
 #' @author Isabelle Weindl
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ a <- readSource(type="FAOLossesWaste",subtype="Consumption")

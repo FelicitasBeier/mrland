@@ -131,7 +131,7 @@ calcISIMIP3bYields <- function(subtype = "yields:EPIC-IIASA:ukesm1-0-ll:ssp585:d
 
   # weight for aggregation
   cropAreaWeight <- dimSums(calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = FALSE,
-                                       cellular = TRUE, cells = cells, aggregate = FALSE, years = "y1995",
+                                       cellular = TRUE, aggregate = FALSE, years = "y1995",
                                        round = 6)[, , getNames(x, dim = 1)],
                             dim = 3)
 

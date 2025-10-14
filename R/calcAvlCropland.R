@@ -28,7 +28,7 @@
 #' @param cell_upper_bound Upper bound for cropland at the grid cell level.
 #'                         Even if, for instance, the total available cropland area equals the land area in a grid cell,
 #'                         cropland cannot be expanded above this value.
-#' @param cells            magpiecell (59199 cells) or lpjcell (67420 cells)
+#' @param cells            (deprecated) only lpjcell (67420 cells)
 #' @param country_level    Whether output shall be at country level.
 #'                         Requires aggregate=FALSE in calcOutput.
 #' @param luhBaseYear      Base year of LUH land area
@@ -60,8 +60,8 @@ calcAvlCropland <- function(marginal_land = "magpie", cell_upper_bound = 0.9, co
   }
 
   # read luh data in chosen base year
-  luh <- calcOutput("LUH2v2", landuse_types = "magpie", aggregate = FALSE,
-                    cellular = TRUE, cells = "lpjcell", irrigation = FALSE, years = luhBaseYear)
+  luh <- calcOutput("LUH3", landuseTypes = "magpie", aggregate = FALSE,
+                    cellular = TRUE, irrigation = FALSE, years = luhBaseYear)
   # sum land area per grid cell
   landarea <- dimSums(luh, dim = 3)
 
@@ -216,11 +216,7 @@ calcAvlCropland <- function(marginal_land = "magpie", cell_upper_bound = 0.9, co
 
   } else {
 
-    if (cells == "magpiecell") {
-
-      out <- toolCoord2Isocell(x)
-
-    } else if (cells == "lpjcell") {
+    if (cells == "lpjcell") {
 
       out <- x
 

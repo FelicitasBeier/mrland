@@ -5,7 +5,7 @@
 #' 
 #' @return magpie object of the Sathaye Forest data
 #' @author Lavinia Baumstark, Felicitas Beier, Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ a <- readSource("SathayeForest")

@@ -10,7 +10,7 @@
 #' }
 #' @return EAT Lancet data as MAgPIE object at ISO country level
 #' @author Isabelle Weindl, Felicitas Beier
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' \dontrun{
 #' a <- readSource(type = "EATLancet", subtype = "cons_data")

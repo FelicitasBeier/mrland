@@ -28,7 +28,7 @@ a <- readSource(type="FAOLossesWaste",subtype="Consumption")
 }
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Isabelle Weindl

@@ -7,7 +7,7 @@
 calcHalfEarth(cells = "lpjcell", nclasses = "seven")
 }
 \arguments{
-\item{cells}{number of cells of landmask (select "magpiecell" for 59199 cells or "lpjcell" for 67420 cells)}
+\item{cells}{(deprecated) always lpjcell (67420 cells)}
 
 \item{nclasses}{Options are either "seven" or "nine".
 \itemize{

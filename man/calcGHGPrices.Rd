@@ -33,7 +33,7 @@ calcOutput("GHGPrices")
 }
 }
 \seealso{
-\code{\link{readSSPResults}}
+\code{\link[mrcommons]{readSSPResults}}
 }
 \author{
 David Chen, Benjamin Leon Bodirsky, David Klein

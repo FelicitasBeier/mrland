@@ -23,7 +23,7 @@ a <- calcOutput("AfforestCosts")
 }
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{readSathayeForest}},
+\code{\link[madrat]{calcOutput}}, \code{\link{readSathayeForest}},
 \code{\link{convertSathayeForest}}
 }
 \author{

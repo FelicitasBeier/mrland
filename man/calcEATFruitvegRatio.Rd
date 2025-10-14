@@ -24,8 +24,8 @@ calcOutput("EATFruitvegRatio")
 }
 }
 \seealso{
-\code{\link{calcOutput}}, \code{\link{calcEATLancetTargets}}, \code{\link{calcFAOharmonized}},
-\code{\link{calcEATLancetDiets}}
+\code{\link[madrat]{calcOutput}}, \code{\link{calcEATLancetTargets}},
+\code{\link[mrfaocore]{calcFAOharmonized}}, \code{\link{calcEATLancetDiets}}
 }
 \author{
 Isabelle Weindl, Felicitas Beier

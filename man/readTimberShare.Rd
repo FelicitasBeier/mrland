@@ -23,7 +23,7 @@ a <- readSource("TimberShare")
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Abhijeet Mishra

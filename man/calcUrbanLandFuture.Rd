@@ -6,7 +6,7 @@
 \usage{
 calcUrbanLandFuture(
   timestep = "5year",
-  subtype = "LUH2v2",
+  subtype = "LUH3",
   cells = "lpjcell",
   cellular = TRUE
 )
@@ -14,9 +14,9 @@ calcUrbanLandFuture(
 \arguments{
 \item{timestep}{5year or yearly}
 
-\item{subtype}{where the data source comes from ("LUH2v2" or "Gao")}
+\item{subtype}{where the data source comes from ("LUH3" or "Gao")}
 
-\item{cells}{magpiecell (59199 cells) or lpjcell (67420 cells)}
+\item{cells}{(deprecated) lpjcell (67420 cells)}
 
 \item{cellular}{TRUE for results on 0.5 degree grid.}
 }

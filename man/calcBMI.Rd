@@ -21,8 +21,8 @@ calcOutput("BMI",aggregate=FALSE)
 
 }
 \seealso{
-\code{\link{readNCDrisc}},
-\code{\link{calcIntake}}
+\code{\link[mrcommons]{readNCDrisc}},
+\code{\link[mrcommons]{calcIntake}}
 }
 \author{
 Benjamin Leon Bodirsky

@@ -21,8 +21,8 @@
 calcProtectArea <- function(cells = "lpjcell", bhifl = TRUE) {
 
   # Land area (in Mha):
-  landArea <- setYears(collapseNames(dimSums(readSource("LUH2v2", subtype = "states_1995to1996",
-                                                        convert = "onlycorrect")[, "y1995", ],
+  landArea <- setYears(collapseNames(dimSums(calcOutput("LUH3", yrs = 1995, cellular = TRUE,
+                                                        aggregate = FALSE),
                                              dim = 3)),
                        NULL)
 

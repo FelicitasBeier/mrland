@@ -7,7 +7,7 @@
 #'
 #' @return MAgPIE object
 #' @author Isabelle Weindl
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @export
 #'
 #' @examples

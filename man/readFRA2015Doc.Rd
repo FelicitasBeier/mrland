@@ -22,7 +22,7 @@ Read-in an FRA data from 2015 (forest resource assessment).
 
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 Abhijeet Mishra

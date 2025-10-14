@@ -4,7 +4,7 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link{calcNitrogenFixationPast}}
+#' \code{\link[mrcommons]{calcNitrogenFixationPast}}
 #' @examples
 #' \dontrun{
 #' calcOutput("calcNitrogenFixationNdfa")
@@ -12,7 +12,7 @@
 #'
 calcNitrogenFixationNdfa <- function() {
 
-  past      <- findset("past")
+  past      <- findset("past_til2020")
   ndfa      <- setYears(readSource("Herridge", subtype = "ndfa"), NULL)
   harvest   <- collapseNames(calcOutput("FAOmassbalance", aggregate = FALSE)[, , "nr"][, , "production"])
   harvest   <- add_dimension(harvest, dim = 3.1, add = "data1", nm = "organ")

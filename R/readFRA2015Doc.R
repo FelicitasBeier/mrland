@@ -6,7 +6,7 @@
 #' @param subtype data subtype. 
 #' @return magpie object of the FRA 2015 data
 #' @author Abhijeet Mishra
-#' @seealso \code{\link{readSource}}
+#' @seealso \code{\link[madrat]{readSource}}
 #' @examples
 #' 
 #' \dontrun{ a <- readSource("FRA2015Doc","forest_area")

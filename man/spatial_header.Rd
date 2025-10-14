@@ -25,7 +25,7 @@ spatial_header("regionmappingMAgPIE.csv")
 
 }
 \seealso{
-\code{\link{regionscode}}
+\code{\link[madrat]{regionscode}}
 }
 \author{
 Jan Philipp Dietrich

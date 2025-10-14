@@ -13,7 +13,7 @@ magpie object of gridded future urban land use in Mha, 2015-2100
 read in gridded future urban land use datasets, from LUH2 Hurtt data
 }
 \seealso{
-\code{\link{readSource}}
+\code{\link[madrat]{readSource}}
 }
 \author{
 David Chen, Patrick v. Jeetze

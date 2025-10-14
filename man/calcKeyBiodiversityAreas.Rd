@@ -12,7 +12,7 @@ calcKeyBiodiversityAreas(
 )
 }
 \arguments{
-\item{maginput}{Whether data should be transformed (based on LUH2v2 data) to match land use types used in MAgPIE.}
+\item{maginput}{Whether data should be transformed (based on luh3 data) to match land use types used in MAgPIE.}
 
 \item{unprotected}{if TRUE only KBA land that is currently unprotected is returned}
 

@@ -31,7 +31,7 @@ calcProcessing_shares <- function() { # nolint
   out <- calcshare(c("branoil1", "oil1", "oil2"), c("oils"))
   out <- calcshare(c("ethanol1"), c("ethanol"))
   out <- calcshare(c("molasses1"), c("molasses"))
-  out <- calcshare(c("sugar1"), c("sugar"))
+  out <- calcshare(c("sugar1", "sugar2", "sugar3"), c("sugar"))
   out <- calcshare(c("oilcakes1"), c("oilcakes"))
 
   out$x[, , "scp"][, , "Xbegr"] <- 0.5

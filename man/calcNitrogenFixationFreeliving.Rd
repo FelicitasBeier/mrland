@@ -20,8 +20,8 @@ calcOutput("NitrogenFixationFreeliving")
 
 }
 \seealso{
-\code{\link{calcNitrogenFixationPast}}
-\code{\link{readHerridge}}
+\code{\link[mrcommons]{calcNitrogenFixationPast}}
+\code{\link[mrcommons]{readHerridge}}
 }
 \author{
 Benjamin Leon Bodirsky

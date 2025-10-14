@@ -5,7 +5,7 @@
 #' @return MAgPIE object with FRA 2020 forest disturbance shares
 #' @author Abhijeet Mishra
 #' @seealso
-#' \code{\link{readFRA2020}}
+#' \code{\link[mrfaocore]{readFRA2020}}
 #' 
 #' @examples
 #' 
