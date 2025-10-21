@@ -28,6 +28,7 @@ scaled data in magclass format
 }
 \description{
 This tool scales time series based on the approach used in the magpiemodel yield module.
+#ToDo kristine: describe approach
 }
 \author{
 Kristine Karstens

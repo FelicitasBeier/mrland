@@ -9,17 +9,16 @@ calcYieldsCalibrated(
   climatetype = "GSWP3-W5E5:historical",
   refYear = "y1995",
   selectyears = seq(1965, 2100, by = 5),
+  cells = "lpjcell",
   multicropping = FALSE,
   refYields = FALSE,
   areaSource = "FAO",
-  marginal_land = "magpie"
+  marginal_land = "magpie",
+  average = 5,
+  aggregation = "country"
 )
 }
 \arguments{
-\item{datasource}{Defines LPJmL version for main crop inputs and isimip replacement.
-For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
-"yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"}
-
 \item{climatetype}{switch between different climate scenarios}
 
 \item{refYear}{reference year for calibration}
@@ -71,6 +70,14 @@ of the marginal land are are excluded
                        "q33_marginal:rainfed_and_irrigated" and
                        "no_marginal:rainfed_and_irrigated" in a magclass object to be used as magpie input.
 }}
+
+\item{average}{Averaging period in years used in calcFAOYield (if NULL no averaging is used)}
+
+\item{aggregation}{Aggregation at which calibration is performed (options: "country", "continents", "GLO")}
+
+\item{source}{Defines LPJmL version for main crop inputs and isimip replacement.
+For isimip choose crop model/gcm/rcp/co2 combination formatted like this:
+"yields:EPIC-IIASA:ukesm1-0-ll:ssp585:default:3b"}
 }
 \value{
 magpie object in cellular resolution from reference year onwards
