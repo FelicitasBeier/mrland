@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("ConservationPriority2", aggregate = FALSE)
+#' calcOutput("ConservationPriorities", aggregate = FALSE)
 #' }
 #'
 #' @importFrom magpiesets findset addLocation
