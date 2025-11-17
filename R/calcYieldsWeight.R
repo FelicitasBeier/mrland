@@ -1,9 +1,9 @@
 #' @title calcYieldsWeight
 #'
 #' @description This function calculates the crop area weightings to use for yields.
-#' @param weighting     use of different weights (totalCrop (default),
-#'                      totalLUspecific, cropSpecific, crop+irrigSpecific,
-#'                      avlCropland, avlCropland+avlPasture)
+#' @param weighting      use of different weights (totalCrop (default),
+#'                       totalLUspecific, cropSpecific, crop+irrigSpecific,
+#'                       avlCropland, avlCropland+avlPasture)
 #' @param marginal_land  Defines which share of marginal land should be included (see options below) and
 #'                       whether suitable land under irrigated conditions ("irrigated"),
 #'                       under rainfed conditions ("rainfed")
@@ -42,13 +42,14 @@
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
 
-calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "magpie") { # nolint
+calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "q33_marginal:rainfed_and_irrigated") { # nolint
 
 
   #### To Do: fix this function! Currently pasture is weighted with cropland...
 
-  yieldNames <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral", where = "mappingfolder")$MAgPIE
-  isos <- toolGetMappingCoord2Country()
+  yieldNames <- toolGetMapping("MAgPIE_LPJmL.csv", type = "sectoral",
+                               where = "mappingfolder")$MAgPIE
+  isos       <- toolGetMappingCoord2Country()
   yieldCells <- paste(isos$coords, isos$iso, sep = ".")
 
 
@@ -102,9 +103,14 @@ calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "magpie") 
 
   } else if (weighting == "avlCropland") {
 
-    cropAreaWeight <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
-                                          country_level = FALSE, aggregate = FALSE),
-                               NULL) + 10e-10
+    avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
+                                    country_level = FALSE, aggregate = FALSE),
+                        NULL) + 10e-10
+
+    cropAreaWeight <- new.magpie(cells_and_regions = yieldCells,
+                                 years = NULL,
+                                 names = yieldNames,
+                                 fill = avlCrop)
 
   } else if (weighting == "avlCropland+avlPasture") {
 
@@ -124,7 +130,6 @@ calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "magpie") 
                                                   dim = 3)) + 10e-10
 
   } else {
-
     stop("Weighting setting is not available.")
   }
 
@@ -133,6 +138,6 @@ calcYieldsWeight <- function(weighting = "totalCrop", marginal_land = "magpie") 
   return(list(x            = cropAreaWeight,
               weight       = NULL,
               unit         = "Mha",
-              description  = "Yields in tons per hectar for different crop types.",
+              description  = "Area-based weight for yields",
               isocountries = FALSE))
 }
