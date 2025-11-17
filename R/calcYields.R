@@ -72,7 +72,7 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
                        selectyears = seq(1965, 2100, by = 5),
                        weighting = "totalCrop", multicropping = FALSE,
                        indiaYields = FALSE, scaleFactor = 0.3,
-                       marginal_land = "magpie") { # nolint
+                       marginal_land = "q33_marginal:rainfed_and_irrigated") { # nolint
 
   # Set up size limit
   local_options(magclass_sizeLimit = 1e+12)
