@@ -183,6 +183,9 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
   cropAreaWeight <- calcOutput("YieldsWeight",
                                weighting = weighting,
                                marginal_land = marginal_land,
+                               lpjml = datasource[["lpjml"]],
+                               climatetype = climatetype,
+                               multicropping = multicropping,
                                aggregate = FALSE)
 
   # Special case for India case study
