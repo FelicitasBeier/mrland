@@ -7,6 +7,7 @@
 #'                      "totalLUspecific", "cropSpecific", "crop+irrigSpecific",
 #'                      "avlCropland", "avlCropland+potentiallyIrrigatedAreas",
 #'                      "avlCropland+avlPasture")
+#' @param selectyears   Years to be returned
 #' @param lpjml         lpjml version, only required if potentially irrigated areas
 #'                      are used as aggregation weight
 #' @param climatetype   different climate scenarios, only required if potentially
@@ -64,7 +65,7 @@
 #' @importFrom withr local_options
 
 calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype = NULL,
-                             multicropping = NULL,
+                             multicropping = NULL, selectyears = seq(1995, 2100, by = 5),
                              marginal_land = "q33_marginal:rainfed_and_irrigated") { # nolint
 
   # extract dimension information
@@ -147,7 +148,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     # potentially irrigated areas as weight for irrigated crops and pasture areas
     pia <- calcOutput("PotIrrigAreas", cropAggregation = TRUE,
                       lpjml = lpjml, climatetype = climatetype,
-                      selectyears = 1995, iniyear = 1995,
+                      selectyears = selectyears, iniyear = 1995,
                       multicropping = multicropping,
     # standard options (Question: How to hand them over more elegantly?)
                       efrMethod = "VMF:fair", irrigationsystem = "initialization",
@@ -156,7 +157,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
                       yieldcalib = FALSE, comAg = TRUE,
                       fossilGW = TRUE, transDist = 100,
                       landScen = "potCropland:NULL", cropmix = "hist_total",
-                      aggregate = FALSE)
+                      aggregate = FALSE)[, "y1995", "off"][, , "ssp2"]
 
     cropAreaWeight[, , "rainfed"] <- avlCrop
     cropAreaWeight[, , "irrigated"] <- pia
