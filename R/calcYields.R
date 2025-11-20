@@ -186,7 +186,6 @@ calcYields <- function(datasource = c(lpjml = "ggcmi_phase3_nchecks_9ca735cb", i
                                lpjml = datasource[["lpjml"]],
                                climatetype = climatetype,
                                multicropping = multicropping,
-                               selectyears = selectyears,
                                aggregate = FALSE)
 
   # Special case for India case study
