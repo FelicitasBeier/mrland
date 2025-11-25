@@ -95,7 +95,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     totalCroparea <- dimSums(calcOutput("Croparea", sectoral = "kcr", physical = TRUE, irrigation = FALSE,
                                          cellular = TRUE, aggregate = FALSE,
                                          years = "y1995", round = 6),
-                              dim = 3) + 10e-10
+                              dim = 3)
     cropAreaWeight[, , ] <- totalCroparea
 
   } else if (weighting %in% c("totalLUspecific", "cropSpecific", "crop+irrigSpecific")) {
@@ -109,22 +109,22 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     if (weighting == "crop+irrigSpecific") {
 
       # every irrigated/rainfed crop is weighted with its specific crop area in the initialization year
-      cropAreaWeight[, , kcr] <- crop + 10e-10
-      cropAreaWeight[, , "pasture"]      <- mbind(setNames(past + 10e-10, "irrigated"),
-                                                  setNames(past + 10e-10, "rainfed"))
+      cropAreaWeight[, , kcr] <- crop
+      cropAreaWeight[, , "pasture"]      <- mbind(setNames(past, "irrigated"),
+                                                  setNames(past, "rainfed"))
 
     } else if (weighting == "cropSpecific") {
 
       # every crop is weighted with its specific crop area in the initialization year
-      cropAreaWeight[, , kcr] <- dimSums(crop, dim = "irrigation") + 10e-10
-      cropAreaWeight[, , "pasture"] <- past + 10e-10
+      cropAreaWeight[, , kcr] <- dimSums(crop, dim = "irrigation")
+      cropAreaWeight[, , "pasture"] <- past
 
     } else {
 
       # total croparea as weight for crops
-      cropAreaWeight[, , kcr] <- dimSums(crop, dim = 3) + 10e-10
+      cropAreaWeight[, , kcr] <- dimSums(crop, dim = 3)
       # pasture area as weight for pasture
-      cropAreaWeight[, , "pasture"] <- past + 10e-10
+      cropAreaWeight[, , "pasture"] <- past
 
     }
 
@@ -134,7 +134,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     # available cropland as weight for all irrigated/rainfed crops and pasture areas
     avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
                                     country_level = FALSE, aggregate = FALSE),
-                        NULL) + 10e-10
+                        NULL)
 
     cropAreaWeight[, , ] <- avlCrop
 
@@ -143,7 +143,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     # available cropland as weight for all rainfed crops and pasture areas
     avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
                                    country_level = FALSE, aggregate = FALSE),
-                        NULL) + 10e-10
+                        NULL)
     # potentially irrigated areas as weight for irrigated crops and pasture areas
     pia <- calcOutput("PotIrrigAreas", cropAggregation = TRUE,
                       lpjml = lpjml, climatetype = climatetype,
@@ -168,7 +168,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     # available cropland as weight for all irrigated/rainfed crops
     avlCrop <- setNames(calcOutput("AvlCropland", marginal_land = marginal_land,
                                    country_level = FALSE, aggregate = FALSE),
-                        "avlCrop") + 10e-10
+                        "avlCrop")
     # land use classes in 1995
     lu1995  <- setYears(calcOutput("LanduseInitialisation", aggregate = FALSE,
                                    cellular = TRUE, nclasses = "seven",
@@ -180,7 +180,7 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
     # weight for pasture is available cropland or other land use classes in 1995 if these exceed available cropland
     cropAreaWeight[, , "pasture"] <- pmax(avlCrop,
                                           dimSums(lu1995[, , c("primforest", "secdforest", "forestry", "past")],
-                                                  dim = 3)) + 10e-10
+                                                  dim = 3))
 
   } else {
     warning("No area-based weight for yield aggregation selected or ",
@@ -197,7 +197,10 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
 
   if (any(is.na(cropAreaWeight))) stop("NAs in weights.")
 
-  return(list(x            = cropAreaWeight,
+  # add small number in case of 0s in cropAreaWeight
+  x <- cropAreaWeight + 10e-10
+
+  return(list(x            = x,
               weight       = NULL,
               unit         = "Mha",
               description  = "Area-based weight for yields",
