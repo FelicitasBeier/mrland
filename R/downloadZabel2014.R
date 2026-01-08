@@ -12,7 +12,7 @@ downloadZabel2014 <- function() {
   unlink("cropsuitability.zip")
 
   return(list(
-    title = "Global Agricultural Land Resources - A High Resolution Suitability Evaluation and Its Perspectives until 2100 under Climate Change Conditions",
+    title = "Global Agricultural Land Resources - A High Resolution Suitability Evaluation and Its Perspectives until 2100 under Climate Change Conditions", #nolint: line_length_linter
     url = "https://zenodo.org/records/3748350",
     doi = "10.5281/zenodo.3748350",
     version = "v2.0",
@@ -21,7 +21,7 @@ downloadZabel2014 <- function() {
     reference =
       bibentry(
         "Article",
-        title = "Global Agricultural Land Resources - A High Resolution Suitability Evaluation and Its Perspectives until 2100 under Climate Change Conditions",
+        title = "Global Agricultural Land Resources - A High Resolution Suitability Evaluation and Its Perspectives until 2100 under Climate Change Conditions", #nolint: line_length_linter
         author = c(
           person("Florian", "Zabel"),
           person("Brigitta", "Putzenlechner"),
@@ -30,7 +30,8 @@ downloadZabel2014 <- function() {
         year = "2014",
         journal = "PLOS ONE",
         url = "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0107522",
-        doi = "10.1371/journal.pone.0107522")
+        doi = "10.1371/journal.pone.0107522"
+      )
   ))
 
 }
