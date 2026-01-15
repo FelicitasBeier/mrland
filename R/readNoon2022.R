@@ -42,6 +42,8 @@ readNoon2022 <- function(subtype = "land:IrrC_50pc") {
   if (datatype == "land") {
 
     # read data
+    # the data includes unprotected land not covered
+    # by WDPA and protected areas in China
     if (subtype == "IrrC_30pc") {
       unprotectedICLand <- rast(paste0(
         "./unprotected_irrecoverable_C_land",

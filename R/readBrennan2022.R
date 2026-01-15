@@ -35,10 +35,13 @@ readBrennan2022 <- function(subtype = "KBA_GSN_masked") {
 
   # read data
   if (subtype == "KBA_masked") {
+    # WDPA and China protected areas are masked
     unprotectedCCALand <- rast(paste0(
       "./cca_land_unprotected_0.5.tif"
     ))
   } else if (subtype == "KBA_GSN_masked") {
+    # WDPA and China protected areas, as well as areas
+    # under the "global safety net" are masked
     unprotectedCCALand <- rast(paste0(
       "./cca_land_unprotected_gsn_masked_0.5.tif"
     ))

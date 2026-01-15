@@ -25,7 +25,10 @@ readKeyBiodiversityAreas <- function(subtype = "unprotected") {
   terraOptions(tempdir = local_tempdir(tmpdir = getConfig("tmpfolder")), todisk = TRUE, memfrac = 0.5)
   defer(terraOptions(tempdir = tempdir()))
 
+  # read data
   if (subtype == "unprotected") {
+    # the data includes unprotected land not covered
+    # by WDPA and protected areas in China
     kbaLand <- rast("./kba_land_unprotected_0.5.tif")
   } else if (subtype == "all") {
     kbaLand <- rast("./kba_land_0.5.tif")
