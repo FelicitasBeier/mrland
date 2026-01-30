@@ -163,6 +163,12 @@ calcYieldsWeight <- function(weighting = "totalCrop", lpjml = NULL, climatetype 
 
     # Question: How to handle pasture area? As below? Or treat same as crops?
 
+    ## To Do: add additional if here
+    # calcOutput("ProtectedAreaBaseline", nclasses = "seven",
+    # magpie_input = TRUE,
+    # aggregate = FALSE, round = NULL
+
+
   } else if (weighting == "avlCropland+avlPasture") {
 
     # available cropland as weight for all irrigated/rainfed crops
