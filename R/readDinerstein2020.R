@@ -39,6 +39,8 @@ readDinerstein2020 <- function(subtype = "GSN:distinct_species_assemblages") {
 
 
   # read data
+  # the data includes unprotected land not covered
+  # by WDPA and protected areas in China
   if (subtype == "distinct_species_assemblages") {
     unprotectedGSNLand <- rast(paste0(
       "./GSN_distinct_species_assemblages_unprotected_land_0.5.tif"

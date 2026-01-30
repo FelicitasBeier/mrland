@@ -44,27 +44,53 @@ calcBiocharProd <- function(datasource, rev = numeric_version("0.1"),
 
     } else if (biocharsystems == "disagg") {
 
+      # Mapping between MAgPIE-internal names for pyrolysis plant set-ups and
+      # REMIND technology keys based on the history of REMIND reporting names,
+      # where the full REMIND variable name is: indicatorName|<key> (unit).
       # Note: If future data revisions include REMIND simulations with a different
-      # set of biochar production systems, `biocharSys` must be updated to include
-      # all relevant system definitions.
-      biocharSys <- c(
-        "KonTiki",
-        "biopyrCHP",
-        "biopyrElec",
-        "biopyrFuel",
-        "biopyrHeat",
-        "biopyrOnly"
+      # set of biochar technologies, the mapping has to be adapted accordingly.
+
+      oldMap <- c(
+        # MAgPIE names =  old REMIND reporting key
+        kontiki    = "KonTiki",
+        biopyrchp  = "biopyrCHP",
+        biopyrelec = "biopyrElec",
+        biopyrhe   = "biopyrHeat",
+        biopyrliq  = "biopyrFuel",
+        biopyronly = "biopyrOnly"
       )
 
+      newMap <- c(
+        # MAgPIE names =  new REMIND reporting key
+        kontiki    = "kontiki_NA", # not available in REMIND anymore, filled with Zeros
+        biopyrchp  = "w/ heat and power",
+        biopyrelec = "biopyrelec_NA",  # not available in REMIND anymore, filled with Zeros
+        biopyrhe   = "w/ heat",
+        biopyrliq  = "w/ liquids",
+        biopyronly = "w/o co-product"
+      )
+
+      # Version threshold that triggers switch to new REMIND reporting names
+      # Current threshold is artificial and needs to be specified once
+      # new exogenous scenarios are available.
+      revNewStyle <- numeric_version("11.11")
+
+      if (rev >= revNewStyle) {
+        specMap <- newMap
+      } else {
+        specMap <- oldMap
+      }
+
       x <- NULL
-      for (i in biocharSys) {
+      for (magTech in names(specMap)) {
+        remTech <- specMap[[magTech]]
         tmp <- readSource("REMIND",
           subtype = paste0("extensive_",
                            rev,
                            "_",
-                           paste0(indicatorName, "|", i, " (", unit, ")"))
+                           paste0(indicatorName, "|", remTech, " (", unit, ")"))
         )
-        tmp <- add_dimension(tmp, dim = 3.1, nm = i)
+        tmp <- add_dimension(tmp, dim = 3.1, nm = magTech)
         x <- mbind(x, tmp)
       }
 

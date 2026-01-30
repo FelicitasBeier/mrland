@@ -24,6 +24,12 @@ calcUrbanLandFuture <- function(timestep = "5year", subtype = "LUH3",
     getNames(past)[1] <- "SSP1"
 
     out <- readSource("LUH2UrbanFuture", convert = "onlycorrect")
+
+    # as we are combining LUH3 past to LUH2 future (only product existing),
+    #there is a break in the data so we add the difference in 2020 to the future,
+    # to have LUH3 levels with the "LUH2" existing trend
+    out <- out + setYears((past[, "y2020", ] - out[, "y2020", ]), NULL)
+    out[out < 0] <- 0
     out <- out[, c(2015:2020), invert = TRUE]
 
     if (timestep == "5year") {

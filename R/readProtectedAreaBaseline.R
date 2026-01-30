@@ -39,9 +39,9 @@ readProtectedAreaBaseline <- function() {
       # designated protected areas in the reference year, estimated based on
       # ESA CCI land use/land cover (LULC)
       if (cat == "all") {
-        wdpaRast <- rast(paste0("./wdpa_esacci_land_", yr, "_0.5deg.tif"))
+        wdpaRast <- rast(paste0("./wdpa+china_esacci_land_", yr, "_0.5deg.tif"))
       } else {
-        wdpaRast <- rast(paste0("./wdpa_", cat, "_esacci_land_", yr, "_0.5deg.tif"))
+        wdpaRast <- rast(paste0("./wdpa+china_", cat, "_esacci_land_", yr, "_0.5deg.tif"))
       }
 
       # get spatial mapping
