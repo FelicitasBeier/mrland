@@ -236,6 +236,9 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("TradeImportSupplyRatio", magYears = TRUE, round = 6,
              outputStatistics = stats, file = "f21_import_supply_historical.cs5",
              aggregate = TRUE)
+  calcOutput("TradeBilateralScenarioAdj", magYears = TRUE, round = 6,
+             outputStatistics = stats, file = "f21_trade_scenario_adjustments.cs5",
+             aggregate = TRUE)
 
   # We need to calculate the observed standard deviation of the import supply ratio for each region-to-region pair.
   # As this is only possible on regional level (no simple weighting of std. deviations possible via calcOutput),
