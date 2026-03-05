@@ -18,6 +18,8 @@ calcTradeBilateralScenarioAdj <- function(magYears = TRUE) {
     tm <- tm[, intersect(getYears(tm), tAll), ]
   }
   tm <- toolHoldConstantBeyondEnd(tm)
+  #replace set names order from im.ex to ex.im
+  getSets(tm)[c(1, 2)] <- getSets(tm)[c(2, 1)]
 
   return(list(x = tm,
               weight = NULL,
