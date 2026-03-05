@@ -2,7 +2,7 @@
 % Please edit documentation in R/downloadZabel2014.R
 \name{downloadZabel2014}
 \alias{downloadZabel2014}
-\title{readZabel2014}
+\title{downloadZabel2014}
 \usage{
 downloadZabel2014()
 }

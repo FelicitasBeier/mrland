@@ -38,7 +38,7 @@ Function calculates land area in conservation priority areas that was unprotecte
 }
 \examples{
 \dontrun{
-calcOutput("ConservationPriority2", aggregate = FALSE)
+calcOutput("ConservationPriorities", aggregate = FALSE)
 }
 
 }

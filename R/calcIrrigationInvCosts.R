@@ -33,7 +33,7 @@ calcIrrigationInvCosts <- function() {
                                   fill = NA)
   data[, 1995:2050, ] <- wBirrigation
 
-  # Transform fromm 1000 USD$ per hectare to US$ per hectare
+  # Transform from 1000 USD$ per hectare to US$ per hectare
   data <- data * 1000
 
   # conversion: $1995 to $2004

@@ -1,4 +1,4 @@
-#' @title readZabel2014
+#' @title downloadZabel2014
 #' @description Download Zabel 2014 data
 #' @author Patrick Rein
 #' @importFrom utils download.file bibentry person
