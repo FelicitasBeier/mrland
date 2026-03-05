@@ -17,7 +17,9 @@ Convert irrigation cost data by Inocencio et al. (2007)
              from regional to ISO country resolution
 }
 \examples{
-\dontrun{ a <- convertInocencio2005(x) }
+\dontrun{
+a <- convertInocencio2005(x)
+}
 
 }
 \author{

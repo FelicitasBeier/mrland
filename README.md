@@ -1,6 +1,6 @@
 # MadRaT land data package
 
-R package **mrland**, version **0.71.4**
+R package **mrland**, version **0.71.4.2**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrland)](https://cran.r-project.org/package=mrland) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3822083.svg)](https://doi.org/10.5281/zenodo.3822083) [![R build status](https://github.com/pik-piam/mrland/workflows/check/badge.svg)](https://github.com/pik-piam/mrland/actions) [![codecov](https://codecov.io/gh/pik-piam/mrland/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/mrland) [![r-universe](https://pik-piam.r-universe.dev/badges/mrland)](https://pik-piam.r-universe.dev/builds)
 
@@ -39,7 +39,7 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrland** in publications use:
 
-Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L, Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). "mrland: MadRaT land data package." doi:10.5281/zenodo.3822083 <https://doi.org/10.5281/zenodo.3822083>, Version: 0.71.4, <https://github.com/pik-piam/mrland>.
+Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L, Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). "mrland: MadRaT land data package." doi:10.5281/zenodo.3822083 <https://doi.org/10.5281/zenodo.3822083>, Version: 0.71.4.2, <https://github.com/pik-piam/mrland>.
 
 A BibTeX entry for LaTeX users is
 
@@ -51,6 +51,6 @@ A BibTeX entry for LaTeX users is
   date = {2026-03-05},
   year = {2026},
   url = {https://github.com/pik-piam/mrland},
-  note = {Version: 0.71.4},
+  note = {Version: 0.71.4.2},
 }
 ```

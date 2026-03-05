@@ -33,18 +33,28 @@ downloadInocencio2007 <- function() {
   utils::write.csv(unitCost, file = fname, row.names = FALSE)
 
   # ---- metadata for madrat wrapper ----
-  meta <- list(url         = "https://www.researchgate.net/publication/42764931_Costs_and_Performance_of_Irrigation_Projects_A_Comparison_of_Sub-Saharan_Africa_and_Other_Developing_Regions",
-               title       = "Costs and Performance of Irrigation Projects: A Comparison of Sub-Saharan Africa and Other Developing Regions",
-               author      = "Inocencio, A.; Kikuchi, M.; Tonosaki, M.; Maruyama, A.; Merrey, D.; Sally, H.; de Jong, I.",
+  meta <- list(url         = paste0("https://www.researchgate.net/publication/",
+                                    "42764931_Costs_and_Performance_of_Irrigation_",
+                                    "Projects_A_Comparison_of_Sub-Saharan_Africa_",
+                                    "and_Other_Developing_Regions"),
+               title       = paste0("Costs and Performance of Irrigation Projects: ",
+                                    "A Comparison of Sub-Saharan Africa and Other Developing Regions"),
+               author      = paste0("Inocencio, A.; Kikuchi, M.; Tonosaki, M.; ",
+                                    "Maruyama, A.; Merrey, D.; Sally, H.; de Jong, I."),
                license     = "Copyright by IWMI. All rights reserved",
                ISBN        = "978-92-9090-658-2",
                description = paste0("Region-level unit costs for new irrigation development and rehabilitation ",
                                     "based on Table 7 of IWMI Research Report 109 by Inocencio et al. (2007). ",
                                     "Selected only success projects. ",
-                                    "Extracted following regions: Sub-Saharan Africa (SSA), Middle East and North Africa (MEA), ",
-                                    "South Asia (SA), Southeast Asia (SEA), East Asia (EA), Latin America and the Caribbean (LAM), ",
-                                    "and assigned average over all success projects across these regions as rest of the world average (GLO)."),
-              unit        = "USD/ha (in 2000 prices)",
-              reference   = "Inocencio et al. (2007). Costs and Performance of Irrigation Projects: A Comparison of Sub-Saharan Africa and Other Developing Regions. IWMI Research Report 109.")
+                                    "Extracted following regions: Sub-Saharan Africa (SSA), ",
+                                    "Middle East and North Africa (MEA), ",
+                                    "South Asia (SA), Southeast Asia (SEA), East Asia (EA), ",
+                                    "Latin America and the Caribbean (LAM), ",
+                                    "and assigned average over all success projects across ",
+                                    "these regions as rest of the world average (GLO)."),
+               unit        = "USD/ha (in 2000 prices)",
+               reference   = paste0("Inocencio et al. (2007). Costs and Performance",
+                                    " of Irrigation Projects: A Comparison of Sub-Saharan",
+                                    " Africa and Other Developing Regions. IWMI Research Report 109."))
   return(meta)
 }

@@ -10,8 +10,8 @@ calcIrrigUnitCost()
 MAgPIE object
 }
 \description{
-This function returns unit costs for irrigation expansion (new)
-             and maintenance (rehabilitation)
+This function returns unit costs for irrigation expansion (new_totalCost)
+             and maintenance or rehabilitation (rehab_hardwareCost)
 }
 \examples{
 \dontrun{
@@ -20,8 +20,8 @@ calcOutput("calcIrrigUnitCost")
 
 }
 \seealso{
-\code{\link[madrat]{calcOutput}}, \code{\link{readInocencio2005}},
-\code{\link{convertInocencio2005}}
+\code{\link[madrat]{calcOutput}}, \code{\link{readInocencio2007}},
+\code{\link{convertInocencio2007}}
 }
 \author{
 Felicitas Beier

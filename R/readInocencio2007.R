@@ -27,9 +27,9 @@ readInocencio2007 <- function() {
   # Average over period 1965-1999 assigned to MAgPIE initialization year
   getItems(unitCost, dim = 2) <- "y1995"
 
-return(list(x        = unitCost,
-            unit     = "USD per hectare (in 2000 prices)",
-            metadata = paste0("Inocencio et al. (2007). Costs and Performance of ",
-                              "Irrigation Projects: A Comparison of Sub-Saharan Africa ",
-                              "and Other Developing Regions. IWMI Research Report 109.")))
+  return(list(x        = unitCost,
+              unit     = "USD per hectare (in 2000 prices)",
+              metadata = paste0("Inocencio et al. (2007). Costs and Performance of ",
+                                "Irrigation Projects: A Comparison of Sub-Saharan Africa ",
+                                "and Other Developing Regions. IWMI Research Report 109.")))
 }
