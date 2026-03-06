@@ -27,9 +27,19 @@ calcIrrigUnitCost <- function() {
                          unit_in = "constant 2000 US$MER",
                          unit_out = "constant 2017 US$MER",
                          replace_NAs = "no_conversion")
+  # Aggregation weight
+  avlCroplandIrrig <- calcOutput("AvlCropland",
+                                 marginal_land = "no_marginal:irrigated",
+                                 aggregate = FALSE)
+  avlCroplandIrrig <- dimSums(avlCroplandIrrig, dim = c("x", "y"))
+
+  weight <- new.magpie(cells_and_regions = getItems(data, dim = 1),
+                       years = getItems(data, dim = 2),
+                       fill = 0)
+  weight[getItems(avlCroplandIrrig, dim = 1), , ] <- avlCroplandIrrig[getItems(avlCroplandIrrig, dim = 1), , ]
 
   return(list(x = data,
-              weight = NULL,
+              weight = weight,
               unit = "US$MER2017",
               description = "unit cost for irrigation expansion and maintenance"))
 }
