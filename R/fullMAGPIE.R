@@ -329,7 +329,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
 
   # unit cost for irrigation expansion and maintenance/rehabilitation for iniyear
   calcOutput("IrrigUnitCost", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "irrig_unit_cost.csv")
+             outputStatistics = stats, file = "f41_irrig_unit_cost.csv")
 
   # 42_water_demand
   calcOutput("PumpingCosts", round = 4, outputStatistics = stats, file = "f42_pumping_cost.cs4", aggregate = TRUE)
