@@ -320,7 +320,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f50_nitrogen_balanceflow.cs4")
   calcOutput("NitrogenFixationNdfa", years = magYears, round = 4,
              outputStatistics = stats, file = "f50_ndfa.cs4")
-  calcOutput("NitrogenFixationFreeliving", round = 4,
+  calcOutput("calcNitrogenFixationFreelivingRate", round = 4,
              outputStatistics = stats, file = "f50_fixation_freeliving.cs4", aggregate = FALSE)
   calcOutput("AtmosphericDepositionRates", round = 4,
              outputStatistics = stats, file = "f50_atmospheric_deposition_rates.cs4")
