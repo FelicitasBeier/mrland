@@ -28,8 +28,21 @@ calcEFch4Rice <- function(physical = TRUE) {
     stop("FAOSTAT seems to have changed, recheck this function, ef seems dynamic over time")
   }
 
-  weight <- calcOutput("Croparea", sectoral = "kcr", physical = physical, aggregate = FALSE)[, past, ]
-  weight <- weight[, , "rice_pro"]
+  if (physical == TRUE) {
+    weight <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)[, past, ]
+    weight <- weight[, , "rice_pro"]
+    areaHarvested <- calcOutput("Croparea", sectoral = "kcr", physical = FALSE, aggregate = FALSE)[, past, ]
+    areaHarvested <- areaHarvested[, , "rice_pro"]
+    emis <- emis * areaHarvested / weight
+    unit <- "t CH4 per ha physical area"
+  } else if (physical == FALSE) {
+    weight <- calcOutput("Croparea", sectoral = "kcr", physical = FALSE, aggregate = FALSE)[, past, ]
+    weight <- weight[, , "rice_pro"]
+    unit <- "t CH4 per ha area harvested"
+  } else {
+    stop("Stop! Physical is boolean!")
+  }
+
   weight <- toolHoldConstantBeyondEnd(weight)
   years  <- intersect(getYears(weight), getYears(emis))
   ef     <- emis[, years, "Emissions_(CH4)_(Rice_cultivation)_(gigagrams)"] / weight[, years, ]
@@ -41,14 +54,6 @@ calcEFch4Rice <- function(physical = TRUE) {
   ef[is.na(ef)] <- upperValue
   ef[is.infinite(ef)] <- upperValue
   ef[ef == 0]     <- upperValue
-
-  if (physical == TRUE) {
-    unit <- "t CH4 per ha physical area"
-  } else if (physical == FALSE) {
-    unit <- "t CH4 per ha area harvested"
-  } else {
-    stop("Stop! Physical is boolean!")
-  }
 
   # transform from Gg 10^9g to Mt
   ef <- ef / 1000
