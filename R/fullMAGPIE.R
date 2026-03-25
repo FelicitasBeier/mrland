@@ -103,8 +103,9 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f14_pasture_yields_hist.csv")
   calcOutput("FAOYield", cut = 0.98, years = magYearsPast, round = 2,
              outputStatistics = stats, file = "f14_region_yields.cs3")
-  calcOutput("BEYield", outputStatistics = stats, file = "f14_region_be_yields.cs3")
+  calcOutput("BEYield", aggregate = "region", outputStatistics = stats, file = "f14_region_be_yields.cs3")
   calcOutput("BEYield", aggregate = "GLO", outputStatistics = stats, file = "f14_global_be_yields.cs3")
+  calcOutput("BEYield", returnWeights = TRUE, aggregate = "cluster", outputStatistics = stats, file = "f14_cluster_be_croparea_weights.cs3")
 
   calcOutput("Ir2RfYieldRatio", round = 2, outputStatistics = stats, file = "f14_ir2rf_ratio.cs4")
 
