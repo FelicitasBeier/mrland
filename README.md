@@ -2,7 +2,7 @@
 
 R package **mrland**, version **0.72.0**
 
-[![CRAN status](https://www.r-pkg.org/badges/version/mrland)](https://cran.r-project.org/package=mrland) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3822083.svg)](https://doi.org/10.5281/zenodo.3822083) [![R build status](https://github.com/pik-piam/mrland/workflows/check/badge.svg)](https://github.com/pik-piam/mrland/actions) [![codecov](https://codecov.io/gh/pik-piam/mrland/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/mrland) [![r-universe](https://pik-piam.r-universe.dev/badges/mrland)](https://pik-piam.r-universe.dev/builds)
+  [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3822083.svg)](https://doi.org/10.5281/zenodo.3822083) [![R build status](https://github.com/pik-piam/mrland/workflows/check/badge.svg)](https://github.com/pik-piam/mrland/actions) [![codecov](https://codecov.io/gh/pik-piam/mrland/branch/master/graph/badge.svg)](https://app.codecov.io/gh/pik-piam/mrland) [![r-universe](https://pik-piam.r-universe.dev/badges/mrland)](https://pik-piam.r-universe.dev/builds)
 
 ## Purpose and Functionality
 
@@ -48,7 +48,7 @@ A BibTeX entry for LaTeX users is
   title = {mrland: MadRaT land data package},
   author = {Jan Philipp Dietrich and Abhijeet Mishra and Isabelle Weindl and Benjamin Leon Bodirsky and Xiaoxi Wang and Lavinia Baumstark and Ulrich Kreidenweis and David Klein and Nele Steinmetz and David Chen and Florian Humpenoeder and Patrick {von Jeetze} and Stephen Wirth and Felicitas Beier and David Hoetten and Pascal Sauer and Jake Tommey},
   doi = {10.5281/zenodo.3822083},
-  date = {2026-03-30},
+  date = {2026-05-05},
   year = {2026},
   url = {https://github.com/pik-piam/mrland},
   note = {Version: 0.72.0},
