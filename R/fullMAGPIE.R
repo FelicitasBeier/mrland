@@ -268,29 +268,11 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   }
 
   # 32 forestry
-  calcOutput("AfforestCosts", years = 2001, round = 0,
-             outputStatistics = stats, file = "f32_fac_req_ha.csv")
-  calcOutput("GrowingStockPlantations", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "f32_gs_target.cs4")
-  calcOutput("GrowingStockPlantAbsolute", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "f32_gs_absolutetarget.cs4")
-  calcOutput("GrowingStockpha", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "f32_gs_relativetarget.cs4")
-  calcOutput("PlantationContribution", aggregate = TRUE, round = 3,
-             outputStatistics = stats, file = "f32_plantation_contribution.cs3")
   calcOutput("PlantedForest", aggregate = TRUE, round = 3, outputStatistics = stats, file = "f32_plantedforest.cs4")
-  calcOutput("PlantEstablishCalib", aggregate = TRUE, round = 2, outputStatistics = stats, file = "f32_estb_calib.cs4")
-  calcOutput("TradeSelfSuff", years = magYears, round = 2,
-             outputStatistics = stats, file = "f32_trade_self_suff.cs3",
-             aggregate = superregion)
 
   # 35 natural vegetation
   calcOutput("ForestLossShare", round = 7, outputStatistics = stats, file = "f35_forest_lost_share.cs3")
   calcOutput("ForestDisturbances", round = 7, outputStatistics = stats, file = "f35_forest_disturbance_share.cs4")
-  calcOutput("GrowingStockNatVegAbsolute", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "f35_gs_absolutetarget.cs4")
-  calcOutput("GrowingStockNRF", aggregate = TRUE, round = 0,
-             outputStatistics = stats, file = "f35_gs_relativetarget.cs4")
 
   # 36 employment
   calcOutput("WeeklyHoursILO", projections = TRUE, aggregate = TRUE, years = seq(1965, 2150, 5),
@@ -368,6 +350,10 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   # 52 carbon
   calcOutput("AdjustGrassi2021", aggregate = TRUE,
              outputStatistics = stats, file = "f52_land_carbon_sink_adjust_grassi.cs3")
+  calcOutput("GrowingStockPlantations", aggregate = TRUE, round = 0,
+             outputStatistics = stats, file = "f52_fra_pla_gs.cs4")
+  calcOutput("GrowingStockNRF", aggregate = TRUE, round = 0,
+             outputStatistics = stats, file = "f52_fra_nrf_gs.cs4")
 
   # 53 methane
   calcOutput("EFch4Rice", years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4Rice.cs4")
