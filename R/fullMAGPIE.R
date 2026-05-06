@@ -196,8 +196,6 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f16_domestic_balanceflow.csv")
 
   # 18 residues
-  calcOutput("Multicropping", years = magYears, round = 4,
-             outputStatistics = stats, file = "f18_multicropping.csv", aggregate = TRUE)
   calcOutput("ResCombustEff", round = 4, outputStatistics = stats, file = "f18_res_combust_eff.cs4", aggregate = FALSE)
 
   # 20 processing
@@ -259,6 +257,9 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              file = "f21_trade_regional_balanceflow.cs3", aggregate = TRUE)
 
 
+  # 30 Croparea
+  calcOutput("Multicropping", years = magYears, round = 4, cellular = FALSE,
+             outputStatistics = stats, file = "fm_multicropping.cs3", aggregate = FALSE)
 
   # 31 Past
   if (grepl("+grasslandRealization", dev)) {
@@ -350,7 +351,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f52_fra_nrf_gs.cs4")
 
   # 53 methane
-  calcOutput("EFch4Rice", years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4Rice.cs4")
+  calcOutput("EFch4Rice", physical = FALSE, years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4Rice.cs4")
   calcOutput("EFch4AWMS", years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4AWMS.cs4")
 
   # 55 awms

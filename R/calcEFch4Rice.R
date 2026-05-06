@@ -1,8 +1,7 @@
 #' @title calcEFch4Rice
-#' @description emission factors for methane from flooded rice fields, depending on phyiscal area or area harvested.
+#' @description emission factors for methane from flooded rice fields, depending on area harvested.
 #' The emission factors were calculated based on FAOSTAT estimates due to lack of all necessary parameters in the
 #' IPCC Guidelines
-#' @param physical if true physical area, if false area harvested
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
@@ -17,7 +16,7 @@
 #' @importFrom stats median
 #' @importFrom grDevices boxplot.stats
 
-calcEFch4Rice <- function(physical = TRUE) {
+calcEFch4Rice <- function() {
   past <- findset("past")
   emis <- readSource("FAO_online", "EmisAgRiceCult")
 
@@ -28,20 +27,9 @@ calcEFch4Rice <- function(physical = TRUE) {
     stop("FAOSTAT seems to have changed, recheck this function, ef seems dynamic over time")
   }
 
-  if (physical == TRUE) {
-    weight <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE, aggregate = FALSE)[, past, ]
-    weight <- weight[, , "rice_pro"]
-    areaHarvested <- calcOutput("Croparea", sectoral = "kcr", physical = FALSE, aggregate = FALSE)[, past, ]
-    areaHarvested <- areaHarvested[, , "rice_pro"]
-    emis <- emis * areaHarvested / weight
-    unit <- "t CH4 per ha physical area"
-  } else if (physical == FALSE) {
-    weight <- calcOutput("Croparea", sectoral = "kcr", physical = FALSE, aggregate = FALSE)[, past, ]
-    weight <- weight[, , "rice_pro"]
-    unit <- "t CH4 per ha area harvested"
-  } else {
-    stop("Stop! Physical is boolean!")
-  }
+  weight <- calcOutput("Croparea", physical = FALSE, aggregate = FALSE)[, past, ]
+  weight <- weight[, , "rice_pro"]
+  unit <- "t CH4 per ha area harvested"
 
   weight <- toolHoldConstantBeyondEnd(weight)
   years  <- intersect(getYears(weight), getYears(emis))
@@ -65,7 +53,7 @@ calcEFch4Rice <- function(physical = TRUE) {
   return(list(x = out,
               weight = weight + 10^-10,
               unit = unit,
-              description = "Emission factor per area according to the FAOSTAT emission estimates",
+              description = "Emission factor per harvested area according to the FAOSTAT emission estimates",
               min = 0,
               max = 200)
   )
