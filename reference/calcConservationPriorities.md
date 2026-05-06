@@ -1,0 +1,61 @@
+# calcConservationPriorities
+
+Function calculates land area in conservation priority areas that was
+unprotected in 2020 (WDPA).
+
+## Usage
+
+``` r
+calcConservationPriorities(
+  consvBaseYear = "y1750",
+  cells = "lpjcell",
+  nclasses = "seven"
+)
+```
+
+## Arguments
+
+- consvBaseYear:
+
+  Reference year for land conservation. Chosing "y1750", for instance,
+  means that the reference land use is based on the year 1750
+  ('pre-industrial') so land use can be restored to the pre-industrial
+  state in conservation priority areas. Any year available in the LUH3
+  data set can be chosen. Historic land use in the LUH3 data is based on
+  the HYDE data base. The choice "y2020" provides a special case, in
+  which reference land use is based on the 2020 ESA CCI LULC map,
+  derived at a spatial resolution of 300 x 300 Meter.
+
+- cells:
+
+  (deprecated) number of cells of landmask (only "lpjcell" for 67420
+  cells)
+
+- nclasses:
+
+  Options are either "seven" or "nine".
+
+  - "seven" separates primary and secondary forest and includes "crop",
+    "past", "forestry", "primforest", "secdforest", "urban" and "other"
+
+  - "nine" adds the separation of pasture and rangelands, as well as a
+    differentiation of primary and secondary non-forest vegetation and
+    therefore returns "crop", "past", "range", "forestry", "primforest",
+    "secdforest", "urban", "primother" and "secdother"
+
+## Value
+
+magpie object in cellular resolution with different protection options
+in conservation priority areas
+
+## Author
+
+Patrick v. Jeetze
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+calcOutput("ConservationPriority2", aggregate = FALSE)
+} # }
+```
