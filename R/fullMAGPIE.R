@@ -351,7 +351,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f52_fra_nrf_gs.cs4")
 
   # 53 methane
-  calcOutput("EFch4Rice", physical = FALSE, years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4Rice.cs4")
+  calcOutput("EFch4Rice", years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4Rice.cs4")
   calcOutput("EFch4AWMS", years = magYears, round = 4, outputStatistics = stats, file = "f53_EFch4AWMS.cs4")
 
   # 55 awms
