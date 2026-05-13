@@ -28,7 +28,8 @@ jobs:
         run: |
           options(repos = c(pikpiam = 'https://pik-piam.r-universe.dev',
                             CRAN = Sys.getenv('RSPM')))
-          pak::pak(dependencies = c("all", "website"))
+          pak::pak(".")
+          pak::pkg_install("tidyverse/tidytemplate")
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
