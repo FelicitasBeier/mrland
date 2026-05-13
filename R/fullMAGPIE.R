@@ -271,10 +271,8 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   # It is currently based directly on calcLandInG, so this is still an inconsistency
   # and we have to update it. But this would eventually make sense, since we wanna harmonize
   # mrwater using the new calcCroparea, too.
-  ## I moved it now and am using calcMulticroppingIntensity. If you wanna do it
-  ## differently, let me know.
-  #calcOutput("Multicropping", years = magYears, round = 4, cellular = FALSE,
-  #           outputStatistics = stats, file = "fm_multicropping.cs3", aggregate = FALSE)
+  calcOutput("Multicropping", years = magYears, round = 4, cellular = FALSE,
+             outputStatistics = stats, file = "fm_multicropping_iso.cs3", aggregate = FALSE)
 
   # 31 Past
   if (grepl("+grasslandRealization", dev)) {
