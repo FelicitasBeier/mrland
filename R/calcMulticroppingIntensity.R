@@ -150,8 +150,10 @@ calcMulticroppingIntensity <- function(scenario, selectyears,
   description <- paste0("Cropping Intensitiy of different crops ",
                         "under irrigated and rainfed conditions respectively")
 
+  # Question (Benni/Jan): Which weight makes sense for multiple cropping factor
+  # aggregation from grid cell to cluster level?
   return(list(x            = out,
-              weight       = NULL,
+              weight       = phys,
               unit         = unit,
               description  = description,
               isocountries = FALSE))
