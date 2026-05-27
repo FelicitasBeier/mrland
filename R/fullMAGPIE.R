@@ -102,7 +102,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("PastureYield", round = 3,
              outputStatistics = stats, file = "f14_pasture_yields_hist.csv")
   calcOutput("FAOYield", cut = 0.98, years = magYearsPast, round = 2,
-             outputStatistics = stats, file = "f14_region_yields.cs3")
+             outputStatistics = stats, file = "fm_region_yields.cs3")
 
   calcOutput("Ir2RfYieldRatio", round = 2, outputStatistics = stats, file = "f14_ir2rf_ratio.cs4")
 
@@ -291,8 +291,6 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              round = 4, outputStatistics = stats, file = "f36_nonmagpie_factor_costs.csv")
 
   # 38 factor costs
-  calcOutput("FAOYield", cut = 0.98, years = 1995, round = 2, outputStatistics = stats, file = "f38_region_yield.csv")
-  # Question: Is f38_region_yield used? And why not f14_region_yield?
   calcOutput("FacReq", round = 2, aggregate = "GLO", years = 2005, outputStatistics = stats,
              file = "f38_fac_req_fao.csv")
   calcOutput("FacReq", round = 2, aggregate = TRUE, outputStatistics = stats,

@@ -1,16 +1,26 @@
 #' @title calcYieldsMAgPIEcrops
 #'
-#' @description
-#' Transforms LPJmL yields to MAgPIE crop types (kcr) and applies proxy crop
-#' calibration. Optionally applies FAO yield calibration when a calibration
-#' list is provided.
+#' @description Transforms LPJmL yields to MAgPIE crop types (kcr)
+#'              and applies proxy crop calibration.
+#'              Optionally applies FAO yield calibration when a calibration
+#'              list is provided.
 #'
 #' @param lpjml         LPJmL version for main crop inputs
 #' @param climatetype   Climate scenario or historical baseline
 #' @param selectyears   Years to be returned
 #' @param multicropping Multicropping activated (TRUE) or not (FALSE) and
 #'                      Multiple Cropping Suitability mask selected
-#'                      (e.g. TRUE:actual:total; TRUE:none; FALSE)
+#'                      (mask can be:
+#'                      "none": no mask applied (only for development purposes)
+#'                      "actual:total": currently multiple cropped areas calculated from total harvested areas
+#'                                      and total physical areas per cell from readLandInG
+#'                      "actual:crop" (crop-specific), "actual:irrigation" (irrigation-specific),
+#'                      "actual:irrig_crop" (crop- and irrigation-specific) "total"
+#'                      "potential:endogenous": potentially multiple cropped areas given
+#'                                              temperature and productivity limits
+#'                      "potential:exogenous": potentially multiple cropped areas given
+#'                                             GAEZ suitability classification)
+#'                     (e.g. TRUE:actual:total; TRUE:none; FALSE)
 #' @param calibration   NULL for uncalibrated yields (default)
 #'                      or a list with FAO calibration settings.
 #'                      Expected keys:
@@ -30,10 +40,9 @@
 #' }
 #'
 #' @importFrom magpiesets findset
-#' @importFrom magclass getYears getCells getItems add_columns dimSums
-#'   new.magpie collapseDim dimOrder mbind
-#' @importFrom madrat toolGetMapping toolTimeAverage toolAggregate
-#'   toolConditionalReplace toolPatternScaling
+#' @importFrom magclass getYears getCells getItems add_columns dimSums new.magpie collapseDim dimOrder mbind
+#' @importFrom madrat toolGetMapping toolTimeAverage toolAggregate toolConditionalReplace
+#' @importFrom mrland toolPatternScaling
 #' @importFrom mstools toolGetMappingCoord2Country
 #' @importFrom stringr str_split
 #' @importFrom withr local_options
@@ -43,7 +52,6 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
                                   selectyears = seq(1965, 2100, by = 5),
                                   multicropping = FALSE,
                                   calibration = NULL) {
-
   # Increase object size limit
   local_options(magclass_sizeLimit = 1e+12)
 
@@ -130,7 +138,6 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
   # This section mimicks the yield calibrtion to FAO levels that takes place
   # in MAgPIE's preloop. Different settings can be chosen via argument list.
   if (!is.null(calibration)) {
-
     # Extract calibration arguments
     refYear     <- calibration$refYear
     refYields   <- calibration$refYields
@@ -138,8 +145,9 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
     average     <- calibration$average
     aggregation <- calibration$aggregation
 
-    if (is.null(refYear) | is.null(refYields) | is.null(areaSource)) {
-      stop("Please provide a list with: refYear, refYields, areaSource, (optional: average), (optional: aggregation) for calibration of yields.")
+    if (is.null(refYear) || is.null(refYields) || is.null(areaSource)) {
+      stop("Please provide a list with: refYear, refYields, areaSource,
+           (optional: average), (optional: aggregation) for calibration of yields.")
     }
 
     if (!grepl("y", refYear)) {
@@ -186,7 +194,8 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
       cropareaMAGgrid <- dimOrder(cropareaMAGgrid, perm = c(2, 1), dim = 3)
       proxyMAGgrid    <- dimSums(cropareaMAGgrid, dim = "crop")
     } else {
-      stop("Please specify which area should be used for calculation.\n         Note: LandInG should be FAO-consistent.")
+      stop("Please specify which area should be used for calculation.\n
+           Note: LandInG should be FAO-consistent.")
     }
 
     # Aggregate to country values
@@ -215,8 +224,12 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
     if (aggregation == "GLO") {
       rel <- data.frame(iso = getItems(yieldFAOiso, dim = "iso"),
                         glo = rep("GLO", length(getItems(yieldFAOiso, dim = "iso"))))
-      yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "glo")
-      yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "glo")
+      yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel,
+                                     weight = cropareaMAGiso + 1e-10,
+                                     from = "iso", to = "glo")
+      yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel,
+                                     weight = cropareaMAGiso + 1e-10,
+                                     from = "iso", to = "glo")
     } else if (grepl("continent", aggregation)) {
       rel <- toolGetMapping("country2continent.csv", where = "mrland")
       rel <- rel[rel$iso %in% getItems(yieldFAOiso, dim = "iso"), ]
@@ -224,8 +237,12 @@ calcYieldsMAgPIEcrops <- function(lpjml = "ggcmi_phase3_nchecks_9ca735cb",
       rel <- merge(tmp, rel, by = "iso")
       rel <- rel[order(match(rel$coords, tmp$coords)), ]
 
-      yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
-      yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel, weight = cropareaMAGiso + 1e-10, from = "iso", to = "continent")
+      yieldLPJmLiso <- toolAggregate(yieldLPJmLiso, rel = rel,
+                                     weight = cropareaMAGiso + 1e-10,
+                                     from = "iso", to = "continent")
+      yieldFAOiso   <- toolAggregate(yieldFAOiso, rel = rel,
+                                     weight = cropareaMAGiso + 1e-10,
+                                     from = "iso", to = "continent")
 
       getItems(yieldLPJmLgrid, dim = 1, raw = TRUE) <- paste(rel$coords, rel$iso, rel$continent, sep = ".")
       names(dimnames(yieldLPJmLgrid))[1] <- "x.y.iso.iso1"

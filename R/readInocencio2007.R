@@ -9,7 +9,7 @@
 #'
 #' @seealso \code{\link[madrat]{readSource}}
 #' @examples
-#' \dontrun{ a <- readSource("Inocencio2005)
+#' \dontrun{ a <- readSource("Inocencio2007")
 #' }
 #'
 readInocencio2007 <- function() {

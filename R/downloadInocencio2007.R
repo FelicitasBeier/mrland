@@ -9,7 +9,7 @@
 #'
 #' @seealso \code{\link[madrat]{downloadSource}}
 #' @examples
-#' \dontrun{downloadSource("Inocencio2007)
+#' \dontrun{downloadSource("Inocencio2007")
 #' }
 #'
 #' @export

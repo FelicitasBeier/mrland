@@ -20,7 +20,17 @@ calcYieldsMAgPIEcrops(
 \item{selectyears}{Years to be returned}
 
 \item{multicropping}{Multicropping activated (TRUE) or not (FALSE) and
-Multiple Cropping Suitability mask selected
+ Multiple Cropping Suitability mask selected
+ (mask can be:
+ "none": no mask applied (only for development purposes)
+ "actual:total": currently multiple cropped areas calculated from total harvested areas
+                 and total physical areas per cell from readLandInG
+ "actual:crop" (crop-specific), "actual:irrigation" (irrigation-specific),
+ "actual:irrig_crop" (crop- and irrigation-specific) "total"
+ "potential:endogenous": potentially multiple cropped areas given
+                         temperature and productivity limits
+ "potential:exogenous": potentially multiple cropped areas given
+                        GAEZ suitability classification)
 (e.g. TRUE:actual:total; TRUE:none; FALSE)}
 
 \item{calibration}{NULL for uncalibrated yields (default)
@@ -36,9 +46,10 @@ list(refYear = "y1995", refYields = FALSE,
 magpie object in cellular resolution
 }
 \description{
-Transforms LPJmL yields to MAgPIE crop types (kcr) and applies proxy crop
-calibration. Optionally applies FAO yield calibration when a calibration
-list is provided.
+Transforms LPJmL yields to MAgPIE crop types (kcr)
+             and applies proxy crop calibration.
+             Optionally applies FAO yield calibration when a calibration
+             list is provided.
 }
 \examples{
 \dontrun{

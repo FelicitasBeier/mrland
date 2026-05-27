@@ -13,6 +13,11 @@ magpie object of unit costs of irrigation projects
 reads in average unit cost of irrigation projects per region and
              by purpose of project from Inocencio et al. (2007) IWMI Research Report 109
 }
+\examples{
+\dontrun{ a <- readSource("Inocencio2007")
+}
+
+}
 \seealso{
 \code{\link[madrat]{readSource}}
 }

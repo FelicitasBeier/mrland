@@ -13,6 +13,11 @@ A list with metadata required by \code{downloadSource()}.
 Create (no external download) unit cost table based on manual
              extraction from Inocencio et al. (2007)
 }
+\examples{
+\dontrun{downloadSource("Inocencio2007")
+}
+
+}
 \seealso{
 \code{\link[madrat]{downloadSource}}
 }
