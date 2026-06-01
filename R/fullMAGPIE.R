@@ -102,7 +102,7 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("PastureYield", round = 3,
              outputStatistics = stats, file = "f14_pasture_yields_hist.csv")
   calcOutput("FAOYield", cut = 0.98, years = magYearsPast, round = 2,
-             outputStatistics = stats, file = "fm_region_yields.cs3")
+             outputStatistics = stats, file = "f14_region_yields.cs3")
 
   calcOutput("Ir2RfYieldRatio", round = 2, outputStatistics = stats, file = "f14_ir2rf_ratio.cs4")
 
