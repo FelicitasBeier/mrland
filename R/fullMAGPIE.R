@@ -256,24 +256,6 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("TradeBilateralBalanceFlow", balanceflow = "total", round = 6, outputStatistics = stats,
              file = "f21_trade_regional_balanceflow.cs3", aggregate = TRUE)
 
-
-  # 30 Croparea
-  ### Benni: You replaced f18_multicropping.csv with fm_multicropping.cs3
-  ### using the function mrlandcore:::calcMulticropping"
-  ### There are two problems:
-  # (1) f18_multicropping is used in residues and used to be not crop-specific.
-  # Do you want it crop-specific there? If so: why not also at cluster resolution rather
-  # than iso-country resolution that then needs to be aggregated? It then needs to be moved
-  # to mrmagpie::fullCELLULARMAGPIE
-  # (2) The mrlandcore multiple cropping function doesn't distinguish which crops are
-  # suitable for multiple cropping. I would recommend using mrland::calcMulticroppingIntensity instead.
-  # It accounts for that and you can return it at different aggregation-levels w.r.t crops.
-  # It is currently based directly on calcLandInG, so this is still an inconsistency
-  # and we have to update it. But this would eventually make sense, since we wanna harmonize
-  # mrwater using the new calcCroparea, too.
-  calcOutput("Multicropping", years = magYears, round = 4, cellular = FALSE,
-             outputStatistics = stats, file = "fm_multicropping_iso.cs3", aggregate = FALSE)
-
   # 31 Past
   if (grepl("+grasslandRealization", dev)) {
     calcOutput("PastureYield", range_pastr = TRUE, round = 3,
