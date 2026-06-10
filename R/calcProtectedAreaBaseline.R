@@ -40,10 +40,7 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
 
     # extend the data set to all time steps provided in the protected area data
     # i.e. use the data from the year 2015 for the year 2020.
-    luh3 <- setCells(
-      luh3,
-      getCells(PABaseline)
-    )
+    luh3 <- setCells(luh3, getCells(PABaseline))
 
     # calculate total land area
     landArea <- dimSums(luh3[, "y1995", ], dim = 3)
@@ -75,6 +72,15 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
         sub("WDPA", "WDPA_IV-V-VI", getNames(PABaseline[, , "WDPA"]))
       )
     )
+
+    # Consider mismatches in the classification of open
+    # ecosystems into pasture and other between land-use
+    # initialisation (LUH) and ESA CCI:
+    luIni <- calcOutput("LanduseInitialisation",
+      nclasses = "seven", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE
+    )[, getYears(PABaseline), ]
+    luIni <- setCells(luIni, getCells(PABaseline))
+    PABaseline <- toolCorrectOpenEcosystemMismatch(PABaseline, luIni) # nolint
 
     if (nclasses %in% c("seven", "nine")) {
       # differentiate primary and secondary forest based on luh3 data
@@ -114,17 +120,14 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
     }
 
     if (nclasses == "nine") {
-      # separate pasture into pasture and rangeland
-      totgrassluh <- dimSums(luh3[, , c("pastr", "range")], dim = 3)
-      pastShr <- luh3[, , "pastr"] / setNames(totgrassluh + 1e-10, NULL)
-      rangeShr <- luh3[, , "range"] / setNames(totgrassluh + 1e-10, NULL)
-      # where luh2 does not report grassland, but we find grassland in
-      # protected area data, set share of rangeland to 1
-      rangeShr[pastShr == 0 & rangeShr == 0] <- 1
-      # multiply shares of pasture and rangeland with pasture in protected area data
-      past <- setNames(pastShr, NULL) * PABaseline[, , "past"]
-      range <- setNames(rangeShr, NULL) * PABaseline[, , "past"]
-      range <- setNames(range, sub("past", "range", getNames(range)))
+      past <- new.magpie(
+        cells_and_regions = getCells(PABaseline),
+        years = getYears(PABaseline),
+        names = paste0(c("WDPA", "WDPA_I-II-III", "WDPA_IV-V-VI"), ".past"),
+        fill = 0
+      )
+      range <- PABaseline[, , "past"]
+      range <- setNames(range, sub("past", "range", getItems(range, dim = 3)))
 
       # separate other land into primary and secondary
       tototherluh <- dimSums(luh3[, , c("primn", "secdn")], dim = 3)

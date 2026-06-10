@@ -81,8 +81,17 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
     ic[, , "IrrC_95pc_30by30"] <- ic[, , "IrrC_95pc_30by30"] * landMismatch[, , "IrrC_95pc_30by30"]
     ic[, , "IrrC_99pc_30by30"] <- ic[, , "IrrC_99pc_30by30"] * landMismatch[, , "IrrC_99pc_30by30"]
 
-    if (nclasses %in% c("seven", "nine")) {
+    # Consider mismatches in the classification of open
+    # ecosystems into pasture and other between land-use
+    # initialisation (LUH) and ESA CCI:
+    luIni <- calcOutput("LanduseInitialisation",
+      nclasses = "seven", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE
+    )[, "y2020", ]
+    getYears(luIni) <- NULL
+    getCells(luIni) <- getCells(ic)
+    ic <- toolCorrectOpenEcosystemMismatch(ic, luIni)
 
+    if (nclasses %in% c("seven", "nine")) {
       # differentiate primary and secondary forest based on luh3 data
       totForestLUH <- dimSums(luh3[, , c("primf", "secdf")], dim = 3) # nolint
       primforestShr <- luh3[, , "primf"] / setNames(totForestLUH + 1e-10, NULL)
@@ -92,15 +101,15 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
       secdforestShr[secdforestShr == 0 & primforestShr == 0] <- 1
       # multiply shares of primary and secondary non-forest veg with
       # land pools in irrecoverable carbon data set
-      primforest <- setNames(primforestShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "forest", sep = ".")]
-      secdforest <- setNames(secdforestShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "forest", sep = ".")]
+      primforest <- setNames(primforestShr, NULL) * ic[, , paste(getItems(ic, dim = 3.1), "forest", sep = ".")]
+      secdforest <- setNames(secdforestShr, NULL) * ic[, , paste(getItems(ic, dim = 3.1), "forest", sep = ".")]
 
       out <- mbind(
         ic[, , c("crop", "past")],
-        new.magpie(getCells(ic), getYears(ic), paste(getNames(ic, dim = 1), "forestry", sep = "."), fill = 0),
-        setNames(primforest, paste(getNames(ic, dim = 1), "primforest", sep = ".")),
-        setNames(secdforest, paste(getNames(ic, dim = 1), "secdforest", sep = ".")),
-        new.magpie(getCells(ic), getYears(ic), paste(getNames(ic, dim = 1), "urban", sep = "."), fill = 0),
+        new.magpie(getCells(ic), getYears(ic), paste(getItems(ic, dim = 3.1), "forestry", sep = "."), fill = 0),
+        setNames(primforest, paste(getItems(ic, dim = 3.1), "primforest", sep = ".")),
+        setNames(secdforest, paste(getItems(ic, dim = 3.1), "secdforest", sep = ".")),
+        new.magpie(getCells(ic), getYears(ic), paste(getItems(ic, dim = 3.1), "urban", sep = "."), fill = 0),
         ic[, , "other"]
       )
     } else {
@@ -108,17 +117,14 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
     }
 
     if (nclasses == "nine") {
-
       # separate pasture into pasture and rangeland
-      totGrassLUH <- dimSums(luh3[, , c("pastr", "range")], dim = 3) # nolint
-      pastShr <- luh3[, , "pastr"] / setNames(totGrassLUH + 1e-10, NULL)
-      rangeShr <- luh3[, , "range"] / setNames(totGrassLUH + 1e-10, NULL)
-      # where luh2 does not report grassland, but we find grassland in
-      # irrecoverable carbon data, set share of rangeland to 1
-      rangeShr[pastShr == 0 & rangeShr == 0] <- 1
-      # multiply shares of pasture and rangeland with pasture in irrecoverable carbon data
-      past <- setNames(pastShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "past", sep = ".")]
-      range <- setNames(rangeShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "past", sep = ".")]
+      past <- new.magpie(
+        cells_and_regions = getCells(ic),
+        years = getYears(ic),
+        names = paste(getItems(ic, dim = 3.1), "past", sep = "."),
+        fill = 0
+      )
+      range <- ic[, , paste(getItems(ic, dim = 3.1), "past", sep = ".")]
 
       # separate other land into primary and secondary
       totOtherLUH <- dimSums(luh3[, , c("primn", "secdn")], dim = 3) # nolint
@@ -128,16 +134,16 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
       # irrecoverable carbon data, set share of secondary other land to 1
       secdotherShr[secdotherShr == 0 & primotherShr == 0] <- 1
       # multiply shares of primary and secondary non-forest veg with other land
-      primother <- setNames(primotherShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "other", sep = ".")]
-      secdother <- setNames(secdotherShr, NULL) * ic[, , paste(getNames(ic, dim = 1), "other", sep = ".")]
+      primother <- setNames(primotherShr, NULL) * ic[, , paste(getItems(ic, dim = 3.1), "other", sep = ".")]
+      secdother <- setNames(secdotherShr, NULL) * ic[, , paste(getItems(ic, dim = 3.1), "other", sep = ".")]
 
       out <- mbind(
         out[, , "crop"],
-        setNames(past, paste(getNames(ic, dim = 1), "past", sep = ".")),
-        setNames(range, paste(getNames(ic, dim = 1), "range", sep = ".")),
+        past,
+        setNames(range, paste(getItems(ic, dim = 3.1), "range", sep = ".")),
         out[, , c("forestry", "primforest", "secdforest", "urban")],
-        setNames(primother, paste(getNames(ic, dim = 1), "primother", sep = ".")),
-        setNames(secdother, paste(getNames(ic, dim = 1), "secdother", sep = "."))
+        setNames(primother, paste(getItems(ic, dim = 3.1), "primother", sep = ".")),
+        setNames(secdother, paste(getItems(ic, dim = 3.1), "secdother", sep = "."))
       )
     }
   } else {
