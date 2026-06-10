@@ -42,6 +42,7 @@
 <url><loc>/reference/calcH08evapotranspiration.html</loc></url>
 <url><loc>/reference/calcHalfEarth.html</loc></url>
 <url><loc>/reference/calcHousehold_balanceflow.html</loc></url>
+<url><loc>/reference/calcIPLCLand.html</loc></url>
 <url><loc>/reference/calcISIMIP3bYields.html</loc></url>
 <url><loc>/reference/calcIr2RfYieldRatio.html</loc></url>
 <url><loc>/reference/calcIrrecoverableCarbonLand.html</loc></url>
@@ -107,6 +108,7 @@
 <url><loc>/reference/correctHalfEarth.html</loc></url>
 <url><loc>/reference/correctKeyBiodiversityAreas.html</loc></url>
 <url><loc>/reference/correctLUH2UrbanFuture.html</loc></url>
+<url><loc>/reference/correctLandMark.html</loc></url>
 <url><loc>/reference/correctNoon2022.html</loc></url>
 <url><loc>/reference/correctOzoneYieldShock.html</loc></url>
 <url><loc>/reference/correctProtectArea.html</loc></url>
@@ -135,6 +137,7 @@
 <url><loc>/reference/readHalfEarth.html</loc></url>
 <url><loc>/reference/readKeyBiodiversityAreas.html</loc></url>
 <url><loc>/reference/readLUH2UrbanFuture.html</loc></url>
+<url><loc>/reference/readLandMark.html</loc></url>
 <url><loc>/reference/readNIN.html</loc></url>
 <url><loc>/reference/readNoon2022.html</loc></url>
 <url><loc>/reference/readOzoneYieldShock.html</loc></url>
@@ -151,6 +154,7 @@
 <url><loc>/reference/readWHObmi.html</loc></url>
 <url><loc>/reference/readZabel2014.html</loc></url>
 <url><loc>/reference/spatial_header.html</loc></url>
+<url><loc>/reference/toolCorrectOpenEcosystemMismatch.html</loc></url>
 <url><loc>/reference/toolImportSupplyRatioAggregate.html</loc></url>
 <url><loc>/reference/toolPatternScaling.html</loc></url>
 </urlset>

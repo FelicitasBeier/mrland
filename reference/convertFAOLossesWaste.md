@@ -37,7 +37,6 @@ Isabelle Weindl
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 a <- readSource(type="FAOLossesWaste",subtype="Consumption")
 } # }

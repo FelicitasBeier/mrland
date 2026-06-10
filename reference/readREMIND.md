@@ -31,7 +31,6 @@ David Klein
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 readSource("REMIND",aggregate=FALSE)
 } # }

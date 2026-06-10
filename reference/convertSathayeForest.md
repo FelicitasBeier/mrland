@@ -26,7 +26,6 @@ Lavinia Baumstark
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- convertSathayeForest(x)
  # \dontrun{}
 ```

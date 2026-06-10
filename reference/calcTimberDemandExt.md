@@ -25,7 +25,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 calcOutput("TimberDemandExt")
 } # }

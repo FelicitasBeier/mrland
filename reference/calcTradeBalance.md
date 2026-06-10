@@ -25,7 +25,6 @@ Jan Philipp Dietrich
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 a <- calcTradeBalance()
 } # }

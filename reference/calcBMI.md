@@ -24,7 +24,6 @@ Benjamin Leon Bodirsky
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 calcOutput("BMI",aggregate=FALSE)
 } # }

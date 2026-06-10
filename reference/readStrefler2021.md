@@ -29,7 +29,6 @@ Florian Humpenöder
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 readSource("Strefler2021",aggregate=FALSE)
 } # }

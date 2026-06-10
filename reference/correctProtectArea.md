@@ -29,7 +29,6 @@ David Chen, Felicitas Beier
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
   readSource("ProtectArea", convert="onlycorrect")
 } # }

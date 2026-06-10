@@ -25,7 +25,6 @@ Isabelle Weindl
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- convertPYieldCoeff(x)
  # \dontrun{}
 ```

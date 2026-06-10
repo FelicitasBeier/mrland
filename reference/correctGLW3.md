@@ -30,7 +30,6 @@ Marcos Alves
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
   readSource("GLW3", subtype = "DA", convert="onlycorrect")
 } # }

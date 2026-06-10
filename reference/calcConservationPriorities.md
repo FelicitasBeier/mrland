@@ -9,7 +9,8 @@ unprotected in 2020 (WDPA).
 calcConservationPriorities(
   consvBaseYear = "y1750",
   cells = "lpjcell",
-  nclasses = "seven"
+  nclasses = "seven",
+  baseYearIPLCLand = FALSE
 )
 ```
 
@@ -43,6 +44,12 @@ calcConservationPriorities(
     therefore returns "crop", "past", "range", "forestry", "primforest",
     "secdforest", "urban", "primother" and "secdother"
 
+- baseYearIPLCLand:
+
+  Whether the reference year for land conservation `"consvBaseYear"`
+  also is applied to IPLC land. The default is `FALSE` to avoid land-use
+  change on IPLC land.
+
 ## Value
 
 magpie object in cellular resolution with different protection options
@@ -56,6 +63,6 @@ Patrick v. Jeetze
 
 ``` r
 if (FALSE) { # \dontrun{
-calcOutput("ConservationPriority2", aggregate = FALSE)
+calcOutput("ConservationPriorities", aggregate = FALSE)
 } # }
 ```

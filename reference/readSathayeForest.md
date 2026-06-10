@@ -23,7 +23,6 @@ Lavinia Baumstark, Felicitas Beier, Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- readSource("SathayeForest")
  # \dontrun{}
 ```

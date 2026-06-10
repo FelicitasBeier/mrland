@@ -24,7 +24,6 @@ Isabelle Weindl
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 calcOutput("PYieldSlope")
 } # }

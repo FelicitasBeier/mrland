@@ -26,7 +26,6 @@ Nele Steinmetz
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 
 a <- calcOutput("AfforestCosts")

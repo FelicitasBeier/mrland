@@ -23,7 +23,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 calcOutput("ForestFireShare",aggregate=FALSE)
 } # }

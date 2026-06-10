@@ -30,7 +30,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 a <- readSource("TimberShare")
 } # }

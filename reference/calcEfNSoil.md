@@ -27,7 +27,6 @@ Benjamin Leon Bodirsky
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 calcOutput("EmisNitrogenPast")
 } # }

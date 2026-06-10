@@ -29,7 +29,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- readSource("FRA2015Doc","forest_area")
  # \dontrun{}
 ```

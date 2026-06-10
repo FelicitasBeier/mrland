@@ -24,7 +24,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{ 
 calcOutput("ForestFireLoss",aggregate=FALSE)
 } # }

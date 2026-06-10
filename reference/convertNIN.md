@@ -38,7 +38,6 @@ Isabelle Weindl
 ## Examples
 
 ``` r
-
 if (FALSE) { # \dontrun{
 a <- readSource(type="NIN",subtype="cons_data")
 } # }

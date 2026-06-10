@@ -30,7 +30,6 @@ Lavinia Baumstark
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- readSource(type="WBirrigation")
  # \dontrun{}
 ```

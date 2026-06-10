@@ -23,7 +23,6 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- readSource("ForestryProductionRatio")
  # \dontrun{}
 ```

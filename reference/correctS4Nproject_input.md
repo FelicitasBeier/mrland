@@ -30,7 +30,6 @@ Felicitas Beier
 ## Examples
 
 ``` r
-
 if (FALSE)  a <- readSource("S4Nproject_input", aggregate=FALSE)
  # \dontrun{}
 ```
