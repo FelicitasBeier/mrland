@@ -138,6 +138,7 @@
   calcYieldsCalibrated
 - [`calcYieldsLPJmL()`](calcYieldsLPJmL.md) : calcYieldsLPJmL
 - [`calcYieldsWeight()`](calcYieldsWeight.md) : calcYieldsWeight
+- [`calcYldPastSwitch()`](calcYldPastSwitch.md) : calcYldPastSwitch
 - [`convertAQUASTAT()`](convertAQUASTAT.md) : convertAQUASTAT
 - [`convertEATLancet()`](convertEATLancet.md) : convertEATLancet
 - [`convertFAOLossesWaste()`](convertFAOLossesWaste.md) : Convert data
