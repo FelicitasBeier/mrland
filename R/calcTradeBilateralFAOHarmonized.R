@@ -87,15 +87,25 @@ calcTradeBilateralFAOHarmonized <- function(yearly = TRUE) {
                                     names = getNames(tm),
                                     fill = 0)
 
-    for (t in getYears(tm, as.integer = TRUE)[-c(1, length(getYears(tm)))]) {
+    yrs <- getYears(tm, as.integer = TRUE)
+    n <- length(yrs)
+    if (n > 2) {
+      # interior target years and their adjacent-year sources; done for all years at once
+      # (vectorised replacement for the former year-by-year loop, identical result)
+      tgtY  <- yrs[-c(1, n)]     # years[2 .. n-1]  (interior targets, kept 0 at the ends)
+      lagY  <- yrs[-c(n - 1, n)] # years[1 .. n-2]  (the t-1 sources)
+      leadY <- yrs[-c(1, 2)]     # years[3 .. n]    (the t+1 sources)
 
       if (year == "both") {
-        yearAdjTrPatterns[, t, ] <-      (setYears(tm[, t - 1, ] / dimSums(tm[, t - 1, ], dim = 1.2), NULL) +
-                                            setYears(tm[, t + 1, ] / dimSums(tm[, t + 1, ], dim = 1.2), NULL)) / 2
+        norm <- tm / dimSums(tm, dim = 1.2)
+        yearAdjTrPatterns[, tgtY, ] <- (setYears(norm[, lagY, ], tgtY) +
+                                          setYears(norm[, leadY, ], tgtY)) / 2
       } else if (year == "after") {
-        yearAdjTrPatterns[, t, ] <-      setYears(tmS2[, t + 1, ] / dimSums(tmS2[, t + 1, ], dim = 1.2), NULL)
+        norm <- tmS2 / dimSums(tmS2, dim = 1.2)
+        yearAdjTrPatterns[, tgtY, ] <- setYears(norm[, leadY, ], tgtY)
       } else if (year == "before") {
-        yearAdjTrPatterns[, t, ] <-      setYears(tmS2[, t - 1, ] / dimSums(tmS2[, t - 1, ], dim = 1.2), NULL)
+        norm <- tmS2 / dimSums(tmS2, dim = 1.2)
+        yearAdjTrPatterns[, tgtY, ] <- setYears(norm[, lagY, ], tgtY)
       }
     }
 
@@ -109,7 +119,7 @@ calcTradeBilateralFAOHarmonized <- function(yearly = TRUE) {
   # make out object
   tmSout <- tmS
 
-  for (i in seq(1:5)) {
+  for (i in seq_len(5)) {
     # first both
     tmS2 <- .fillMiss(tmSout, year = "both")
     # then after
@@ -130,17 +140,17 @@ calcTradeBilateralFAOHarmonized <- function(yearly = TRUE) {
     dimSums(mbx[, , "ethanol"], dim = 1)
 
   nonmatch <- dimSums(tmSout, dim = 1.2) - mbi[, cyears, citems]
-  missing <- magclass::where(round(nonmatch, 3) < 0)$true$individual
-  missing <- as.data.frame(missing)
 
-
-  # Now we will fill all the others also with global exporters ratio
-  for (i in seq_along(missing[, 1])) {
-    tmSout[missing$im[i], missing$Year[i], missing$ItemCodeItem[i]] <-
-      mbi[missing$im[i], missing$Year[i], missing$ItemCodeItem[i]] *
-      mbx[, missing$Year[i], missing$ItemCodeItem[i]] /
-      dimSums(mbx[, missing$Year[i], missing$ItemCodeItem[i]], dim = 1)
-  }
+  # Now we will fill all the others also with global exporters ratio.
+  # Vectorised form of the former per-cell where()/for-loop: this is the same
+  # global-export-share distribution used for ethanol above (mbi * mbx / global exports),
+  # computed for every importer at once but written only into the cells that still
+  # under-fill the mass-balance imports (round(nonmatch, 3) < 0), broadcast across exporters.
+  globalRatioFill <- magpie_expand(mbi[, cyears, citems] * mbx[, cyears, citems] /
+                                     dimSums(mbx[, cyears, citems], dim = 1),
+                                   tmSout)
+  refill <- as.array(magpie_expand(round(nonmatch, 3) < 0, tmSout)) > 0
+  tmSout[refill] <- as.array(globalRatioFill)[refill]
 
   getItems(tmSout, dim = 1.2) <- gsub("[0-9]+", "", getItems(tmSout, dim = 1.2))
 
