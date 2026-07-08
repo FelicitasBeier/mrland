@@ -59,8 +59,8 @@ readREMIND <- function(subtype) {
     indicator <- unlist(subtype)[3]
 
     # for data that was added with revisions < 4.118 always look for US$2005
+    # this gets changed back to US$2017 further down for later revisions
     indicator <- gsub("US\\$2017", "US$2005", indicator)
-
 
     # reading in REMIND reporting files:
 
@@ -172,6 +172,24 @@ readREMIND <- function(subtype) {
                                   replacement = "R34BC-SSP2-PkBudg650-\\1",
                                   indicator = indicator))
     }
+
+    if (revision >= 4.133) {
+      # Please refer to the 2026-R36M414/readme.txt for the source of the data
+      fileList <- c("2026-R36M414/REMIND_generic_C_SSP1-NPi2025.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP1-PkBudg1000.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP1-PkBudg750.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP2-NPi2025.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP2-PkBudg1000.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP2-PkBudg750.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP3-NPi2025.mif",
+                    "2026-R36M414/REMIND_generic_C_SSP3-PkBudg1000.mif")
+
+      out <- mbind(out, .readAndRename(fileList = fileList,
+                                       pattern = "C_(SSP)",
+                                       replacement = "R36M414-\\1",
+                                       indicator = indicator))
+    }
+
   }
 
   # shorten names of the REMIND scenarios

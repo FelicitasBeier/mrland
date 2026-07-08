@@ -104,6 +104,8 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
   calcOutput("FAOYield", cut = 0.98, years = magYearsPast, round = 2,
              outputStatistics = stats, file = "f14_region_yields.cs3")
   calcOutput("Ir2RfYieldRatio", round = 2, outputStatistics = stats, file = "f14_ir2rf_ratio.cs4")
+  calcOutput("YldPastSwitch", round = 2,
+             outputStatistics = stats, file = "f14_yld_past_switch.csv", aggregate = superregion)
 
   # 15 food
   calcOutput("BodyHeight", aggregate = FALSE, years = magYearsPast, round = 2, outputStatistics = stats,
