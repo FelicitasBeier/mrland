@@ -36,25 +36,29 @@ calcKeyBiodiversityAreas <- function(maginput = TRUE, unprotected = TRUE,
   }
 
   if (maginput) {
-    luh3 <- calcOutput("LUH3",
-      landuseTypes = "LUH3", aggregate = FALSE,
-      cellular = TRUE,
-      yrs = 2015
-    )
-    getYears(luh3) <- NULL
-    getCells(luh3) <- getCells(kba)
+    .alignLuDims <- function(lu, aData) {
+      getYears(lu) <- NULL
+      getCells(lu) <- getCells(aData)
+      return(lu)
+    }
+
+    baseLandUse <- calcOutput("LanduseInitialisation", nclasses = "five", cellular = TRUE,
+                              input_magpie = TRUE, aggregate = FALSE, years = 2020)
+    landUse2020 <- .alignLuDims(baseLandUse[, 2020, ], kba)
 
     # calculate total land area
-    landArea <- dimSums(luh3, dim = 3)
+    landArea <- dimSums(landUse2020, dim = 3)
 
-    # urban land
-    urbanLand <- calcOutput("UrbanLandFuture",
-      subtype = "LUH3", aggregate = FALSE,
-      timestep = "5year", cells = "lpjcell"
-    )
+    # urban land from LanduseInitialisation
+    landUse9 <- calcOutput("LanduseInitialisation",
+      nclasses = "nine", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE,
+      years = 2020
+    )[, "y2020", ]
+    landUse9 <- .alignLuDims(landUse9, kba)
+    urbanLand2020 <- landUse9[, , "urban"]
 
     # make sure that kba land is not greater than total land area minus urban area
-    landNoUrban <- setYears(landArea, "y2020") - setCells(urbanLand[, "y2020", "SSP2"], getCells(landArea))
+    landNoUrban <- landArea - urbanLand2020
     getYears(landNoUrban) <- getYears(kba)
     # compute mismatch factor
     kbaTotalLand <- dimSums(kba[, , "KBA"], dim = 3.2)
@@ -65,20 +69,15 @@ calcKeyBiodiversityAreas <- function(maginput = TRUE, unprotected = TRUE,
 
     # Consider mismatches in the classification of open
     # ecosystems into pasture and other between land-use
-    # initialisation (LUH) and ESA CCI:
-    luIni <- calcOutput("LanduseInitialisation",
-      nclasses = "seven", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE
-    )[, "y2020", ]
-    getYears(luIni) <- NULL
-    getCells(luIni) <- getCells(kba)
-    kba <- toolCorrectOpenEcosystemMismatch(kba, luIni)
+    # initialisation and ESA CCI:
+    kba <- toolCorrectOpenEcosystemMismatch(kba, landUse2020)
 
     if (nclasses %in% c("seven", "nine")) {
-      # differentiate primary and secondary forest based on luh3 data
-      totForestLUH <- dimSums(luh3[, , c("primf", "secdf")], dim = 3) # nolint
-      primforestShr <- luh3[, , "primf"] / setNames(totForestLUH + 1e-10, NULL)
-      secdforestShr <- luh3[, , "secdf"] / setNames(totForestLUH + 1e-10, NULL)
-      # where luh2 does not report forest, but we find forest land in
+      # differentiate primary and secondary forest based on LanduseInitialisation data
+      totalForest <- dimSums(landUse9[, , c("primforest", "secdforest")], dim = 3) # nolint
+      primforestShr <- landUse9[, , "primforest"] / setNames(totalForest + 1e-10, NULL)
+      secdforestShr <- landUse9[, , "secdforest"] / setNames(totalForest + 1e-10, NULL)
+      # where LanduseInitialisation does not report forest, but we find forest land in
       # KBA data, set share of secondary forest land to 1
       secdforestShr[secdforestShr == 0 & primforestShr == 0] <- 1
       # multiply shares of primary and secondary non-forest veg with
@@ -109,10 +108,10 @@ calcKeyBiodiversityAreas <- function(maginput = TRUE, unprotected = TRUE,
       range <- kba[, , paste(getItems(kba, dim = 3.1), "past", sep = ".")]
 
       # separate other land into primary and secondary
-      totOtherLUH <- dimSums(luh3[, , c("primn", "secdn")], dim = 3) # nolint
-      primotherShr <- luh3[, , "primn"] / setNames(totOtherLUH + 1e-10, NULL)
-      secdotherShr <- luh3[, , "secdn"] / setNames(totOtherLUH + 1e-10, NULL)
-      # where luh2 does not report other land, but we find other land in
+      totalOther <- dimSums(landUse9[, , c("primother", "secdother")], dim = 3) # nolint
+      primotherShr <- landUse9[, , "primother"] / setNames(totalOther + 1e-10, NULL)
+      secdotherShr <- landUse9[, , "secdother"] / setNames(totalOther + 1e-10, NULL)
+      # where LanduseInitialisation does not report other land, but we find other land in
       # KBA data, set share of secondary other land to 1
       secdotherShr[secdotherShr == 0 & primotherShr == 0] <- 1
       # multiply shares of primary and secondary non-forest veg with other land
