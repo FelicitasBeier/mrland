@@ -23,18 +23,15 @@ calcSNVTargetCropland <- function(maginput = TRUE, cells = "magpiecell") {
   targetCropland <- readSource("Copernicus", subtype = "SNVTargetCropland", convert = "onlycorrect")
 
   if (maginput) {
-    luh <- calcOutput("LUH3",
-      landuseTypes = "magpie", aggregate = FALSE,
-      cellular = TRUE, 
-      yrs = 2015
-    )
-    getYears(luh) <- NULL
-    getCells(luh) <- getCells(targetCropland)
+    landUse2020 <- calcOutput("LanduseInitialisation", nclasses = "five", cellular = TRUE,
+                              input_magpie = TRUE, aggregate = FALSE, years = 2020)
+    getYears(landUse2020) <- NULL
+    getCells(landUse2020) <- getCells(targetCropland)
 
     # SNV target cropland area is corrected to make sure that it is not
-    # larger than cropland area reported by LUH
+    # larger than cropland area reported by LanduseInitialisation
     for (i in seq(ndata(targetCropland))) {
-      targetCropland[, , i] <- pmin(targetCropland[, , i], luh[, , "crop"])
+      targetCropland[, , i] <- pmin(targetCropland[, , i], landUse2020[, , "crop"])
     }
     out <- targetCropland
   } else {
