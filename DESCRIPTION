@@ -1,8 +1,8 @@
 Type: Package
 Package: mrland
 Title: MadRaT land data package
-Version: 0.74.0
-Date: 2026-06-26
+Version: 0.75.2
+Date: 2026-07-13
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Abhijeet", "Mishra", role = "aut"),
@@ -67,3 +67,4 @@ Encoding: UTF-8
 LazyData: no
 Config/Needs/website: tidyverse/tidytemplate
 Config/roxygen2/version: 8.0.0
+RoxygenNote: 7.3.3
