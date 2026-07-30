@@ -17,22 +17,29 @@
 #' }
 #' @importFrom SPEI thornthwaite
 #' @importFrom magpiesets findset
-
+#' @importFrom mrlandcore toolLPJmLDefault
 
 calcClimateRegionsIPCC <- function(landusetypes = "all", cellular = FALSE,
                                    yearly = FALSE, convert = TRUE) {
-  # PET based on thornwaite function
-  pet       <- calcOutput("LPJmL_new", version = "LPJmL4_for_MAgPIE_44ac93de",
-                          climatetype = "GSWP3-W5E5:historical", subtype = "mpet",
-                          stage = "smoothed", aggregate = FALSE)
-  precip    <- calcOutput("LPJmLClimateInput_new", lpjmlVersion = "LPJmL4_for_MAgPIE_44ac93de",
-                          climatetype  = "GSWP3-W5E5:historical",
-                          variable = "precipitation:monthlySum",
-                          stage = "smoothed", aggregate = FALSE)
-  temp      <- calcOutput("LPJmLClimateInput_new", lpjmlVersion = "LPJmL4_for_MAgPIE_44ac93de",
-                          climatetype  = "GSWP3-W5E5:historical",
-                          variable = "temperature:monthlyMean",
-                          stage = "smoothed", aggregate = FALSE)
+  # extract default arguments for LPJmL
+  cfg <- toolLPJmLDefault()
+
+  # PET based on thornwaite function for historical baseline
+  pet <- calcOutput("LPJmLTransform", lpjmlversion = cfg$defaultLPJmLVersion,
+                    climatetype = cfg$baselineHist,
+                    subtype     = "pnv:pet", subdata = NULL,
+                    stage       = "smoothed:cut",
+                    monthly     = TRUE,
+                    aggregate   = FALSE)
+
+  # LPJmL climate inputs: precipitation and temperature
+  precip <- calcOutput("LPJmLClimateInput", climatetype = cfg$baselineHist,
+                       variable = "precipitation:monthlySum", stage = "smoothed",
+                       lpjmlVersion = cfg$defaultLPJmLVersion, aggregate = FALSE)
+
+  temp <- calcOutput("LPJmLClimateInput", climatetype = cfg$baselineHist,
+                     variable = "temperature:monthlyMean", stage = "smoothed",
+                     lpjmlVersion = cfg$defaultLPJmLVersion, aggregate = FALSE)
 
   # yearly total precip and pet
   precip <- dimSums(precip, dim = c(3.1))
