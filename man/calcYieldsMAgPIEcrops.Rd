@@ -5,8 +5,8 @@
 \title{calcYieldsMAgPIEcrops}
 \usage{
 calcYieldsMAgPIEcrops(
-  lpjml = "ggcmi_phase3_nchecks_9ca735cb",
-  climatetype = "GSWP3-W5E5:historical",
+  lpjml = "lpjml5.10.0-m4",
+  climatetype = "MRI-ESM2-0:ssp245",
   selectyears = seq(1965, 2100, by = 5),
   multicropping = FALSE,
   calibration = NULL
