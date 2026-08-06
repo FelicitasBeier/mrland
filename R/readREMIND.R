@@ -76,7 +76,7 @@ readREMIND <- function(subtype) {
                           replacement = "R2M41-SSP2-",
                           indicator = indicator)
 
-    if (revision > 4.58) {
+    if (revision > "4.58") {
       # Please refer to the 2021-R21M42/readme.txt for the source of the data
       fileList <- c("2021-R21M42/REMIND_generic_C_SDP-NPi-rem-5.mif",
                     "2021-R21M42/REMIND_generic_C_SDP-PkBudg900-rem-5.mif",
@@ -94,7 +94,7 @@ readREMIND <- function(subtype) {
                     "2021-R21M42/REMIND_generic_C_SSP5-PkBudg900-rem-5.mif",
                     "2021-R21M42/REMIND_generic_C_SSP5-PkBudg1100-rem-5.mif",
                     "2021-R21M42/REMIND_generic_C_SSP5-PkBudg1300-rem-5.mif")
-      if (revision > 4.103) {
+      if (revision > "4.103") {
         fileList <- c(fileList,
                       "2021-R21M42/REMIND_generic_C_SDP-NDC-rem-5.mif",
                       "2021-R21M42/REMIND_generic_C_SSP1-NDC-rem-5.mif",
@@ -108,7 +108,7 @@ readREMIND <- function(subtype) {
                                        indicator = indicator))
     }
 
-    if (revision >= 4.96) {
+    if (revision >= "4.96") {
       # Please refer to the 2023-R32M46/readme.txt for the source of the data
       fileList <- c("2023-R32M46/REMIND_generic_C_SDP_MC-NDC-rem-5.mif",
                     "2023-R32M46/REMIND_generic_C_SDP_MC-NPi-rem-5.mif",
@@ -135,7 +135,7 @@ readREMIND <- function(subtype) {
     # for data that was added with revisions >= 4.118 look for US$2017
     indicator <- gsub("US\\$2005", "US$2017", indicator)
 
-    if (revision >= 4.118) {
+    if (revision >= "4.118") {
       # Please refer to the 2025-R34M410/readme.txt for the source of the data
       fileList <- c("2025-R34M410/REMIND_generic_C_SSP1-NPi2025-rawluc-rem-5.mif",
                     "2025-R34M410/REMIND_generic_C_SSP1-PkBudg1000-rawluc-rem-5.mif",
@@ -159,7 +159,7 @@ readREMIND <- function(subtype) {
                                        indicator = indicator))
     }
 
-    if (revision >= 4.122) {
+    if (revision >= "4.122") {
       # Please refer to the 2025-R34withBC/readme.txt for the source of the data
       fileList <- c("2025-R34withBC/REMIND_generic_PB650-BCdef-CTS01-BM70-noFuel-CHP17.mif",
                     "2025-R34withBC/REMIND_generic_PB650-BCdef-CTS01-noFuel-CHP17.mif",
@@ -173,7 +173,7 @@ readREMIND <- function(subtype) {
                                   indicator = indicator))
     }
 
-    if (revision >= 4.133) {
+    if (revision >= "4.133") {
       # Please refer to the 2026-R36M414/readme.txt for the source of the data
       fileList <- c("2026-R36M414/REMIND_generic_C_SSP1-NPi2025.mif",
                     "2026-R36M414/REMIND_generic_C_SSP1-PkBudg1000.mif",
