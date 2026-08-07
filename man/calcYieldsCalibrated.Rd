@@ -12,7 +12,6 @@ calcYieldsCalibrated(
   cells = "lpjcell",
   multicropping = FALSE,
   refYields = FALSE,
-  areaSource = "FAO",
   marginal_land = "magpie"
 )
 }
@@ -49,9 +48,6 @@ FALSE: single-cropped LPJmL yields used as baseline to calculate country-level y
 "TRUE:actual:irrig_crop": multicropped yields
                           where LandInG reports current multiple cropping
                           (irrigation- and crop-specific))}
-
-\item{areaSource}{data source for croparea used in calculation: FAO or LandInG
-Note: when calibrating multicropped yields, LandInG croparea should be used}
 
 \item{marginal_land}{Defines which share of marginal land should be included (see options below) and
                      whether suitable land under irrigated conditions ("irrigated"),

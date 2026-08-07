@@ -15,7 +15,7 @@ calculates fixation rates from freeliving bacteria per area
 \examples{
 
 \dontrun{
-calcOutput("calcNitrogenFixationFreelivingRate")
+calcOutput("NitrogenFixationFreelivingRate")
 }
 
 }
