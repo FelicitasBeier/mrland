@@ -182,6 +182,7 @@ calcYieldsMAgPIEcrops <- function(lpjml = "lpjml5.10.0-m4",
     yieldLPJmLbase <- yieldLPJmLbase[, refYear, crops]
 
     # crop-specific cropland area split by irrigation and rainfed
+    # To Do: adjust both to calcCroparea (if cropareaUpdate is merged first, see calcYieldsCalibrated)
     if (areaSource == "FAO") {
       cropareaMAGgrid <- calcOutput("Croparea", sectoral = "kcr", physical = TRUE,
                                     cellular = TRUE, cells = "lpjcell",
