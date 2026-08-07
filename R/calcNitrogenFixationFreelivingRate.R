@@ -7,7 +7,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' calcOutput("calcNitrogenFixationFreelivingRate")
+#' calcOutput("NitrogenFixationFreelivingRate")
 #' }
 #'
 
