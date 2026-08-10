@@ -8,7 +8,7 @@
 #' \code{\link[mrcommons]{calcNitrogenFixationSymbiotic}}
 #' @examples
 #' \dontrun{
-#' calcOutput("calcNitrogenFixationNdfa")
+#' calcOutput("NitrogenFixationNdfa")
 #' }
 #'
 calcNitrogenFixationNdfa <- function() {

@@ -14,7 +14,7 @@ calculates the share of N in biomass derived from biological fixation
 }
 \examples{
 \dontrun{
-calcOutput("calcNitrogenFixationNdfa")
+calcOutput("NitrogenFixationNdfa")
 }
 
 }
