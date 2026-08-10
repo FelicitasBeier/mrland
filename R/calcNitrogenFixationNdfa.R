@@ -4,7 +4,8 @@
 #' @return List of magpie objects with results on country level, weight on country level, unit and description.
 #' @author Benjamin Leon Bodirsky
 #' @seealso
-#' \code{\link[mrcommons]{calcNitrogenFixationPast}}
+#' \code{\link[mrcommons]{calcNitrogenFixationFreeliving}},
+#' \code{\link[mrcommons]{calcNitrogenFixationSymbiotic}}
 #' @examples
 #' \dontrun{
 #' calcOutput("calcNitrogenFixationNdfa")
