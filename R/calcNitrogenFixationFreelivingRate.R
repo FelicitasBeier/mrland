@@ -11,7 +11,6 @@
 #' }
 #'
 
-
 calcNitrogenFixationFreelivingRate <- function() {
   out <- setYears(readSource("Herridge", subtype = "freeliving", convert = FALSE),
                   NULL)

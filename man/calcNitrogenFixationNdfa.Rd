@@ -18,10 +18,6 @@ calcOutput("NitrogenFixationNdfa")
 }
 
 }
-\seealso{
-\code{\link[mrcommons]{calcNitrogenFixationFreeliving}},
-\code{\link[mrcommons]{calcNitrogenFixationSymbiotic}}
-}
 \author{
 Benjamin Leon Bodirsky
 }
