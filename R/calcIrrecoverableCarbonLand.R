@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("calcIrrecoverableCarbonLand", aggregate = FALSE)
+#' calcOutput("IrrecoverableCarbonLand", aggregate = FALSE)
 #' }
 #'
 #' @importFrom mstools toolCoord2Isocell
@@ -48,16 +48,16 @@ calcIrrecoverableCarbonLand <- function(maginput = TRUE, nclasses = "seven",
 
     baseLandUse <- calcOutput("LanduseInitialisation", nclasses = "five", cellular = TRUE,
                               input_magpie = TRUE, aggregate = FALSE, years = 2020)
-    landUse2020 <- .alignLuDims(baseLandUse[, 2020, ], ic)
+    landUse2020 <- .alignLuDims(setYears(baseLandUse, "y2020"), ic)
 
     # calculate total land area
     landArea <- dimSums(landUse2020, dim = 3)
 
     # urban land from LanduseInitialisation
-    landUse9 <- calcOutput("LanduseInitialisation",
+    landUse9 <- setYears(calcOutput("LanduseInitialisation",
       nclasses = "nine", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE,
       years = 2020
-    )[, "y2020", ]
+    ), "y2020")
     landUse9 <- .alignLuDims(landUse9, ic)
     urbanLand2020 <- landUse9[, , "urban"]
 

@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("calcGlobalSafetyNet", aggregate = FALSE)
+#' calcOutput("GlobalSafetyNet", aggregate = FALSE)
 #' }
 #'
 #' @importFrom mstools toolCoord2Isocell

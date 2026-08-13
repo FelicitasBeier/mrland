@@ -49,16 +49,16 @@ calcIPLCLand <- function(maginput = TRUE, nclasses = "seven", datasource = "Land
 
     baseLandUse <- calcOutput("LanduseInitialisation", nclasses = "five", cellular = TRUE,
                               input_magpie = TRUE, aggregate = FALSE, years = 2020)
-    landUse2020 <- .alignLuDims(baseLandUse[, 2020, ], iplc)
+    landUse2020 <- setYears(.alignLuDims(baseLandUse, iplc), "y2020")
 
     # calculate total land area
     landArea <- dimSums(landUse2020, dim = 3)
 
     # urban land from LanduseInitialisation
-    landUse9 <- calcOutput("LanduseInitialisation",
+    landUse9 <- setYears(calcOutput("LanduseInitialisation",
       nclasses = "nine", aggregate = FALSE, cellular = TRUE, input_magpie = TRUE,
       years = 2020
-    )[, "y2020", ]
+    ), "y2020")
     landUse9 <- .alignLuDims(landUse9, iplc)
     urbanLand2020 <- landUse9[, , "urban"]
 

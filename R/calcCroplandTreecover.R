@@ -23,7 +23,7 @@ calcCroplandTreecover <- function(maginput = TRUE, countryLevel = FALSE) {
   treecover <- readSource("Copernicus", subtype = "CroplandTreecover", convert = "onlycorrect")
 
   if (maginput) {
-    luh <- calcOutput("LanduseInitialisation", 
+    landuseInit <- calcOutput("LanduseInitialisation",
       nclasses = "five", input_magpie = TRUE,
       cellular = TRUE, aggregate = FALSE,
       years = 2015
@@ -31,7 +31,7 @@ calcCroplandTreecover <- function(maginput = TRUE, countryLevel = FALSE) {
 
     # cropland treecover area is corrected to make sure that it is not
     # larger than cropland area reported by LUH
-    out <- pmin(treecover, luh[, , "crop"])
+    out <- pmin(treecover, landuseInit[, , "crop"])
   } else {
     out <- treecover
   }

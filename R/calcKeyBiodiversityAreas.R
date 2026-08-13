@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("calcKeyBiodiversityAreas", aggregate = FALSE)
+#' calcOutput("KeyBiodiversityAreas", aggregate = FALSE)
 #' }
 #'
 #' @importFrom mstools toolCoord2Isocell
