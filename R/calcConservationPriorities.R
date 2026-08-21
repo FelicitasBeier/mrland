@@ -17,13 +17,15 @@
 #' primary and secondary non-forest vegetation and therefore returns "crop", "past", "range",
 #' "forestry", "primforest", "secdforest", "urban", "primother" and "secdother"
 #' }
+#' @param baseYearIPLCLand Whether the reference year for land conservation \code{"consvBaseYear"}
+#' also is applied to IPLC land. The default is \code{FALSE} to avoid land-use change on IPLC land.
 #'
 #' @return magpie object in cellular resolution with different protection options in conservation priority areas
 #' @author Patrick v. Jeetze
 #'
 #' @examples
 #' \dontrun{
-#' calcOutput("ConservationPriority2", aggregate = FALSE)
+#' calcOutput("ConservationPriorities", aggregate = FALSE)
 #' }
 #'
 #' @importFrom magpiesets findset addLocation
@@ -31,7 +33,8 @@
 #' @importFrom mstools toolCoord2Isocell
 #'
 
-calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell", nclasses = "seven") {
+calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell",
+                                       nclasses = "seven", baseYearIPLCLand = FALSE) {
   # ===============================
   # Get conservation templates
   # ===============================
@@ -103,6 +106,28 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
 
   irrC <- calcOutput("IrrecoverableCarbonLand",
     maginput = TRUE, nclasses = nclasses,
+    aggregate = FALSE
+  )
+
+  # ------------------------------
+  # IPLC land (LandMark)
+  # ------------------------------
+  # LandMark Dataset: Indigenous Peoples' Lands & Territories
+  # and Local Community Lands.
+  # "The Indigenous Peoples' Lands & Territories and Local Community
+  # Lands data represent the boundaries of indigenous and community
+  # lands. The Indicative Areas of Indigenous and Community Lands
+  # layer shows areas where indigenous and community lands likely
+  # exist but the data on the precise delimitation, recognition and/or
+  # documentation status of these are not available at this time.
+  # In all cases, these are areas where Indigenous Peoples’ or local
+  # communities’ lands are known to exist, but available attribute or
+  # precise locational information is insufficient for their inclusion
+  # in the data layers on Indigenous and Community Land Maps or Indigenous
+  # and Community Natural Resource Rights".
+
+  landMark <- calcOutput("IPLCLand",
+    maginput = TRUE, nclasses = nclasses, datasource = "LandMark",
     aggregate = FALSE
   )
 
@@ -189,7 +214,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # Prepare output
   # ======================================
   # Combine all templates for the output
-  consvPrio <- mbind(thirty, kba, gsn, bhifl, irrC, cca, gsnHalfEarth, pblHalfEarth)
+  consvPrio <- mbind(thirty, kba, gsn, bhifl, irrC, cca, gsnHalfEarth, pblHalfEarth, landMark)
 
   # ----------------------------
   # Correct data
@@ -198,8 +223,10 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # in the additive options can be larger than total
   # land in a grid cell. This is corrected in the following.
 
-  luh3 <- calcOutput("LUH3", cellular = TRUE, yrs = consvBaseYear,
-                     landuseTypes = "LUH3", aggregate = FALSE)[, consvBaseYear, ]
+  luh3 <- calcOutput("LUH3",
+    cellular = TRUE, yrs = consvBaseYear,
+    landuseTypes = "LUH3", aggregate = FALSE
+  )[, consvBaseYear, ]
   getYears(luh3) <- NULL
 
   # get total land area
@@ -231,6 +258,7 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # correct conservation priority data
   consvPrio <- consvPrio * landMismatch
 
+
   # -------------------------------
   # Define conservation base year
   # -------------------------------
@@ -240,6 +268,10 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
   # in conservation priority areas.
 
   if (consvBaseYear != "y2020") {
+    if (!baseYearIPLCLand) {
+      iplc <- consvPrio[, , "IPLC", pmatch = TRUE]
+      consvPrio <- consvPrio[, , "IPLC", pmatch = TRUE, invert = TRUE]
+    }
     # Reclassify LUH classes to MAgPIE classes
     if (nclasses == "seven") {
       consvBaseLand <- mbind(
@@ -270,14 +302,21 @@ calcConservationPriorities <- function(consvBaseYear = "y1750", cells = "lpjcell
     # Multiply total conservation priority land with
     # share of land types in conservation base year
     consvPrio <- dimSums(consvPrio, dim = 3.2) * consvBaseLandShr
+    if (!baseYearIPLCLand) {
+      consvPrio <- mbind(consvPrio, iplc)
+    }
   }
 
-  return(list(x = consvPrio,
-              weight = NULL,
-              unit = "Mha",
-              description = paste0("Land conservation priority targets in each land type. ",
-                                   "Land use in conservation priority areas is based on the ",
-                                   "reference year ", consvBaseYear,
-                                   ifelse(gsub("y", "", consvBaseYear) <= 1800, " (pre-industrial)", "")),
-              isocountries = FALSE))
+  return(list(
+    x = consvPrio,
+    weight = NULL,
+    unit = "Mha",
+    description = paste0(
+      "Land conservation priority targets in each land type. ",
+      "Land use in conservation priority areas is based on the ",
+      "reference year ", consvBaseYear,
+      ifelse(gsub("y", "", consvBaseYear) <= 1800, " (pre-industrial)", "")
+    ),
+    isocountries = FALSE
+  ))
 }

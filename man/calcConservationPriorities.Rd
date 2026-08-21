@@ -7,7 +7,8 @@
 calcConservationPriorities(
   consvBaseYear = "y1750",
   cells = "lpjcell",
-  nclasses = "seven"
+  nclasses = "seven",
+  baseYearIPLCLand = FALSE
 )
 }
 \arguments{
@@ -29,6 +30,9 @@ derived at a spatial resolution of 300 x 300 Meter.}
 primary and secondary non-forest vegetation and therefore returns "crop", "past", "range",
 "forestry", "primforest", "secdforest", "urban", "primother" and "secdother"
 }}
+
+\item{baseYearIPLCLand}{Whether the reference year for land conservation \code{"consvBaseYear"}
+also is applied to IPLC land. The default is \code{FALSE} to avoid land-use change on IPLC land.}
 }
 \value{
 magpie object in cellular resolution with different protection options in conservation priority areas
@@ -38,7 +42,7 @@ Function calculates land area in conservation priority areas that was unprotecte
 }
 \examples{
 \dontrun{
-calcOutput("ConservationPriority2", aggregate = FALSE)
+calcOutput("ConservationPriorities", aggregate = FALSE)
 }
 
 }
