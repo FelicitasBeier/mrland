@@ -39,16 +39,16 @@ calcTradeFlexBandHelper <- function(dataIn,
 
   dataIn <- as.data.frame(collapseNames(dataIn), rev = 2)
 
-  out <- dataIn %>%
-    dplyr::arrange(.data[[yearCol]]) %>%
-    dplyr::group_by(dplyr::across(dplyr::all_of(groupVars))) %>%
+  out <- dataIn |>
+    dplyr::arrange(.data[[yearCol]]) |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(groupVars))) |>
     dplyr::mutate(
       rollrange = zoo::rollapply(.data[[valueCol]],
                                  width = windowYears,
                                  FUN = function(x) diff(range(x)),
                                  fill = NA,
                                  align = "right")
-    ) %>%
+    ) |>
     dplyr::summarise(
       !!meanCol := mean(.data[["rollrange"]], na.rm = TRUE),
       !!maxCol  := max(.data[["rollrange"]],  na.rm = TRUE),
