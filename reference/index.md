@@ -122,12 +122,12 @@
 - [`calcTradeBilateralScenarioAdj()`](calcTradeBilateralScenarioAdj.md)
   : calcTradeBilateralScenarioAdj
 - [`calcTradeExportShr()`](calcTradeExportShr.md) : calcTradeExportShr
+- [`calcTradeFlexBandHelper()`](calcTradeFlexBandHelper.md) :
+  calcTradeFlexBandHelper
 - [`calcTradeImportSupplyRatio()`](calcTradeImportSupplyRatio.md) :
   calcTradeImportSupplyRatio
 - [`calcTradeMargin()`](calcTradeMargin.md) : calcTradeMargin
 - [`calcTradeSelfSuff()`](calcTradeSelfSuff.md) : calcTradeSelfSuff
-- [`calcTradeStdDevHelper()`](calcTradeStdDevHelper.md) :
-  calcTradeStdDevHelper
 - [`calcTradeTariff()`](calcTradeTariff.md) : calcTradeTariff
 - [`calcUrbanLandFuture()`](calcUrbanLandFuture.md) :
   calcUrbanLandFuture
