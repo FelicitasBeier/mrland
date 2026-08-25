@@ -39,7 +39,8 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrland** in publications use:
 
-Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L, Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). "mrland: MadRaT land data package." doi:10.5281/zenodo.3822083 <https://doi.org/10.5281/zenodo.3822083>, Version: 0.76.0, <https://github.com/pik-piam/mrland>.
+
+Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L, Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). "mrland: MadRaT land data package." doi:10.5281/zenodo.3822083 <https://doi.org/10.5281/zenodo.3822083>, Version: 0.75.3, <https://github.com/pik-piam/mrland>.
 
 A BibTeX entry for LaTeX users is
 
