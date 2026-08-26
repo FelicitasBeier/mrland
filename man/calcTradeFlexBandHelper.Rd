@@ -32,9 +32,13 @@ Calculate the rolling-range flexibility band of trade ratios observed over a win
 \details{
 Given a tidy data.frame/tibble with columns for exporter (ex), importer (im),
 item (ItemCodeItem), year and a numeric value column (default `.value`),
-this function computes the rolling RANGE (max - min) over `windowYears` for each
-group and returns the mean, max and min of that rolling range per group. The mean
-variant (mean over windows of the rolling range) is used by the model as the
+this function computes HALF the rolling range ((max - min) / 2) over `windowYears`
+for each group and returns the mean, max and min of that half-range per group. The
+half (amplitude, not full peak-to-trough) is used because the model applies the band
+as a +/- half-width around the historical anchor ratio: with the full range the
+symmetric corridor would span anchor +/- range, i.e. TWICE the observed historical
+range; the half makes the corridor width equal the historical range. The mean
+variant (mean over windows of the half-range) is used by the model as the
 flexibility window; it is empirically monotone in window length on the historical
 data. The max variant is provably monotone (range is a monotone set function) and
 wider; min is the narrowest. All three are written to the input file.
