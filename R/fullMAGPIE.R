@@ -243,17 +243,22 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f21_trade_scenario_adjustments.cs5",
              aggregate = TRUE)
 
-  # We need to calculate the observed standard deviation of the import supply ratio for each region-to-region pair.
-  # As this is only possible on regional level (no simple weighting of std. deviations possible via calcOutput),
-  # we run this function manually here.
+  # We need to calculate the observed flexibility band (rolling range) of the import supply ratio for each
+  # region-to-region pair. As this is only possible on regional level (no simple weighting of the band possible
+  # via calcOutput), we run this function manually here. The rolling RANGE (max - min) is used instead of the
+  # standard deviation because it is a monotone set function, so the max-over-windows band widens monotonically
+  # with the 5/10/15 year horizon (the std did not). The band is capped at 1 below: a flexibility window wider
+  # than the importer's entire domestic supply is economically meaningless and would only occur for near-zero-
+  # supply products (e.g. ethanol into IND) where the import supply ratio itself is a near-zero-denominator artifact.
 
   ratio <- calcOutput("TradeImportSupplyRatio", magYears = FALSE,
                       aggregate = TRUE)
-  ratio5 <- calcOutput("TradeStdDevHelper", dataIn = ratio, sdYears = 5, aggregate = FALSE)
-  ratio10 <- calcOutput("TradeStdDevHelper", dataIn = ratio, sdYears = 10, aggregate = FALSE)
-  ratio15 <- calcOutput("TradeStdDevHelper", dataIn = ratio, sdYears = 15, aggregate = FALSE)
-  ratiosd <- mbind(ratio5, ratio10, ratio15)
-  write.magpie(ratiosd, round = 6, file_name = "f21_trade_bilat_stddev.cs5")
+  ratio5 <- calcOutput("TradeFlexBandHelper", dataIn = ratio, windowYears = 5, aggregate = FALSE)
+  ratio10 <- calcOutput("TradeFlexBandHelper", dataIn = ratio, windowYears = 10, aggregate = FALSE)
+  ratio15 <- calcOutput("TradeFlexBandHelper", dataIn = ratio, windowYears = 15, aggregate = FALSE)
+  ratioFlexBand <- mbind(ratio5, ratio10, ratio15)
+  ratioFlexBand[ratioFlexBand > 1] <- 1   # cap flexibility band at 100% of domestic supply
+  write.magpie(ratioFlexBand, round = 6, file_name = "f21_trade_bilat_flexBand.cs5")
 
   calcOutput("TradeBilateralBalanceFlow", balanceflow = "trade", round = 6, outputStatistics = stats,
              file = "f21_trade_export_balanceflow.cs3", aggregate = TRUE)
