@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">mrland</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.75.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.75.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,9 +79,13 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Given a tidy data.frame/tibble with columns for exporter (ex), importer (im),
 item (ItemCodeItem), year and a numeric value column (default `.value`),
-this function computes the rolling RANGE (max - min) over `windowYears` for each
-group and returns the mean, max and min of that rolling range per group. The mean
-variant (mean over windows of the rolling range) is used by the model as the
+this function computes HALF the rolling range ((max - min) / 2) over `windowYears`
+for each group and returns the mean, max and min of that half-range per group. The
+half (amplitude, not full peak-to-trough) is used because the model applies the band
+as a +/- half-width around the historical anchor ratio: with the full range the
+symmetric corridor would span anchor +/- range, i.e. TWICE the observed historical
+range; the half makes the corridor width equal the historical range. The mean
+variant (mean over windows of the half-range) is used by the model as the
 flexibility window; it is empirically monotone in window length on the historical
 data. The max variant is provably monotone (range is a monotone set function) and
 wider; min is the narrowest. All three are written to the input file.</p>
