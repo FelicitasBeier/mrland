@@ -45,6 +45,8 @@
 - [`calcForestFireLoss()`](calcForestFireLoss.md) : calcForestFireLoss
 - [`calcForestFireShare()`](calcForestFireShare.md) :
   calcForestFireShare
+- [`calcForestGrassi2023()`](calcForestGrassi2023.md) :
+  calcForestGrassi2023
 - [`calcForestLossShare()`](calcForestLossShare.md) :
   calcForestLossShare
 - [`calcForestProductionInitialization()`](calcForestProductionInitialization.md)
@@ -164,6 +166,8 @@
 - [`correctCopernicus()`](correctCopernicus.md) : correctCopernicus
 - [`correctDinerstein2020()`](correctDinerstein2020.md) :
   correctDinerstein2020
+- [`correctForestGrassi2023()`](correctForestGrassi2023.md) :
+  correctForestGrassi2023
 - [`correctGLW3()`](correctGLW3.md) : correctGLW3
 - [`correctHalfEarth()`](correctHalfEarth.md) : correctHalfEarth
 - [`correctKeyBiodiversityAreas()`](correctKeyBiodiversityAreas.md) :
@@ -180,6 +184,8 @@
 - [`correctS4Nproject_input()`](correctS4Nproject_input.md) :
   correctS4Nproject_input
 - [`correctZabel2014()`](correctZabel2014.md) : correctZabel2014
+- [`downloadForestGrassi2023()`](downloadForestGrassi2023.md) :
+  downloadForestGrassi2023
 - [`downloadH08vapotranspiration()`](downloadH08vapotranspiration.md) :
   downloadH08evapotranspiration
 - [`downloadSPAM()`](downloadSPAM.md) : downloadSPAM
@@ -195,6 +201,8 @@
 - [`readFAOLossesWaste()`](readFAOLossesWaste.md) : Read in data on food
   losses and waste from FAO for several commodity groups
 - [`readFRA2015Doc()`](readFRA2015Doc.md) : Read FRA2015Doc
+- [`readForestGrassi2023()`](readForestGrassi2023.md) :
+  readForestGrassi2023
 - [`readForestLossDrivers()`](readForestLossDrivers.md) : Read
   ForestLossDrivers
 - [`readForestryProductionRatio()`](readForestryProductionRatio.md) :

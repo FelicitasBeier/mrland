@@ -1,5 +1,7 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
+<url><loc>/CODE_STYLE.html</loc></url>
+<url><loc>/CONTRIBUTING.html</loc></url>
 <url><loc>/LICENSE-text.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
@@ -32,6 +34,7 @@
 <url><loc>/reference/calcForestDisturbances.html</loc></url>
 <url><loc>/reference/calcForestFireLoss.html</loc></url>
 <url><loc>/reference/calcForestFireShare.html</loc></url>
+<url><loc>/reference/calcForestGrassi2023.html</loc></url>
 <url><loc>/reference/calcForestLossShare.html</loc></url>
 <url><loc>/reference/calcForestProductionInitialization.html</loc></url>
 <url><loc>/reference/calcForestryProductionRatio.html</loc></url>
@@ -105,6 +108,7 @@
 <url><loc>/reference/correctBrennan2022.html</loc></url>
 <url><loc>/reference/correctCopernicus.html</loc></url>
 <url><loc>/reference/correctDinerstein2020.html</loc></url>
+<url><loc>/reference/correctForestGrassi2023.html</loc></url>
 <url><loc>/reference/correctGLW3.html</loc></url>
 <url><loc>/reference/correctHalfEarth.html</loc></url>
 <url><loc>/reference/correctKeyBiodiversityAreas.html</loc></url>
@@ -116,6 +120,7 @@
 <url><loc>/reference/correctProtectedAreaBaseline.html</loc></url>
 <url><loc>/reference/correctS4Nproject_input.html</loc></url>
 <url><loc>/reference/correctZabel2014.html</loc></url>
+<url><loc>/reference/downloadForestGrassi2023.html</loc></url>
 <url><loc>/reference/downloadH08vapotranspiration.html</loc></url>
 <url><loc>/reference/downloadSPAM.html</loc></url>
 <url><loc>/reference/downloadZabel2014.html</loc></url>
@@ -129,6 +134,7 @@
 <url><loc>/reference/readEATLancet.html</loc></url>
 <url><loc>/reference/readFAOLossesWaste.html</loc></url>
 <url><loc>/reference/readFRA2015Doc.html</loc></url>
+<url><loc>/reference/readForestGrassi2023.html</loc></url>
 <url><loc>/reference/readForestLossDrivers.html</loc></url>
 <url><loc>/reference/readForestryProductionRatio.html</loc></url>
 <url><loc>/reference/readGLW3.html</loc></url>

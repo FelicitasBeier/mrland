@@ -1,6 +1,6 @@
 # MadRaT land data package
 
-R package **mrland**, version **0.76.0**
+R package **mrland**, version **0.78.0**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3822083.svg)](https://doi.org/10.5281/zenodo.3822083)
 [![R build
@@ -52,7 +52,7 @@ Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L,
 Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze
 P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). “mrland:
 MadRaT land data package.” <doi:10.5281/zenodo.3822083>
-<https://doi.org/10.5281/zenodo.3822083>. Version: 0.76.0,
+<https://doi.org/10.5281/zenodo.3822083>, Version: 0.78.0,
 <https://github.com/pik-piam/mrland>.
 
 A BibTeX entry for LaTeX users is
@@ -62,10 +62,10 @@ A BibTeX entry for LaTeX users is
  title = {mrland: MadRaT land data package},
  author = {Jan Philipp Dietrich and Abhijeet Mishra and Isabelle Weindl and Benjamin Leon Bodirsky and Xiaoxi Wang and Lavinia Baumstark and Ulrich Kreidenweis and David Klein and Nele Steinmetz and David Chen and Florian Humpenoeder and Patrick {von Jeetze} and Stephen Wirth and Felicitas Beier and David Hoetten and Pascal Sauer and Jake Tommey},
  doi = {10.5281/zenodo.3822083},
- date = {2026-09-11},
+ date = {2026-10-02},
  year = {2026},
  url = {https://github.com/pik-piam/mrland},
- note = {Version: 0.76.0},
+ note = {Version: 0.78.0},
 }
 ```
 
@@ -116,6 +116,8 @@ A BibTeX entry for LaTeX users is
 - [`calcForestFireLoss()`](calcForestFireLoss.md) : calcForestFireLoss
 - [`calcForestFireShare()`](calcForestFireShare.md) :
   calcForestFireShare
+- [`calcForestGrassi2023()`](calcForestGrassi2023.md) :
+  calcForestGrassi2023
 - [`calcForestLossShare()`](calcForestLossShare.md) :
   calcForestLossShare
 - [`calcForestProductionInitialization()`](calcForestProductionInitialization.md)
@@ -235,6 +237,8 @@ A BibTeX entry for LaTeX users is
 - [`correctCopernicus()`](correctCopernicus.md) : correctCopernicus
 - [`correctDinerstein2020()`](correctDinerstein2020.md) :
   correctDinerstein2020
+- [`correctForestGrassi2023()`](correctForestGrassi2023.md) :
+  correctForestGrassi2023
 - [`correctGLW3()`](correctGLW3.md) : correctGLW3
 - [`correctHalfEarth()`](correctHalfEarth.md) : correctHalfEarth
 - [`correctKeyBiodiversityAreas()`](correctKeyBiodiversityAreas.md) :
@@ -251,6 +255,8 @@ A BibTeX entry for LaTeX users is
 - [`correctS4Nproject_input()`](correctS4Nproject_input.md) :
   correctS4Nproject_input
 - [`correctZabel2014()`](correctZabel2014.md) : correctZabel2014
+- [`downloadForestGrassi2023()`](downloadForestGrassi2023.md) :
+  downloadForestGrassi2023
 - [`downloadH08vapotranspiration()`](downloadH08vapotranspiration.md) :
   downloadH08evapotranspiration
 - [`downloadSPAM()`](downloadSPAM.md) : downloadSPAM
@@ -266,6 +272,8 @@ A BibTeX entry for LaTeX users is
 - [`readFAOLossesWaste()`](readFAOLossesWaste.md) : Read in data on food
   losses and waste from FAO for several commodity groups
 - [`readFRA2015Doc()`](readFRA2015Doc.md) : Read FRA2015Doc
+- [`readForestGrassi2023()`](readForestGrassi2023.md) :
+  readForestGrassi2023
 - [`readForestLossDrivers()`](readForestLossDrivers.md) : Read
   ForestLossDrivers
 - [`readForestryProductionRatio()`](readForestryProductionRatio.md) :
