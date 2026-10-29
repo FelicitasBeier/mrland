@@ -24,8 +24,7 @@ Abhijeet Mishra
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{ 
-calcOutput("ForestDisturbances",aggregate=FALSE)
+if (FALSE) { # \dontrun{
+calcOutput("ForestDisturbances", aggregate = FALSE)
 } # }
-
 ```

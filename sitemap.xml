@@ -32,9 +32,9 @@
 <url><loc>/reference/calcFAOLossesWaste.html</loc></url>
 <url><loc>/reference/calcForestAreaInitialization.html</loc></url>
 <url><loc>/reference/calcForestDisturbances.html</loc></url>
-<url><loc>/reference/calcForestFireLoss.html</loc></url>
 <url><loc>/reference/calcForestFireShare.html</loc></url>
 <url><loc>/reference/calcForestGrassi2023.html</loc></url>
+<url><loc>/reference/calcForestLossByDriver.html</loc></url>
 <url><loc>/reference/calcForestLossShare.html</loc></url>
 <url><loc>/reference/calcForestProductionInitialization.html</loc></url>
 <url><loc>/reference/calcForestryProductionRatio.html</loc></url>
@@ -99,6 +99,7 @@
 <url><loc>/reference/convertFAOLossesWaste.html</loc></url>
 <url><loc>/reference/convertFRA2015Doc.html</loc></url>
 <url><loc>/reference/convertForestryProductionRatio.html</loc></url>
+<url><loc>/reference/convertGFWLossByDriver.html</loc></url>
 <url><loc>/reference/convertGTAP.html</loc></url>
 <url><loc>/reference/convertNIN.html</loc></url>
 <url><loc>/reference/convertPYieldCoeff.html</loc></url>
@@ -121,6 +122,7 @@
 <url><loc>/reference/correctS4Nproject_input.html</loc></url>
 <url><loc>/reference/correctZabel2014.html</loc></url>
 <url><loc>/reference/downloadForestGrassi2023.html</loc></url>
+<url><loc>/reference/downloadGFWLossByDriver.html</loc></url>
 <url><loc>/reference/downloadH08vapotranspiration.html</loc></url>
 <url><loc>/reference/downloadSPAM.html</loc></url>
 <url><loc>/reference/downloadZabel2014.html</loc></url>
@@ -137,6 +139,7 @@
 <url><loc>/reference/readForestGrassi2023.html</loc></url>
 <url><loc>/reference/readForestLossDrivers.html</loc></url>
 <url><loc>/reference/readForestryProductionRatio.html</loc></url>
+<url><loc>/reference/readGFWLossByDriver.html</loc></url>
 <url><loc>/reference/readGLW3.html</loc></url>
 <url><loc>/reference/readGLW4.html</loc></url>
 <url><loc>/reference/readGTAP.html</loc></url>

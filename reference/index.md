@@ -42,11 +42,12 @@
   calcForestAreaInitialization
 - [`calcForestDisturbances()`](calcForestDisturbances.md) :
   calcForestDisturbances
-- [`calcForestFireLoss()`](calcForestFireLoss.md) : calcForestFireLoss
 - [`calcForestFireShare()`](calcForestFireShare.md) :
   calcForestFireShare
 - [`calcForestGrassi2023()`](calcForestGrassi2023.md) :
   calcForestGrassi2023
+- [`calcForestLossByDriver()`](calcForestLossByDriver.md) :
+  calcForestLossByDriver
 - [`calcForestLossShare()`](calcForestLossShare.md) :
   calcForestLossShare
 - [`calcForestProductionInitialization()`](calcForestProductionInitialization.md)
@@ -150,6 +151,8 @@
 - [`convertForestryProductionRatio()`](convertForestryProductionRatio.md)
   : Converts Forestry Production Ratio Update dd-Jmm-jjjj - Please add
   comment if changes made here (Abhi)
+- [`convertGFWLossByDriver()`](convertGFWLossByDriver.md) :
+  convertGFWLossByDriver
 - [`convertGTAP()`](convertGTAP.md) : convertGTAP
 - [`convertNIN()`](convertNIN.md) : Convert data from the NIN Lancet
   Comission
@@ -186,6 +189,8 @@
 - [`correctZabel2014()`](correctZabel2014.md) : correctZabel2014
 - [`downloadForestGrassi2023()`](downloadForestGrassi2023.md) :
   downloadForestGrassi2023
+- [`downloadGFWLossByDriver()`](downloadGFWLossByDriver.md) :
+  downloadGFWLossByDriver
 - [`downloadH08vapotranspiration()`](downloadH08vapotranspiration.md) :
   downloadH08evapotranspiration
 - [`downloadSPAM()`](downloadSPAM.md) : downloadSPAM
@@ -203,10 +208,12 @@
 - [`readFRA2015Doc()`](readFRA2015Doc.md) : Read FRA2015Doc
 - [`readForestGrassi2023()`](readForestGrassi2023.md) :
   readForestGrassi2023
-- [`readForestLossDrivers()`](readForestLossDrivers.md) : Read
-  ForestLossDrivers
+- [`readForestLossDrivers()`](readForestLossDrivers.md) :
+  readForestLossDrivers
 - [`readForestryProductionRatio()`](readForestryProductionRatio.md) :
   Read Forestry Production Ratio
+- [`readGFWLossByDriver()`](readGFWLossByDriver.md) :
+  readGFWLossByDriver
 - [`readGLW3()`](readGLW3.md) : readGLW3
 - [`readGLW4()`](readGLW4.md) : readGLW4
 - [`readGTAP()`](readGTAP.md) : readGTAP

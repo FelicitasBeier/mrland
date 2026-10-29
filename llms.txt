@@ -1,6 +1,6 @@
 # MadRaT land data package
 
-R package **mrland**, version **0.78.0**
+R package **mrland**, version **0.79.1**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3822083.svg)](https://doi.org/10.5281/zenodo.3822083)
 [![R build
@@ -49,10 +49,10 @@ In case of questions / problems please contact Jan Philipp Dietrich
 To cite package **mrland** in publications use:
 
 Dietrich J, Mishra A, Weindl I, Bodirsky B, Wang X, Baumstark L,
-Kreidenweis U, Klein D, Steinmetz N, Chen D, Humpenoeder F, von Jeetze
-P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026). “mrland:
-MadRaT land data package.” <doi:10.5281/zenodo.3822083>
-<https://doi.org/10.5281/zenodo.3822083>, Version: 0.78.0,
+Kreidenweis U, Klein D, Crawford M, Steinmetz N, Chen D, Humpenoeder F,
+von Jeetze P, Wirth S, Beier F, Hoetten D, Sauer P, Tommey J (2026).
+“mrland: MadRaT land data package.” <doi:10.5281/zenodo.3822083>
+<https://doi.org/10.5281/zenodo.3822083>, Version: 0.79.1,
 <https://github.com/pik-piam/mrland>.
 
 A BibTeX entry for LaTeX users is
@@ -60,12 +60,12 @@ A BibTeX entry for LaTeX users is
 ``` latex
 @Misc{,
  title = {mrland: MadRaT land data package},
- author = {Jan Philipp Dietrich and Abhijeet Mishra and Isabelle Weindl and Benjamin Leon Bodirsky and Xiaoxi Wang and Lavinia Baumstark and Ulrich Kreidenweis and David Klein and Nele Steinmetz and David Chen and Florian Humpenoeder and Patrick {von Jeetze} and Stephen Wirth and Felicitas Beier and David Hoetten and Pascal Sauer and Jake Tommey},
+ author = {Jan Philipp Dietrich and Abhijeet Mishra and Isabelle Weindl and Benjamin Leon Bodirsky and Xiaoxi Wang and Lavinia Baumstark and Ulrich Kreidenweis and David Klein and Michael Crawford and Nele Steinmetz and David Chen and Florian Humpenoeder and Patrick {von Jeetze} and Stephen Wirth and Felicitas Beier and David Hoetten and Pascal Sauer and Jake Tommey},
  doi = {10.5281/zenodo.3822083},
- date = {2026-10-02},
+ date = {2026-10-26},
  year = {2026},
  url = {https://github.com/pik-piam/mrland},
- note = {Version: 0.78.0},
+ note = {Version: 0.79.1},
 }
 ```
 
@@ -113,11 +113,12 @@ A BibTeX entry for LaTeX users is
   calcForestAreaInitialization
 - [`calcForestDisturbances()`](calcForestDisturbances.md) :
   calcForestDisturbances
-- [`calcForestFireLoss()`](calcForestFireLoss.md) : calcForestFireLoss
 - [`calcForestFireShare()`](calcForestFireShare.md) :
   calcForestFireShare
 - [`calcForestGrassi2023()`](calcForestGrassi2023.md) :
   calcForestGrassi2023
+- [`calcForestLossByDriver()`](calcForestLossByDriver.md) :
+  calcForestLossByDriver
 - [`calcForestLossShare()`](calcForestLossShare.md) :
   calcForestLossShare
 - [`calcForestProductionInitialization()`](calcForestProductionInitialization.md)
@@ -221,6 +222,8 @@ A BibTeX entry for LaTeX users is
 - [`convertForestryProductionRatio()`](convertForestryProductionRatio.md)
   : Converts Forestry Production Ratio Update dd-Jmm-jjjj - Please add
   comment if changes made here (Abhi)
+- [`convertGFWLossByDriver()`](convertGFWLossByDriver.md) :
+  convertGFWLossByDriver
 - [`convertGTAP()`](convertGTAP.md) : convertGTAP
 - [`convertNIN()`](convertNIN.md) : Convert data from the NIN Lancet
   Comission
@@ -257,6 +260,8 @@ A BibTeX entry for LaTeX users is
 - [`correctZabel2014()`](correctZabel2014.md) : correctZabel2014
 - [`downloadForestGrassi2023()`](downloadForestGrassi2023.md) :
   downloadForestGrassi2023
+- [`downloadGFWLossByDriver()`](downloadGFWLossByDriver.md) :
+  downloadGFWLossByDriver
 - [`downloadH08vapotranspiration()`](downloadH08vapotranspiration.md) :
   downloadH08evapotranspiration
 - [`downloadSPAM()`](downloadSPAM.md) : downloadSPAM
@@ -274,10 +279,12 @@ A BibTeX entry for LaTeX users is
 - [`readFRA2015Doc()`](readFRA2015Doc.md) : Read FRA2015Doc
 - [`readForestGrassi2023()`](readForestGrassi2023.md) :
   readForestGrassi2023
-- [`readForestLossDrivers()`](readForestLossDrivers.md) : Read
-  ForestLossDrivers
+- [`readForestLossDrivers()`](readForestLossDrivers.md) :
+  readForestLossDrivers
 - [`readForestryProductionRatio()`](readForestryProductionRatio.md) :
   Read Forestry Production Ratio
+- [`readGFWLossByDriver()`](readGFWLossByDriver.md) :
+  readGFWLossByDriver
 - [`readGLW3()`](readGLW3.md) : readGLW3
 - [`readGLW4()`](readGLW4.md) : readGLW4
 - [`readGTAP()`](readGTAP.md) : readGTAP

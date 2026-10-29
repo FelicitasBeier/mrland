@@ -1,31 +1,48 @@
 # calcForestLossShare
 
-Calculates which share of forest land is lost due to different drivers
+Calculates which share of forest area is lost per year to each driver of
+forest loss.
 
 ## Usage
 
 ``` r
-calcForestLossShare()
+calcForestLossShare(src = "Curtis", period = 2015:2024)
 ```
+
+## Arguments
+
+- src:
+
+  Driver data to use, `"Curtis"` (default) or `"GFW"`, see
+  [`calcForestLossByDriver`](calcForestLossByDriver.md)
+
+- period:
+
+  Years averaged into the annual rate, GFW only
 
 ## Value
 
-MAgPIE object with share of area lost in forests due to different
-drivers
+MAgPIE object with the share of forest area lost per year by driver
+
+## Details
+
+The denominator is FRA 2020 naturally regenerating forest area, the
+natural forest MAgPIE applies the share to: 2020 for `src = "GFW"`, 2010
+for `src = "Curtis"` (loss 2001-2015). Shares above 1 are clamped to 1.
 
 ## See also
 
-[`readForestLossDrivers`](readForestLossDrivers.md)
+[`calcForestLossByDriver`](calcForestLossByDriver.md)
 
 ## Author
 
-Abhijeet Mishra
+Abhijeet Mishra, Michael Crawford
 
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{ 
-calcOutput("ForestLossShare",aggregate=FALSE)
+if (FALSE) { # \dontrun{
+calcOutput("ForestLossShare", aggregate = FALSE)
+calcOutput("ForestLossShare", src = "GFW", aggregate = FALSE)
 } # }
-
 ```
