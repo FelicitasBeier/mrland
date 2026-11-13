@@ -53,6 +53,6 @@ Patrick v. Jeetze
 
 ``` r
 if (FALSE) { # \dontrun{
-calcOutput("calcIrrecoverableCarbonLand", aggregate = FALSE)
+calcOutput("IrrecoverableCarbonLand", aggregate = FALSE)
 } # }
 ```

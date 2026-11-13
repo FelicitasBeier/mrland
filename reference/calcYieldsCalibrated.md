@@ -14,7 +14,6 @@ calcYieldsCalibrated(
   cells = "lpjcell",
   multicropping = FALSE,
   refYields = FALSE,
-  areaSource = "FAO",
   marginal_land = "magpie"
 )
 ```
@@ -64,11 +63,6 @@ calcYieldsCalibrated(
   calculate country-level yields, "TRUE:actual:irrig_crop": multicropped
   yields where LandInG reports current multiple cropping (irrigation-
   and crop-specific))
-
-- areaSource:
-
-  data source for croparea used in calculation: FAO or LandInG Note:
-  when calibrating multicropped yields, LandInG croparea should be used
 
 - marginal_land:
 

@@ -1,21 +1,14 @@
 # calcEFch4Rice
 
-emission factors for methane from flooded rice fields, depending on
-phyiscal area or area harvested. The emission factors were calculated
-based on FAOSTAT estimates due to lack of all necessary parameters in
-the IPCC Guidelines
+emission factors for methane from flooded rice fields, depending on area
+harvested. The emission factors were calculated based on FAOSTAT
+estimates due to lack of all necessary parameters in the IPCC Guidelines
 
 ## Usage
 
 ``` r
-calcEFch4Rice(physical = TRUE)
+calcEFch4Rice()
 ```
-
-## Arguments
-
-- physical:
-
-  if true physical area, if false area harvested
 
 ## Value
 

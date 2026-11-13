@@ -50,6 +50,6 @@ Patrick v. Jeetze
 
 ``` r
 if (FALSE) { # \dontrun{
-calcOutput("calcGlobalSafetyNet", aggregate = FALSE)
+calcOutput("GlobalSafetyNet", aggregate = FALSE)
 } # }
 ```

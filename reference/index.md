@@ -82,8 +82,8 @@
 - [`calcMulticroppingYieldIncrease()`](calcMulticroppingYieldIncrease.md)
   : calcMulticroppingYieldIncrease
 - [`calcNINDiets()`](calcNINDiets.md) : calcNINDiets
-- [`calcNitrogenFixationFreeliving()`](calcNitrogenFixationFreeliving.md)
-  : calcNitrogenFixationFreeliving
+- [`calcNitrogenFixationFreelivingRate()`](calcNitrogenFixationFreelivingRate.md)
+  : calcNitrogenFixationFreelivingRate
 - [`calcNitrogenFixationNdfa()`](calcNitrogenFixationNdfa.md) :
   calcNitrogenFixationNdfa
 - [`calcNutritionAttributes()`](calcNutritionAttributes.md) :

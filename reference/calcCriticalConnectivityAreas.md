@@ -18,8 +18,8 @@ calcCriticalConnectivityAreas(
 
 - maginput:
 
-  Whether data should be transformed (based on LUH3 data) to match land
-  use types used in MAgPIE.
+  Whether data should be transformed (based on LanduseInitialisation
+  data) to match land use types used in MAgPIE.
 
 - nclasses:
 

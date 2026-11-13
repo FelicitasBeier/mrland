@@ -58,6 +58,6 @@ Patrick v. Jeetze
 
 ``` r
 if (FALSE) { # \dontrun{
-calcOutput("calcKeyBiodiversityAreas", aggregate = FALSE)
+calcOutput("KeyBiodiversityAreas", aggregate = FALSE)
 } # }
 ```

@@ -13,10 +13,6 @@ calcNitrogenFixationNdfa()
 List of magpie objects with results on country level, weight on country
 level, unit and description.
 
-## See also
-
-[`calcNitrogenFixationPast`](https://rdrr.io/pkg/mrcommons/man/calcNitrogenFixationPast.html)
-
 ## Author
 
 Benjamin Leon Bodirsky
@@ -25,6 +21,6 @@ Benjamin Leon Bodirsky
 
 ``` r
 if (FALSE) { # \dontrun{
-calcOutput("calcNitrogenFixationNdfa")
+calcOutput("NitrogenFixationNdfa")
 } # }
 ```

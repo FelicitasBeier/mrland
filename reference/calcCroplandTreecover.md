@@ -5,11 +5,7 @@ Returns area on cropland covered by trees (Mha).
 ## Usage
 
 ``` r
-calcCroplandTreecover(
-  maginput = TRUE,
-  cells = "magpiecell",
-  countryLevel = FALSE
-)
+calcCroplandTreecover(maginput = TRUE, countryLevel = FALSE)
 ```
 
 ## Arguments
@@ -18,10 +14,6 @@ calcCroplandTreecover(
 
   Whether data should be corrected to align with cropland initialised in
   MAgPIE.
-
-- cells:
-
-  magpiecell (59199 cells) or lpjcell (67420 cells)
 
 - countryLevel:
 
