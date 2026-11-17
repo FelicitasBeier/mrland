@@ -18,7 +18,7 @@
 calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
 
   if (datasource == "REMIND") {
-  
+
     indicator <- "SE|Biochar"
     unitInfo  <- "PJ per year"
     unit      <- "EJ/yr"
@@ -36,7 +36,7 @@ calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
     }
 
     x <- do.call(mbind, lapply(names(techMaps), function(tech) {
-      tmp <- readSource("REMIND", subtype = remindSubtype(paste0("|", techMap[[tech]])))
+      tmp <- readSource("REMIND", subtype = remindSubtype(paste0("|", techMaps[[tech]])))
       add_dimension(tmp, dim = 3.1, nm = tech)
     }))
     # sort scenarios alphabetically
@@ -44,10 +44,10 @@ calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
 
     # unit conversion from EJ to PJ
     x <- x * 10^3
-    
+
     # if data is not available from REMIND reports, set biochar production to zero
     x[is.na(x)] <- 0
-    
+
     x <- collapseNames(x)
     firstRemindYear <- sort(getYears(x))[1]
     x <- time_interpolate(x, seq(1995, 2150, 5), extrapolation_type = "constant")
@@ -60,7 +60,7 @@ calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
     description <- paste("biochar production for different scenarios",
                          "taken from REMIND standalone and REMIND-MAgPIE coupled runs")
 
-    
+
   } else if (datasource == "Dorndorf2026") {
 
     unitInfo <- "PJ per year"

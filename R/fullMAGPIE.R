@@ -411,14 +411,14 @@ fullMAGPIE <- function(rev = numeric_version("0.1"), dev = "") {
              outputStatistics = stats, file = "f62_hist_dem_bioplastic.csv")
 
   # 63 biochar
-  # TODO: re-enable on the cluster (all sources available there)
+  # Disabled until cluster preprocessing, re-enable once all sources are available
   # calcOutput("BiocharProd", datasource = "REMIND_and_Dorndorf", years = shortYears, round = 3, rev = rev,
   #            outputStatistics = stats, file = "f63_biochar_prod.cs3")
   calcOutput("BiocharAttributes", processCond = "default", round = 2, aggregate = FALSE,
              outputStatistics = stats, file = "f63_biochar_attributes.cs3")
   calcOutput("BiocharEfficiency", processCond = "default", outputType = "default", round = 2,
              outputStatistics = stats, aggregate = FALSE, file = "f63_biochar_efficiency.cs3")
-  # TODO: re-enable on the cluster (all sources available there)
+  # Disabled until cluster preprocessing, re-enable once all sources are available
   # calcOutput("BiocharGatePrice", bcSys = "default", outputSys = "bc_sys", round = 2,
   #            aggregate = FALSE, outputStatistics = stats, file = "f63_biochar_gate_price.cs3")
 

@@ -16,9 +16,9 @@
 #' For Kontiki, no learning is assumed. If set to NULL, defaults are used. If set
 #' to FALSE, not learning will be assumed.
 #' @param capRecF Capital recovery factor (annualization rate).
-#' Default is 0.05 (5%/yr).
+#' Default is 0.05 (5\%/yr).
 #' @param markupHigh Markup (fraction) applied to central gate prices to define high
-#' cost variant (if no explicit high data exists). Default is 0.3 (= +30%).
+#' cost variant (if no explicit high data exists). Default is 0.3 (= +30\%).
 #' @param fallbackMultLow Multiplier applied to inco0_main if inco0_low is missing and
 #' variant == "low". Default is 0.7.
 #' @param sysCostScaling Multipliers to scale from SP-500 costs to other temperature systems
@@ -37,16 +37,16 @@
 #'   calcOutput("BiocharGatePrice", bcSys = "default")
 #' }
 calcBiocharGatePrice <- function(
-    bcSys = "default",
-    variant = c("low", "central", "high"),
-    baseYear = "y2025",
-    learningRates = NULL,
-    capRecF = 0.05,
-    markupHigh = 0.30,
-    fallbackMultLow = 0.70,
-    sysCostScaling =
-        c("SP-400" = 0.85, "SP-650" = 1.15, "SP-800" = 1.35,
-          "FP-500" = 2.60, "P-KonTiki" = 3.60), outputSys = "bc_sys") {
+  bcSys = "default",
+  variant = c("low", "central", "high"),
+  baseYear = "y2025",
+  learningRates = NULL,
+  capRecF = 0.05,
+  markupHigh = 0.30,
+  fallbackMultLow = 0.70,
+  sysCostScaling = c("SP-400" = 0.85, "SP-650" = 1.15, "SP-800" = 1.35, "FP-500" = 2.60,
+                     "P-KonTiki" = 3.60),
+  outputSys = "bc_sys") {
 
   ## Defaults for bcSys selection
   defaultBcSys <- c("SP-400", "SP-500", "SP-650", "SP-800", "FP-500", "P-Woolf", "P-KonTiki")
