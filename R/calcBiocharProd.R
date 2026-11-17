@@ -13,8 +13,6 @@
 #' calcOutput("BiocharProd")
 #' }
 #' @importFrom madrat readSource toolGetMapping
-#' @importFrom magclass collapseNames time_interpolate mbind complete_magpie
-#'   toolAggregate add_dimension getItems
 
 calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
 
