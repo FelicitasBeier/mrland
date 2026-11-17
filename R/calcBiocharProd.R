@@ -12,8 +12,9 @@
 #' \dontrun{
 #' calcOutput("BiocharProd")
 #' }
-#' @importFrom madrat readSource
+#' @importFrom madrat readSource toolGetMapping
 #' @importFrom magclass collapseNames time_interpolate mbind complete_magpie
+#'   toolAggregate add_dimension getItems
 
 calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
 
@@ -67,7 +68,14 @@ calcBiocharProd <- function(datasource, rev = numeric_version("0.1")) {
 
     # biochar production per plant setup from the published REMIND runs of
     # Dorndorf et al 2026, returned by the read function as bc_plant63.scenario
-    x <- readSource("Dorndorf2026", subtype = "Baseline")
+    # on REMIND regions (there is no convertDorndorf2026 function, so the
+    # disaggregation to countries is done here in the same way as done by
+    # convertREMIND for the REMIND source: weighted by population in 2010)
+    x <- readSource("Dorndorf2026", subtype = "Baseline", convert = FALSE)
+    x <- x[!(getItems(x, dim = 1) %in% c("GLO", "World")), , ]
+    map <- toolGetMapping(type = "regional", name = "regionmappingH12.csv", where = "madrat")
+    pop <- calcOutput("Population", scenario = "SSP2", aggregate = FALSE)
+    x <- toolAggregate(x, map, weight = pop[, 2010, ])
 
     # electricity-only co-product plant is added to the CHP plant
     elec <- x[, , "biopyrelec"]
