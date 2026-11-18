@@ -34,7 +34,7 @@ calcOutput("calcIPLCLand", aggregate = FALSE)
 
 }
 \seealso{
-\code{\link{readLandMark}}
+\code{\link{readLandMark}}, \code{\link{toolMagpieLandClasses}}
 }
 \author{
 Patrick v. Jeetze

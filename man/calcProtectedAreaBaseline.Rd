@@ -39,7 +39,7 @@ calcOutput("ProtectedAreaBaseline", aggregate = FALSE)
 
 }
 \seealso{
-\code{\link{calcProtectArea}}
+\code{\link{calcProtectArea}}, \code{\link{toolSplitLandClasses}}
 }
 \author{
 Patrick v. Jeetze

@@ -41,7 +41,7 @@ calcOutput("KeyBiodiversityAreas", aggregate = FALSE)
 
 }
 \seealso{
-\code{\link{readKeyBiodiversityAreas}}
+\code{\link{readKeyBiodiversityAreas}}, \code{\link{toolMagpieLandClasses}}
 }
 \author{
 Patrick v. Jeetze

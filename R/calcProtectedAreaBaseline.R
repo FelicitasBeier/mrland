@@ -18,7 +18,7 @@
 #' @return List with a magpie object
 #' @author Patrick v. Jeetze
 #' @seealso
-#' \code{\link{calcProtectArea}}
+#' \code{\link{calcProtectArea}}, \code{\link{toolSplitLandClasses}}
 #'
 #' @examples
 #' \dontrun{
@@ -82,75 +82,7 @@ calcProtectedAreaBaseline <- function(magpie_input = TRUE, nclasses = "seven", #
     luIni <- setCells(luIni, getCells(PABaseline))
     PABaseline <- toolCorrectOpenEcosystemMismatch(PABaseline, luIni) # nolint
 
-    if (nclasses %in% c("seven", "nine")) {
-      # differentiate primary and secondary forest based on landUseInitialization data
-      totforestLu <- dimSums(landUse9[, , c("primforest", "secdforest")], dim = 3)
-      primforestShr <- landUse9[, , "primforest"] / setNames(totforestLu + 1e-10, NULL)
-      secdforestShr <- landUse9[, , "secdforest"] / setNames(totforestLu + 1e-10, NULL)
-      # where landUseInitialization does not report forest, but we find forest land in
-      # protected area data, set share of secondary forest land to 1
-      secdforestShr[secdforestShr == 0 & primforestShr == 0] <- 1
-      # multiply shares of primary and secondary non-forest veg with
-      # land pools in protected area data set
-      primforest <- setNames(primforestShr, NULL) * PABaseline[, , "forest"]
-      secdforest <- setNames(secdforestShr, NULL) * PABaseline[, , "forest"]
-      primforest <- setNames(primforest, sub("forest", "primforest", getNames(primforest)))
-      secdforest <- setNames(secdforest, sub("forest", "secdforest", getNames(secdforest)))
-
-      out <- mbind(
-        PABaseline[, , c("crop", "past")],
-        new.magpie(
-          cells_and_regions = getCells(PABaseline),
-          years = getYears(PABaseline),
-          names = paste0(c("WDPA", "WDPA_I-II-III", "WDPA_IV-V-VI"), ".forestry"),
-          fill = 0
-        ),
-        primforest,
-        secdforest,
-        new.magpie(
-          cells_and_regions = getCells(PABaseline),
-          years = getYears(PABaseline),
-          names = paste0(c("WDPA", "WDPA_I-II-III", "WDPA_IV-V-VI"), ".urban"),
-          fill = 0
-        ),
-        PABaseline[, , "other"]
-      )
-    } else {
-      stop("Option specified for argument 'nclasses' does not exist.")
-    }
-
-    if (nclasses == "nine") {
-      past <- new.magpie(
-        cells_and_regions = getCells(PABaseline),
-        years = getYears(PABaseline),
-        names = paste0(c("WDPA", "WDPA_I-II-III", "WDPA_IV-V-VI"), ".past"),
-        fill = 0
-      )
-      range <- PABaseline[, , "past"]
-      range <- setNames(range, sub("past", "range", getItems(range, dim = 3)))
-
-      # separate other land into primary and secondary
-      tototherLu <- dimSums(landUse9[, , c("primn", "secdn")], dim = 3)
-      primotherShr <- landUse9[, , "primother"] / setNames(tototherLu + 1e-10, NULL)
-      secdotherShr <- landUse9[, , "secdother"] / setNames(tototherLu + 1e-10, NULL)
-      # where landUseInitialization does not report other land, but we find other land in
-      # protected area data, set share of secondary other land to 1
-      secdotherShr[secdotherShr == 0 & primotherShr == 0] <- 1
-      # multiply shares of primary and secondary non-forest veg with other land
-      primother <- setNames(primotherShr, NULL) * PABaseline[, , "other"]
-      secdother <- setNames(secdotherShr, NULL) * PABaseline[, , "other"]
-      primother <- setNames(primother, sub("other", "primother", getNames(primother)))
-      secdother <- setNames(secdother, sub("other", "secdother", getNames(secdother)))
-
-      out <- mbind(
-        out[, , "crop"],
-        past,
-        range,
-        out[, , c("forestry", "primforest", "secdforest", "urban")],
-        primother,
-        secdother
-      )
-    }
+    out <- toolSplitLandClasses(PABaseline, landUse9, nclasses)
   } else {
     out <- PABaseline
   }

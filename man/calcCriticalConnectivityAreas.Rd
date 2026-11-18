@@ -44,7 +44,7 @@ calcOutput("calcCriticalConnectivityAreas", aggregate = FALSE)
 
 }
 \seealso{
-\code{\link{readBrennan2022}}
+\code{\link{readBrennan2022}}, \code{\link{toolMagpieLandClasses}}
 }
 \author{
 Patrick v. Jeetze

@@ -39,7 +39,7 @@ calcOutput("IrrecoverableCarbonLand", aggregate = FALSE)
 
 }
 \seealso{
-\code{\link{readNoon2022}}
+\code{\link{readNoon2022}}, \code{\link{toolMagpieLandClasses}}
 }
 \author{
 Patrick v. Jeetze
