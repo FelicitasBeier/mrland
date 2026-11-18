@@ -22,7 +22,7 @@ readDorndorf2026 <- function(subtype = "Baseline") {
 
   file <- toolSubtypeSelect(subtype, files)
 
-  x <- read.report(file, as.list = FALSE)
+  x <- read.report(file, as.list = FALSE, showSeparatorWarning = FALSE)
 
   # dim 3 after read.report is scenario.model.variable, dots inside names are
   # escaped to "p" by read.report, so dots can be used as dimension separator.
