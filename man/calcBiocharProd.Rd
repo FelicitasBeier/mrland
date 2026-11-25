@@ -4,23 +4,12 @@
 \alias{calcBiocharProd}
 \title{calcBiocharProd}
 \usage{
-calcBiocharProd(
-  datasource,
-  rev = numeric_version("0.1"),
-  biocharsystems = "disagg",
-  unit = "EJ/yr"
-)
+calcBiocharProd(datasource, rev = numeric_version("0.1"))
 }
 \arguments{
-\item{datasource}{source to be used}
+\item{datasource}{source to be used (either "REMIND" or "Dorndorf2026")}
 
 \item{rev}{data revision the output will be produced for (numeric_version).}
-
-\item{biocharsystems}{selects the biochar production systems for which data is returned.
-Options are disagg which returns data for all available biochar production systems separately,
-and agg which returns the total of all biochar production systems.}
-
-\item{unit}{(available: EJ/yr and Mt/yr)}
 }
 \value{
 magpie object with results on country level, weight on country level, unit and description.
